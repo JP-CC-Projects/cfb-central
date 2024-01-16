@@ -1,0 +1,42 @@
+/* SortableSegmentedTable.module.css */
+.sortableTableContainer {
+    margin: 0 auto;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.sortableTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.sortableTableThead {
+    background-color: #818181;
+    color: white;
+}
+
+.sortableTableTh, .sortableTableTd {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sortableTableTh {
+    cursor: pointer;
+}
+
+.sortableTableRow:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.sortableTableRow:hover {
+    background-color: #ddd;
+}
+
+.sortIndicator {
+    margin-left: 5px;
+    display: inline-block;
+    width: 16px; /* Adjust the width as needed */
+    text-align: center;
+}

@@ -1,0 +1,82 @@
+.tile-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    height: 80vh;
+    margin: 0;
+    padding: 0px; /* Optional, for inner spacing */
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+
+.tile {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+    border-radius: 10px;
+    perspective: 1000px;
+    position: relative;
+    /* Keep other styles as is */
+}
+
+.tile-front, .tile-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.tile-front {
+    background-color: #fff;
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+/* Add this to your CSS file */
+.tile-full-width {
+    width: 100% !important;
+    display: block; /* This will ensure the div behaves as a block-level element */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.tile-back {
+    background-color: #f1f1f1;
+    transform: rotateY(180deg);
+}
+
+.tile.flipped .tile-front {
+    transform: rotateY(180deg);
+}
+
+.tile.flipped .tile-back {
+    z-index: 3;
+    transform: rotateY(0deg);
+}
+
+@media (min-width: 600px) { /* Adjust breakpoint as needed */
+    .tile-container {
+        justify-content: space-around;
+    }
+    .tile {
+        flex: 0 0 calc(33.333% - 10px); /* 3 tiles across, accounting for gaps */
+        height: calc(40vh - 10px); /* Adjust this based on your layout */
+    }
+}
+
+/* Styles for smaller screens (mobile) */
+@media (max-width: 599px) { /* Adjust breakpoint as needed */
+    .tile {
+        flex: 0 0 100%; /* Full width for 1 tile across */
+        height: calc(33vh - 10px); /* Adjust this based on your layout */
+    }
+}

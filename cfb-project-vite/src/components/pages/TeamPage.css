@@ -1,0 +1,35 @@
+/* TeamPage.css */
+
+/* Style the tab list */
+.react-tabs__tab-list {
+    /* border-bottom: 1px solid #ccc; */
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+
+}
+
+/* Style each tab */
+.react-tabs__tab {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    padding: .1rem 1rem;
+    margin-right: 0;
+    cursor: pointer;
+    background-color: white;
+}
+
+/* Style the active tab */
+.react-tabs__tab--selected {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+    /* color: black; */
+}
+
+/* Style the tab panels */
+.react-tabs__tab-panel {
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+}

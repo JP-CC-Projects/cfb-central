@@ -1,0 +1,22 @@
+/* Custom styles for the InfoWindow content */
+.custom-info-window {
+    background-color: #e22d2d !important; /* Set your preferred background color */
+    color: #333333; /* Set your preferred text color */
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 0; /* Add padding inside the InfoWindow */
+    border-radius: 5px; /* Optional: if you want rounded corners */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* Optional: add a shadow for a pop-out effect */
+    max-width: 250px; /* Set a maximum width for the InfoWindow */
+  }
+  
+  /* Optionally, target the close button and other elements inside the InfoWindow */
+  .custom-info-window .gm-ui-hover-effect {
+    /* Adjust the position of the close button */
+    top: 10px !important; 
+    right: 10px !important;
+  }
+  
+  .custom-info-window .gm-style-iw-d {
+    overflow: hidden !important; /* Adjust overflow properties if needed */
+  }
+  

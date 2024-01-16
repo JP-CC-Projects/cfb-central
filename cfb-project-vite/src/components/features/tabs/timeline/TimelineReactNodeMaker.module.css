@@ -1,0 +1,33 @@
+.timelineWrapper {
+    padding: 0 10px;
+}
+.scoreTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.scoreTable th,
+.scoreTable td {
+    border: 1px solid black;
+    padding: .1rem .5rem;
+    text-align: center;
+}
+
+.scoreTable thead {
+    font-weight: 400;
+}
+.scoreTable td:first-child,
+.scoreTable th:first-child {
+    text-align: left;
+}
+
+.customLink {
+    color: #007bff;  /* Example: blue color */
+    text-decoration: none;  /* Removes underline */
+}
+
+.customLink:hover {
+    text-decoration: underline;  /* Adds underline on hover */
+    color: #0056b3;  /* Darker blue on hover */
+}
