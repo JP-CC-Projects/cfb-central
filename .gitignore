@@ -1,17 +1,28 @@
+# Node modules
 /cfb-project-vite/node_modules/
+node_modules/
+
+# Specific configuration files
 /cfb-project-java-api/src/main/resources/application.properties
 /cfb-project-java-api/src/main/resources/application-dev.properties
-node_modules/
-*.iml
-*.log
-.env
 
+# Environment files
+.env
 
 # Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE - Visual Studio Code
+.vscode/
 
 # BlueJ files
 *.ctxt
@@ -19,7 +30,7 @@ node_modules/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -28,38 +39,15 @@ node_modules/
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-# Maven
+# Maven specific
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 !*/pom.xml
 
-# IntelliJ IDEA
-*.iml
-.idea/
-*.iws
-*.ipr
-out/
-
-# Eclipse
-.classpath
-.project
-.settings/
-
-# NetBeans
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-# VS Code
-.vscode/
+# Virtual machine crash logs
+hs_err_pid*
 
 # OS-specific files
 .DS_Store
