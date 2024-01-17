@@ -9,6 +9,7 @@ import com.jpcc.CFBProject.repository.PlayerTeamHistoryRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
 import com.jpcc.CFBProject.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,6 @@ import java.util.Optional;
 
 @Service
 public class TeamService {
-    //    Logging:
     private static final Logger logger = LoggerFactory.getLogger(TeamService.class);
 
     @Value("${cfbApiKey}")
@@ -34,7 +34,8 @@ public class TeamService {
 
     @Autowired
     public TeamService(TeamRepository teamRepository,
-                       CFBApiConfig cfbApiConfig, ObjectMapper objectMapper,
+                       CFBApiConfig cfbApiConfig,
+                       @Qualifier("objectMapper") ObjectMapper objectMapper, // specify the bean here
                        PlayerTeamHistoryRepository playerTeamHistoryRepository) {
         this.teamRepository = teamRepository;
         this.cfbApiConfig = cfbApiConfig;

@@ -13,6 +13,7 @@ import com.jpcc.CFBProject.repository.GameRepository;
 import com.jpcc.CFBProject.repository.PlayRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -43,7 +44,7 @@ public class GameService extends BaseService {
     @Autowired
     public GameService(GameRepository gameRepository,
                        TeamRepository teamRepository,
-                       ObjectMapper objectMapper,
+                       @Qualifier("objectMapper") ObjectMapper objectMapper,
                        CFBApiConfig cfbApiConfig,
                        WebClient webClient, PlayRepository playRepository) {
         super(webClient, objectMapper, cfbApiConfig);

@@ -5,6 +5,7 @@ import com.jpcc.CFBProject.config.CFBApiConfig;
 import com.jpcc.CFBProject.domain.boxscore.BoxScore;
 import com.jpcc.CFBProject.repository.BoxScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,7 +21,7 @@ public class BoxScoreService extends BaseService {
     public BoxScoreService(BoxScoreRepository boxScoreRepository,
                            RestTemplate restTemplate,
                            CFBApiConfig cfbApiConfig,
-                           ObjectMapper objectMapper,
+                           @Qualifier("objectMapper") ObjectMapper objectMapper,
                            WebClient webClient) {
         super(webClient, objectMapper, cfbApiConfig);
         this.boxScoreRepository = boxScoreRepository;

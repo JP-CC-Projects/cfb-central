@@ -10,6 +10,7 @@ import com.jpcc.CFBProject.repository.PlayerTeamHistoryRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -24,7 +25,7 @@ public class PlayerService extends BaseService {
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository,
-                         ObjectMapper objectMapper,
+                         @Qualifier("objectMapper") ObjectMapper objectMapper,
                          CFBApiConfig cfbApiConfig,
                          WebClient webClient,
                          TeamRepository teamRepository,

@@ -5,6 +5,7 @@ import com.jpcc.CFBProject.config.CFBApiConfig;
 import com.jpcc.CFBProject.domain.Play;
 import com.jpcc.CFBProject.repository.PlayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,7 +24,7 @@ public class PlayService extends BaseService {
 
     @Autowired
     public PlayService(PlayRepository playRepository,
-                       ObjectMapper objectMapper,
+                       @Qualifier("objectMapper") ObjectMapper objectMapper,
                        CFBApiConfig cfbApiConfig,
                        WebClient webClient, GameService gameService) {
         super(webClient, objectMapper, cfbApiConfig);

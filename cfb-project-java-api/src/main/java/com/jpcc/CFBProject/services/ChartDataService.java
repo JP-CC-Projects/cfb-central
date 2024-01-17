@@ -24,7 +24,8 @@ public class ChartDataService {
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
 
-    public ChartDataService(TeamService teamService, PlayerTeamHistoryRepository playerTeamHistoryRepository,
+    public ChartDataService(TeamService teamService,
+                            PlayerTeamHistoryRepository playerTeamHistoryRepository,
                             PlayerRepository playerRepository,
                             TeamRepository teamRepository) {
         this.teamService = teamService;
