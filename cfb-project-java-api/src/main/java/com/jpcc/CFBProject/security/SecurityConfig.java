@@ -41,7 +41,6 @@ import java.util.HashMap;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Profile("dev")
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserServiceImpl userService;
