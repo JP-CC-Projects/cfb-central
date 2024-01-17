@@ -1,5 +1,6 @@
 export type PlayerChartData = {
     playerId: number;
+    playerJersey: number;
     playerFirstName: string;
     playerLastName: string;
     playerWeight: number;

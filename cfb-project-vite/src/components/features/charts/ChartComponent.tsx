@@ -3,13 +3,13 @@ import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../redux/store';
 import { fetchPlayerChartData, fetchAllTeamsChartData } from '../../../redux/actions/chartActions';
+import { PlayerChartData, TeamChartData } from '../../../types/chartTypes';
 Chart.register(...registerables);
 interface ChartComponentProps {
     teamId: number;
-    teamSeason: number;
 }
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ teamId, teamSeason }) => {
+const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
     const dispatch = useAppDispatch();
     const playerChartData = useSelector((state: RootState) => state.chart.playerChartData);
     const teamChartData = useSelector((state: RootState) => state.chart.teamChartData); 
@@ -59,7 +59,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ teamId, teamSeason }) =
                             label: yAxis,
                             backgroundColor: 'rgba(82, 45, 128, 0.5)',
                             borderColor: 'rgb(255, 99, 132)',
-                            data: dataset,
+                            data: dataset?.map(item => typeof item === 'number' ? item : 0) || [],
                         }],
                     },
                     options: {

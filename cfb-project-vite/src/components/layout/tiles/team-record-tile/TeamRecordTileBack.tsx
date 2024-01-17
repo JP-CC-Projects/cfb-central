@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { fetchTeamRecord } from '../../../../redux/actions/teamActions';
-import { RootState, useAppDispatch } from '../../../../redux/store';
+import { RootState } from '../../../../redux/store';
 import MyLoading from '../../../common/MyLoading';
 import { TeamRecord, RecordDetail } from '../../../../types/teamTypes';
 
@@ -15,7 +14,7 @@ interface TeamState {
     isFetchingTeamRecord: boolean;
 }
 
-const TeamRecordTileBack: React.FC<TeamRecordComponentProps> = ({ teamId, teamSeason }) => {
+const TeamRecordTileBack: React.FC<TeamRecordComponentProps> = () => {
     // const dispatch = useAppDispatch();
     const { teamRecord, isFetchingTeamRecord } = useSelector((state: RootState) => state.team) as TeamState;
     const formatRecord = (record: RecordDetail) => {

@@ -87,7 +87,7 @@ const TeamPage = () => {
             </TabPanel>
             <TabPanel>
               <div>
-                <ChartComponent teamId={parsedTeamId} teamSeason={teamSeason}/>
+                <ChartComponent teamId={parsedTeamId}/>
               </div>
             </TabPanel>
             <TabPanel>

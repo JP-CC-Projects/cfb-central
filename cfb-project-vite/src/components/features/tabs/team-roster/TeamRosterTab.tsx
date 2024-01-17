@@ -74,7 +74,9 @@ const TeamRosterTab: React.FC<TeamRosterProps> = ({ teamId, teamSeason }) => {
         { accessorKey: 'firstName', header: 'First Name' },
         { accessorKey: 'lastName', header: 'Last Name' },
         { accessorKey: 'position', header: 'Pos.' },
-        { accessorKey: 'height', header: 'Height', cell: info => `${Math.floor(info.getValue() / 12)}ft ${info.getValue() % 12}in` },
+        { accessorKey: 'height', header: 'Height', cell: info => { const heightInInches = info.getValue() as number;
+                return `${Math.floor(heightInInches / 12)}ft ${heightInInches % 12}in`;}
+        },
         { accessorKey: 'weight', header: 'Weight', cell: info => `${info.getValue()} lbs` },
         { accessorKey: 'year', header: 'Year' },
         { accessorKey: 'homeCity', header: 'Home City' },

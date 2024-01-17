@@ -12,8 +12,10 @@ interface TeamDetailsProps {
     teamDetails: TeamDetails;
 }
 const TileComponent: React.FC<TeamDetailsProps> = ({ teamId, teamDetails }) => {
+    if (teamDetails) {
+        console.log(`teamDetails received for teamId ${teamId}`);
+    }
     const [flippedStates, setFlippedStates] = useState(Array(6).fill(false));
-
     const handleFlip = (index: number) => {
         const newFlippedStates = [...flippedStates];
         newFlippedStates[index] = !newFlippedStates[index];

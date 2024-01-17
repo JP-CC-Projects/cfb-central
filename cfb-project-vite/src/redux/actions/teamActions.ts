@@ -31,12 +31,6 @@ const FETCH_TEAM_ROSTER_FAILURE = 'FETCH_TEAM_ROSTER_FAILURE';
 const START_FETCHING_TEAM_ROSTER = 'START_FETCHING_TEAM_ROSTER';
 const STOP_FETCHING_TEAM_ROSTER = 'STOP_FETCHING_TEAM_ROSTER';
 
-
-// Generic error handler
-const handleFetchError = (dispatch: any, failureType: string) => {
-  dispatch({ type: failureType, error: 'Fetch error' });
-};
-
 // Base URL for API requests
 const API_BASE_URL = 'http://192.168.12.112:8080/api';
 // const API_BASE_URL = 'http://localhost:8080/api';
