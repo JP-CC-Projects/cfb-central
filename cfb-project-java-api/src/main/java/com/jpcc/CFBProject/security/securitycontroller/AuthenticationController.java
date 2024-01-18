@@ -38,7 +38,7 @@ public class AuthenticationController {
 	}
     
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
 	public String getLogin (@ModelAttribute("user") User user) {
 		return "login";
 	}
@@ -49,7 +49,7 @@ public class AuthenticationController {
     	return "login";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SignInRequest request, @RequestBody User user) {
     	Optional<User> existingUser = userService.findUserByEmail(user.getEmail());
     	String accessToken = jwtService.generateToken(user);

@@ -3,7 +3,7 @@ import './LoginPage.css';
 
 interface LoginProps {
   onLogin: (
-    username: string, 
+    username: string,
     password: string) => void;
   errorMessage?: string;
 }
