@@ -1,4 +1,4 @@
-package com.jpcc.CFBProject.security;
+package com.jpcc.CFBProject.security.securityservices;
 
 import com.jpcc.CFBProject.security.securityservices.JwtService;
 import io.jsonwebtoken.Claims;

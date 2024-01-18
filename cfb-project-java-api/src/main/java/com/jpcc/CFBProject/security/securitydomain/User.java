@@ -30,7 +30,6 @@ public class User implements UserDetails {
      * private String confirmPassword;
      */
 
-
     @Override
     public Collection<Authority> getAuthorities() {
         return authorities;

@@ -1,8 +1,7 @@
 package com.jpcc.CFBProject.security.securitycontroller;
 import com.jpcc.CFBProject.request.SignUpRequest;
 import com.jpcc.CFBProject.response.JwtAuthenticationResponse;
-import com.jpcc.CFBProject.security.securitydomain.*;
-import com.jpcc.CFBProject.security.JwtServiceImpl;
+import com.jpcc.CFBProject.security.securityservices.JwtServiceImpl;
 import com.jpcc.CFBProject.security.securitydomain.User;
 import com.jpcc.CFBProject.security.securityservices.RefreshTokenService;
 import com.jpcc.CFBProject.security.securityservices.UserServiceImpl;
