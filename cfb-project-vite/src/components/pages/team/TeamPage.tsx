@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTeamDetails } from '../../../redux/actions/teamActions';
-import MainLayout from '../../layout/MainLayout';
 import { AppDispatch, RootState } from '../../../redux/store';
-import TeamTimelineTab from './team-tabs/team-tab-timeline/TeamTimeLineTab';
 import { Tab, Tabs, TabList, TabPanel, TabProps } from 'react-tabs';
+import MainLayout from '../../layout/MainLayout';
+import TeamTimelineTab from './team-tabs/team-tab-timeline/TeamTimeLineTab';
 import TeamRosterTab from './team-tabs/team-tab-roster/TeamRosterTab';
 import TeamOverviewTab from './team-tabs/team-overview/TeamOverviewTab';
 import MapComponent from '../map/MapComponent';
@@ -28,7 +28,7 @@ const TeamPage = () => {
   const parsedTeamId = teamId ? parseInt(teamId, 10) : undefined;
   const teamDetails = useSelector((state: RootState) => state.team.teamDetails);
 
-  // Custom Tab component
+  // React Tabs component
   interface CustomTabProps extends TabProps {
     children: React.ReactNode;
   }
@@ -70,8 +70,6 @@ const TeamPage = () => {
               <CustomTab>Graphs</CustomTab>
               <CustomTab>Player Map</CustomTab>
             </TabList>
-
-
             <TabPanel>
               <div>
                 {teamDetails && <TeamOverviewTab teamId={parsedTeamId} teamDetails={teamDetails} />}

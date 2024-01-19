@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 //@RestController
 @Controller
-@RequestMapping("/admin2")
+@RequestMapping("/admin")
 public class SecurityAdminController {
     private UserServiceImpl userService;
     private UserRepository userRepo;

@@ -51,7 +51,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
         String encodedPassword = passwordEncoder.encode(request.password());
         logger.info("Raw Password during registation: {}, Encoded Password during registation: {}", request.password(), encodedPassword);
-        
         return new JwtAuthenticationResponse(jwt, refreshToken.getToken());
     }
 
@@ -63,11 +62,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
         var jwt = jwtService.generateToken(user);
         var refreshTokenOpt = refreshTokenService.findByToken(jwt);
-        
         logger.info("Raw password during login: {}", "Encoded password during login: {}", request.password(), user.getPassword());
-        
+
         if (refreshTokenOpt.isPresent()) {
-            return new JwtAuthenticationResponse(jwt, refreshTokenOpt.get().getToken()); 
+            return new JwtAuthenticationResponse(jwt, refreshTokenOpt.get().getToken());
         } else {
             return new JwtAuthenticationResponse(jwt, refreshTokenService.createRefreshToken(user.getId()).getToken());
         }

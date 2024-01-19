@@ -2,7 +2,6 @@ package com.jpcc.CFBProject.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -38,11 +37,9 @@ public class NoOpSecurityConfig {
 
         // Allowing both localhost and the network IP
         List<String> allowedOrigins = Arrays.asList(
-                "http://localhost:5173", // Frontend running on localhost
-                "http://192.168.12.112:5173" // Frontend running on network IP
+                "http://localhost:5173" // Frontend running on localhost
         );
         configuration.setAllowedOrigins(allowedOrigins);
-
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
