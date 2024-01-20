@@ -61,7 +61,7 @@ public class RankingWeek {
     }
 
     @Entity
-    @Table(name = "rank_data")
+    @Table(name = "`rank`")
     public static class Rank {
 
         @Id

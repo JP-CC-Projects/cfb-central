@@ -50,6 +50,7 @@ public class Team {
     public static class Location {
         private Long venueId;
         private String name;
+        @Column(length = 800)
         private String venueImageUrl;
         private String city;
         private String state;

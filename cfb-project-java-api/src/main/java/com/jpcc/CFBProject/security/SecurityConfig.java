@@ -26,6 +26,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -52,7 +53,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public FilterRegistrationBean corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -70,39 +71,33 @@ public class SecurityConfig {
         ));
         config.setMaxAge(3600L);
         source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(-102);
-        return bean;
+        return source;
     }
+
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String[] pathsPermitAll = {
-                "/api/logout",
-                "/account",
-                "/allusers",
-                "/register",
-                "/login"};
-        http    // Apply CORS
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> {
-                    for (String path : pathsPermitAll) {
-                        authz.requestMatchers(new AntPathRequestMatcher(path)).permitAll();
-                    }
-                    authz.requestMatchers(new AntPathRequestMatcher("/user/welcome")).authenticated()
-                            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN")
-                            .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER")
-                            .anyRequest().authenticated();
+                    authz
+                            .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()  // Permit all requests to /api/**
+                            .requestMatchers(new AntPathRequestMatcher("/account"),
+                                    new AntPathRequestMatcher("/register"),
+                                    new AntPathRequestMatcher("/login")).authenticated() // Require authentication for these paths
+                            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
+                            .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER") // User specific paths
+                            .anyRequest().authenticated(); // All other requests require authentication
                 })
-                .headers(frameOptions -> frameOptions.disable())
+                .headers(headers -> headers.frameOptions().disable())
                 .authenticationProvider(authenticationProvider())
-                .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -121,7 +116,6 @@ public class SecurityConfig {
 
         logger.info("UserDetailsService: " + userDetailsService);
         logger.info("PasswordEncoder: " + passwordEncoder);
-
         return authProvider;
     }
 

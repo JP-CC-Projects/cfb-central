@@ -125,8 +125,14 @@ public class GameService extends BaseService {
                         JsonNode root = objectMapper.readTree(response);
                         JsonNode itemsNode = root.path("items");
                         if (!itemsNode.isMissingNode() && itemsNode.isArray() && itemsNode.size() > 0) {
-                            JsonNode firstItem = itemsNode.get(0);
-                            return firstItem.path("link").asText();
+                            for(int i = 0; i < itemsNode.size(); i++){
+                                if(itemsNode.get(i).path("link").asText().length() < 799){
+                                    return itemsNode.get(i).path("link").asText();
+                                }
+                                else{
+                                    return "";
+                                }
+                            }
                         }
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
