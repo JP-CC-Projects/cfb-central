@@ -1,8 +1,14 @@
 package com.jpcc.CFBProject.controller;
 
 import com.jpcc.CFBProject.repository.GameRepository;
+import com.jpcc.CFBProject.security.securitydomain.Authority;
+import com.jpcc.CFBProject.security.securitydomain.User;
+import com.jpcc.CFBProject.security.securityrepository.UserRepository;
 import com.jpcc.CFBProject.services.*;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -24,10 +32,12 @@ public class AdminController {
     private PlayerService playerService;
     private SeasonCalendarService seasonCalendarService;
     private GameRepository gameRepository;
+    private PasswordEncoder passwordEncoder;
+    private UserRepository userRepository;
 
 
     @Autowired
-    public AdminController(TeamService teamService, GameService gameService, TeamRecordService teamRecordService, PlayService playService, PlayerService playerService, SeasonCalendarService seasonCalendarService, GameRepository gameRepository) {
+    public AdminController(TeamService teamService, GameService gameService, TeamRecordService teamRecordService, PlayService playService, PlayerService playerService, SeasonCalendarService seasonCalendarService, GameRepository gameRepository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.teamService = teamService;
         this.gameService = gameService;
         this.teamRecordService = teamRecordService;
@@ -35,7 +45,36 @@ public class AdminController {
         this.playerService = playerService;
         this.seasonCalendarService = seasonCalendarService;
         this.gameRepository = gameRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
+
+    @Value("${admin.firstName}")
+    private String adminFirstName;
+    @Value("${admin.lastName}")
+    private String adminLastName;
+    @Value("${admin.email}")
+    private String adminEmail;
+    @Value("${admin.password}")
+    private String adminUPassword;
+
+//    @PostConstruct // This annotation is used to create an admin user during application startup
+//    public void init() {
+//        createAdminUser();
+//    }
+    List<User> allAdmins = new ArrayList<>();
+    public void createAdminUser() {
+        User adminUser = new User();
+        adminUser.setFirstName(adminFirstName);
+        adminUser.setLastName(adminLastName);
+        adminUser.setEmail(adminEmail);
+        adminUser.setPassword(passwordEncoder.encode(adminUPassword));
+
+        Authority adminAuth = new Authority("ROLE_ADMIN", adminUser);
+        adminUser.setAuthorities(Collections.singletonList(adminAuth));
+        userRepository.save(adminUser);
+    }
+
 
     @GetMapping
     public String adminHome(Model model) {
