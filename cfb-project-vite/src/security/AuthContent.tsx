@@ -25,9 +25,9 @@ export default class AuthContent extends React.Component<AuthContentProps> {
     render(){
         return (
             <div>
-                {this.state.data && this.state.data.map(
+                {/* {this.state.data && this.state.data.map(
                     (line: string) => <p>{line}</p>
-                )}
+                )} */}
             </div>
         )
     }
