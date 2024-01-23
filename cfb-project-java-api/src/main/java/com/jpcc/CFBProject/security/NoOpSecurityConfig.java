@@ -36,7 +36,7 @@
 //
 //        // Allowing both localhost and the network IP
 //        List<String> allowedOrigins = Arrays.asList(
-//                "http://localhost:5173" // Frontend running on localhost
+//           r     "http://localhost:5173" // Frontend running on localhost
 //        );
 //        configuration.setAllowedOrigins(allowedOrigins);
 //        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

@@ -12,6 +12,7 @@ import com.jpcc.CFBProject.dto.TimeLineSeasonGamesDTO;
 import com.jpcc.CFBProject.repository.GameRepository;
 import com.jpcc.CFBProject.repository.PlayRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
@@ -106,7 +107,8 @@ public class GameService extends BaseService {
         return null;
     }
 
-    private String handleMissingVenueImageUrl(String teamName, String venueName) {
+    @Transactional
+    public String handleMissingVenueImageUrl(String teamName, String venueName) {
 
         String searchQuery = "cool image of " + teamName + " " + venueName + " football";
         Mono<String> fetchedVenueUrlMono = webClient.get()
@@ -158,6 +160,7 @@ public class GameService extends BaseService {
     }
 
     @Async
+    @Transactional
     public void calculateQuarterScores(Long gameId) {
         List<CalculateQuarterScoresDTO> plays = playRepository.findPlaysByGameId(gameId);
         Game game = gameRepository.findGameById(gameId).orElse(null);

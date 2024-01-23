@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jpcc.CFBProject.config.CFBApiConfig;
 import com.jpcc.CFBProject.domain.boxscore.BoxScore;
 import com.jpcc.CFBProject.repository.BoxScoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class BoxScoreService extends BaseService {
         this.restTemplate = restTemplate;
     }
 
+    @Transactional
     public BoxScore fetechSaveAndReturnBoxScore(Long gameId) throws Exception {
         String boxScoreJsonString = fetchJsonFromApi(
                 cfbApiConfig.getBoxScoreEndpoint(),

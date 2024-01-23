@@ -3,9 +3,10 @@ package com.jpcc.CFBProject.security;
 import com.jpcc.CFBProject.security.securityservices.JwtServiceImpl;
 import com.jpcc.CFBProject.security.securityservices.RefreshTokenService;
 import com.jpcc.CFBProject.security.securityservices.UserServiceImpl;
+import com.jpcc.CFBProject.security.securityutil.JwtAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.Arrays;
 
@@ -52,12 +52,17 @@ public class SecurityConfig {
         this.refreshTokenService = refreshTokenService;
     }
 
+
+    @Value("${frontEndBaseUrl}")
+    private String frontEndBaseUrl;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173"); //Set via @Value annotation later to allow Railway to configure via env
+        //CORS address for front end requests(!!):
+        config.addAllowedOrigin(frontEndBaseUrl);
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
@@ -83,10 +88,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> {
                     authz
-                            .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()  // Permit all requests to /api/**
-                            .requestMatchers(new AntPathRequestMatcher("/account"),
-                                    new AntPathRequestMatcher("/register"),
-                                    new AntPathRequestMatcher("/login")).authenticated() // Require authentication for these paths
+                            .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/account")).authenticated()
                             .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER") // User specific paths
                             .anyRequest().authenticated(); // All other requests require authentication

@@ -1,4 +1,4 @@
-package com.jpcc.CFBProject.controller;
+package com.jpcc.CFBProject.security.securitycontroller;
 
 import com.jpcc.CFBProject.repository.GameRepository;
 import com.jpcc.CFBProject.security.securitydomain.Authority;
@@ -58,13 +58,15 @@ public class AdminController {
     @Value("${admin.password}")
     private String adminUPassword;
 
-//    @PostConstruct // This annotation is used to create an admin user during application startup
-//    public void init() {
-//        createAdminUser();
-//    }
-    List<User> allAdmins = new ArrayList<>();
+    @PostConstruct // This annotation is used to create an admin user during application startup
+    public void init() {
+        createAdminUser();
+    }
     public void createAdminUser() {
         User adminUser = new User();
+        if(userRepository.findByEmail(adminEmail).isPresent()){
+            return;
+        }
         adminUser.setFirstName(adminFirstName);
         adminUser.setLastName(adminLastName);
         adminUser.setEmail(adminEmail);

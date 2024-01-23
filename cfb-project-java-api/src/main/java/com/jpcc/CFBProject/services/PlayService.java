@@ -56,6 +56,7 @@ public class PlayService extends BaseService {
     }
 
 
+    @Transactional
     public List<Play> fetchAndSavePlaysBySeasonAndWeek(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);

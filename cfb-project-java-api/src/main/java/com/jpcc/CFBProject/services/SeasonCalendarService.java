@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jpcc.CFBProject.config.CFBApiConfig;
 import com.jpcc.CFBProject.domain.SeasonWeek;
 import com.jpcc.CFBProject.repository.WeekRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class SeasonCalendarService extends BaseService {
         this.weekRepository = weekRepository;
     }
 
-
+    @Transactional
     public void fetchAndSaveWeeks(Integer seasonYear) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", seasonYear);

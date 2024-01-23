@@ -4,6 +4,7 @@ import com.jpcc.CFBProject.domain.Player;
 import com.jpcc.CFBProject.domain.Team;
 import com.jpcc.CFBProject.repository.PlayerRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class DatabaseCreationService {
         this.playerRepository = playerRepository;
     }
     //Get all players for all teams:
+    @Transactional
     public void fetchAndSaveAllPlayers(){
         for(Team team : teamRepository.findAll()){
             List<Player> playerList = null;

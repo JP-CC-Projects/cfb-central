@@ -79,12 +79,13 @@ public class PlayerService extends BaseService {
         return fetchedPlayers;
     }
 
-    public List<Player> getPlayerListByTeam(Long teamId) {
+   public List<Player> getPlayerListByTeam(Long teamId) {
         String schoolName = teamRepository.findTeamById(teamId).get().getSchool();
         List<Player> playerList = playerRepository.findPlayersByTeam(schoolName);
         return playerList;
     }
 
+    @Transactional
     public void calculateAndSetPlayerHometownDistanceToSchool(Long playerId) {
         Player player = playerRepository.findById(playerId).orElse(null);
         if (player == null) {

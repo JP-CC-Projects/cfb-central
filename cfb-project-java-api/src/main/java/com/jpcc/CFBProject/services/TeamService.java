@@ -8,6 +8,7 @@ import com.jpcc.CFBProject.domain.Team;
 import com.jpcc.CFBProject.repository.PlayerTeamHistoryRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
 import com.jpcc.CFBProject.util.HttpUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +44,7 @@ public class TeamService {
         this.playerTeamHistoryRepository = playerTeamHistoryRepository;
     }
 
+    @Transactional
     public void fetchAndSaveTeams() throws Exception {
         Map<String, Object> queryParams = new HashMap<>();
         String teamsJsonString = HttpUtil.makeApiCall(cfbApiConfig.getBase(),

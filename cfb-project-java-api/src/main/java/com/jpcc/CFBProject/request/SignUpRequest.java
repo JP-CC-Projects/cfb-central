@@ -7,5 +7,4 @@ public record SignUpRequest(String email,
                             String firstName,
                             String lastName,
                             Optional<String> authorityOpt) {
-
 }

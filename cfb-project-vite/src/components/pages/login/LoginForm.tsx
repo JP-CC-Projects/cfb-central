@@ -1,3 +1,5 @@
+// LoginForm.tsx
+
 import { useState } from 'react';
 import './LoginPage.css';
 
@@ -9,13 +11,15 @@ interface LoginProps {
 }
 
 const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
-  const [username, setUsername] = useState('username');
+  const [email, setEmail ] = useState('email');
   const [password, setPassword] = useState('password');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onLogin(username, password);
+    onLogin(email, password);
   };
+
+  
 
   return (
     <>
@@ -25,12 +29,12 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
             <h2>Login</h2>
             {errorMessage && <div className="error-message">{errorMessage}</div>}
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 id="username"
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="input-group">

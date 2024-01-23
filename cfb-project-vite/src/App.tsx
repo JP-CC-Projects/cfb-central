@@ -7,8 +7,20 @@ import HomePage from './components/pages/home/HomePage';
 import SchedulePage from './components/pages/schedule/SchedulePage'; 
 import MapPage from './components/pages/map/MapPage';
 import LoginPage from './components/pages/login/LoginPage';
- 
-function App() {
+import AdminDashboard from './components/pages/admin/AdminDashboard';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+const App: React.FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: token });
+      }
+      // Add redirect to team page here
+  }, [dispatch]);
+
   return (
     <Provider store={store}>
       <Router>
@@ -21,6 +33,7 @@ function App() {
             <Route path="/schedule" element={<SchedulePage />} /> {/* SchedulePage component */}
             <Route path="/:teamId/map" element = {<MapPage />} />
             <Route path="/login" element = {<LoginPage />} />
+            <Route path="/admin" element = {<AdminDashboard />} />
           </Routes>
         </div>
       </Router>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jpcc.CFBProject.config.CFBApiConfig;
 import com.jpcc.CFBProject.domain.TeamRecord;
 import com.jpcc.CFBProject.repository.TeamRecordRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class TeamRecordService extends BaseService {
 
 
     //    Admin Method:
+    @Transactional
     public List<TeamRecord> fetchAndSaveTeamRecords(Integer year) throws Exception {
         return fetchSaveAndConvert(
                 cfbApiConfig.getRecordsEndpoint(),
