@@ -10,6 +10,7 @@ export interface LoginSuccessAction {
   payload: {
     user: User; // Define User type as needed
     token: string;
+    refreshToken: string;
   };
 }
 

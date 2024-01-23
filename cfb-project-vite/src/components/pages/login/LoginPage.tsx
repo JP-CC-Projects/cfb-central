@@ -4,10 +4,11 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 const LoginPage: React.FC = () => {
+  const LOGIN_URL = `${import.meta.env.VITE_APP_BASE_URL}/login`;
   const dispatch = useDispatch();
   const handleLogin = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_APP_BASE_URL}/login`, {
+      const response = await axios.post(LOGIN_URL, {
         email,
         password
       });

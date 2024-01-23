@@ -17,7 +17,7 @@ public class PlayerTeamHistory {
     @ManyToOne
     @JoinColumn(name = "player_id", referencedColumnName = "id")
     @JsonBackReference
-    private Player player; // Changed from Set<Player> to Player
+    private Player player;
 
     @ManyToOne
     @JoinColumn(name = "team_id", referencedColumnName = "id")

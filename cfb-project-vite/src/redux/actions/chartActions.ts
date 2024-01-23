@@ -20,8 +20,7 @@ const START_FETCHING_NAT_AVG_CHART = 'START_FETCHING_NAT_AVG_CHART';
 const STOP_FETCHING_NAT_AVG_CHART = 'STOP_FETCHING_NAT_AVG_CHART';
 
 // Base URL for API requests
-const API_BASE_URL = 'http://localhost:8080/api';
-
+const API_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/api`;
 
 
 // Helper function for error handling

@@ -43,26 +43,33 @@ public class PlayerService extends BaseService {
         params.put("team", teamName);
         String json = fetchJsonFromApi(cfbApiConfig.getRosterEndpoint(), params);
         Player[] allFetchedPlayers = objectMapper.readValue(json, Player[].class);
-        // Process each player and save if not exists
+
         Instant now = Instant.now();
-        for (Player player : allFetchedPlayers) {
-            Team team = teamRepository.findBySchool(player.getTeam()).orElse(null);
-            Optional<Player> existingPlayer = playerRepository.findById(player.getId());
-            if (existingPlayer.isPresent()) {
-                PlayerTeamHistory currentHistory = playerTeamHistoryRepository
-                        .findCurrentByPlayerId(player.getId()).orElse(null);
-                if (currentHistory != null && !currentHistory.getTeam().equals(team)) {
-                    currentHistory.setEndDate(now);
-                    playerTeamHistoryRepository.save(currentHistory);
-                }
-            } else {
-                playerRepository.save(player); // Save new player
+        for (Player fetchedPlayer : allFetchedPlayers) {
+            Team team = teamRepository.findBySchool(fetchedPlayer.getTeam()).orElse(null);
+            Player player = playerRepository.findById(fetchedPlayer.getId())
+                    .orElseGet(() -> playerRepository.save(fetchedPlayer));
+
+            PlayerTeamHistory currentHistory = playerTeamHistoryRepository
+                    .findCurrentByPlayerId(player.getId()).orElse(null);
+
+            if (currentHistory != null && !currentHistory.getTeam().equals(team)) {
+                currentHistory.setEndDate(now);
+                playerTeamHistoryRepository.save(currentHistory);
             }
-            // Save new history record
-            playerTeamHistoryRepository.save(new PlayerTeamHistory(player, team, now));
+
+            PlayerTeamHistory newHistory = new PlayerTeamHistory(player, team, now);
+            playerTeamHistoryRepository.save(newHistory);
+
+            if (player.getPlayerTeamHistories() == null) {
+                player.setPlayerTeamHistories(new HashSet<>());
+            }
+            player.getPlayerTeamHistories().add(newHistory);
         }
+
         return Arrays.asList(allFetchedPlayers);
     }
+
 
     public Boolean doesPlayerExist(Player player) {
         return playerRepository.existsById(player.getId());

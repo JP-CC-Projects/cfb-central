@@ -8,6 +8,7 @@ import com.jpcc.CFBProject.services.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,11 +94,11 @@ public class AdminController {
     }
 
     @PostMapping("/fetchTeams")
-    public String fetchAndSaveTeams(RedirectAttributes redirectAttributes) throws Exception {
+    public ResponseEntity<?> fetchAndSaveTeams() throws Exception {
         teamService.fetchAndSaveTeams();
-        redirectAttributes.addFlashAttribute("message", "Teams fetched and saved successfully.");
-        return "redirect:/admin";
+        return ResponseEntity.ok("Teams fetched and saved successfully.");
     }
+
 
     @PostMapping("/fetchGames")
     public String fetchAndSaveGames(RedirectAttributes redirectAttributes,

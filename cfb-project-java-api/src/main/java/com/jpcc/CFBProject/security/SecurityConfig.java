@@ -92,8 +92,8 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/account")).authenticated()
-                            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER") // User specific paths
+                            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .anyRequest().authenticated(); // All other requests require authentication
                 })
                 .headers(headers -> headers.frameOptions().disable())

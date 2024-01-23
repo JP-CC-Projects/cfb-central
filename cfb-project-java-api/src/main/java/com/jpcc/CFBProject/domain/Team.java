@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jpcc.CFBProject.domain.relationship.PlayerTeamHistory;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 public class Team {
     @OneToMany(mappedBy = "team")
     @JsonManagedReference
-    private Set<PlayerTeamHistory> playerTeamHistories;
+    private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
     public Set<PlayerTeamHistory> getPlayerTeamHistories() {
         return playerTeamHistories;

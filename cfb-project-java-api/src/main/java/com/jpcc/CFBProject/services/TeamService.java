@@ -54,7 +54,14 @@ public class TeamService {
 
         System.out.println("Teams JSON = " + teamsJsonString);
         List<Team> teams = convertJsonStringToTeamObjects(teamsJsonString);
-        teamRepository.saveAll(teams);
+        for(Team team : teams){
+            if (teamRepository.findTeamById(team.getId()).isPresent()){
+                return;
+            }
+            else{
+                teamRepository.save(team);
+            }
+        }
     }
 
     public List<Team> convertJsonStringToTeamObjects(String jsonString) throws Exception {

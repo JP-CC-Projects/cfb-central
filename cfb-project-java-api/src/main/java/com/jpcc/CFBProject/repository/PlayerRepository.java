@@ -22,6 +22,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     void deletePlayersWithNullHeightAndPosition();
     @Query("SELECT p FROM Player p WHERE p.jersey IS NULL")
     List<Player> findPlayersWithNullJersey();
-    @Query("SELECT p from Player p where p.playerTeamHistory.endDate IS NULL")
+    @Query("SELECT p FROM Player p JOIN p.playerTeamHistories pth WHERE pth.endDate IS NULL")
     List<Player> findAllCurrentPlayers();
+
 }

@@ -2,14 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import styles from './AdminDashboard.module.css'; 
 
-const API_BASE_URL = 'http://localhost:8080/admin';
-// const API_BASE_URL = railway env; -- add in prod
+const ADMIN_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/admin`;
+
+// const API_BASE_URL = railway env; -- add in prod!!
 const adminToken = import.meta.env.ADMIN_TOKEN || '';
 
 const AdminDashboard: React.FC = () => {
     const handleFetchTeams = async () => {
         try {
-          const response = await axios.get(`${API_BASE_URL}/fetchTeams`, {
+          const response = await axios.get(`${ADMIN_BASE_URL}/fetchTeams`, {
             headers: {
               Authorization: `Bearer ${adminToken}`
             }

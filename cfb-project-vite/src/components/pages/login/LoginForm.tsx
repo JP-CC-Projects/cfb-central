@@ -26,7 +26,6 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
       <div className="login-container">
         <div className="login-form">
           <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
             {errorMessage && <div className="error-message">{errorMessage}</div>}
             <div className="input-group">
               <label htmlFor="email">Email</label>

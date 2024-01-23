@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jpcc.CFBProject.domain.relationship.PlayerTeamHistory;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "player")
 public class Player {
 
-    @ManyToOne
+    @OneToMany(mappedBy = "player")
     @JsonManagedReference
-    private PlayerTeamHistory playerTeamHistory;
+    private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
     @Id
     private Long id;
@@ -40,15 +42,13 @@ public class Player {
     @Column(name = "recruit_id")
     private List<Integer> recruitIds;
 
-    // Getters and Setters
 
-
-    public PlayerTeamHistory getPlayerTeamHistory() {
-        return playerTeamHistory;
+    public Set<PlayerTeamHistory> getPlayerTeamHistories() {
+        return playerTeamHistories;
     }
 
-    public void setPlayerTeamHistory(PlayerTeamHistory playerTeamHistory) {
-        this.playerTeamHistory = playerTeamHistory;
+    public void setPlayerTeamHistories(Set<PlayerTeamHistory> playerTeamHistories) {
+        this.playerTeamHistories = playerTeamHistories;
     }
 
     public Long getId() {
