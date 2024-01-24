@@ -13,6 +13,7 @@ import java.util.Set;
 public class Team {
     @OneToMany(mappedBy = "team")
     @JsonManagedReference
+//     -- add back if Java17 on railway causes infinite recursion!!
     private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
     public Set<PlayerTeamHistory> getPlayerTeamHistories() {
@@ -51,7 +52,7 @@ public class Team {
     public static class Location {
         private Long venueId;
         private String name;
-        @Column(length = 800)
+        @Column(length = 800, nullable = true)
         private String venueImageUrl;
         private String city;
         private String state;

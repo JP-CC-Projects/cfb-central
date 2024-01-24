@@ -2,7 +2,6 @@ import { AuthActionTypes, LOGIN_SUCCESS, LOGOUT } from '../actions/authActions';
 
 const initialState = {
     isAuthenticated: false,
-    user: null,
     token: null,
     refreshToken: null,
   };
@@ -13,7 +12,6 @@ const initialState = {
         return {
           ...state,
           isAuthenticated: true,
-          user: action.payload.user,
           token: action.payload.token,
           refreshToken: action.payload.refreshToken,
         };
@@ -21,11 +19,9 @@ const initialState = {
         return {
           ...state,
           isAuthenticated: false,
-          user: null,
           token: null,
           refreshToken: null,
         };
-      // ... other cases
       default:
         return state;
     }

@@ -6,7 +6,8 @@ import TeamPage from './components/pages/team/TeamPage';
 import HomePage from './components/pages/home/HomePage'; 
 import SchedulePage from './components/pages/schedule/SchedulePage'; 
 import MapPage from './components/pages/map/MapPage';
-import LoginPage from './components/pages/login/LoginPage';
+import LoginPage from './components/pages/auth/LoginPage';
+import Logout from './components/pages/auth/Logout';
 import AdminDashboard from './components/pages/admin/AdminDashboard';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -34,6 +35,7 @@ const App: React.FC = () => {
             <Route path="/:teamId/map" element = {<MapPage />} />
             <Route path="/login" element = {<LoginPage />} />
             <Route path="/admin" element = {<AdminDashboard />} />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </div>
       </Router>

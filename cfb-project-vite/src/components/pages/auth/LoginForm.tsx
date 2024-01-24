@@ -5,7 +5,7 @@ import './LoginPage.css';
 
 interface LoginProps {
   onLogin: (
-    username: string,
+    email: string,
     password: string) => void;
   errorMessage?: string;
 }
@@ -30,7 +30,7 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
             <div className="input-group">
               <label htmlFor="email">Email</label>
               <input
-                id="username"
+                id="email"
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

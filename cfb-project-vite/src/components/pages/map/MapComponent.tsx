@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import type { UnknownAction } from 'redux';
@@ -8,7 +8,6 @@ import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-m
 import { Library } from '@googlemaps/js-api-loader';
 import markerIcon from './../../../assets/markericon5.svg'; // Import SVG here
 import mapStyles from './MapComponentStyle';
-import { useState } from 'react';
 import { Player } from '../../../types/teamTypes';
 
 // import './MapComponentStyle.css'; 
