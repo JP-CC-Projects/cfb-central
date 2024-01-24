@@ -2,7 +2,7 @@ import { AuthActionTypes, LOGIN_SUCCESS, LOGOUT } from '../actions/authActions';
 
 const initialState = {
     isAuthenticated: false,
-    token: null,
+    accessToken: null,
     refreshToken: null,
   };
   
@@ -12,14 +12,14 @@ const initialState = {
         return {
           ...state,
           isAuthenticated: true,
-          token: action.payload.token,
+          accessToken: action.payload.accessToken,
           refreshToken: action.payload.refreshToken,
         };
       case LOGOUT:
         return {
           ...state,
           isAuthenticated: false,
-          token: null,
+          accessToken: null,
           refreshToken: null,
         };
       default:

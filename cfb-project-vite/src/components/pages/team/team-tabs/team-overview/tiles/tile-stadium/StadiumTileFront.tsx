@@ -8,7 +8,7 @@ const StadiumTileFront = () => {
         teamDetails &&
 <div
     style={{
-        backgroundImage: `url(${teamDetails.location.venue_image_url})`,
+        backgroundImage: `url(${teamDetails.location.venueImageUrl})`,
         width: '100%', 
         height: '100%',
         backgroundSize: 'cover', 

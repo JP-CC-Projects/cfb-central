@@ -15,9 +15,9 @@ import { useEffect } from 'react';
 const App: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-          dispatch({ type: 'LOGIN_SUCCESS', payload: token });
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: accessToken });
       }
       // Add redirect to team page here
   }, [dispatch]);

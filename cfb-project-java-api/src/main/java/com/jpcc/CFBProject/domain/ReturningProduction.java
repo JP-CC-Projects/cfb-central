@@ -20,6 +20,7 @@ public class ReturningProduction {
     private Double percentPassingPPA;
     private Double percentReceivingPPA;
     private Double percentRushingPPA;
+    @Column(name = "`usage`")
     private Double usage;
     private Double passingUsage;
     private Double receivingUsage;

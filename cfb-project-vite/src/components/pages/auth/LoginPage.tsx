@@ -18,11 +18,12 @@ const LoginPage: React.FC = () => {
         password
       });
       console.log('Login successful:', response.data);
-      const { token, refreshToken } = response.data;
-      localStorage.setItem('token', token);
+      const { accessToken, refreshToken } = response.data;
+      console.log("Access token is: " + accessToken)
+      localStorage.setItem('accessToken', accessToken);
       dispatch({ 
         type: 'LOGIN_SUCCESS', 
-        payload: { token, refreshToken }  
+        payload: { accessToken, refreshToken }  
       });      
       navigate(from, { replace: true });
     } catch (error) {
@@ -31,6 +32,7 @@ const LoginPage: React.FC = () => {
       } else {
         console.error('An unexpected error occurred:', error);
       }
+      
     }
   };
 

@@ -1,5 +1,6 @@
 package com.jpcc.CFBProject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jpcc.CFBProject.domain.relationship.PlayerTeamHistory;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import java.util.Set;
 public class Player {
 
     @OneToMany(mappedBy = "player")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
     @Id

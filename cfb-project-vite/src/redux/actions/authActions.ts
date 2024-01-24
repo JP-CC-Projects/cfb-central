@@ -8,8 +8,7 @@ export const LOGOUT = 'LOGOUT';
 export interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
   payload: {
-    user: User; // Define User type as needed
-    token: string;
+    accessToken: string;
     refreshToken: string;
   };
 }

@@ -10,26 +10,25 @@ const Header = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const teamDetails = useSelector((state: RootState) => state.team.teamDetails);
   const location = useLocation();
-  const [bgColor, setBgColor] = useState(''); // Default color
+  const [bgColor, setBgColor] = useState('');
 
   useEffect(() => {
     if (location.pathname.startsWith('/')) {
-      let newBgColor = ''; // Default color
-
+      let newBgColor = '';
       if (teamDetails?.color) {
         const isReadable = contrastUtils.isContrastReadable(teamDetails.color, '#FFFFFF');
         if (isReadable) {
           newBgColor = teamDetails.color;
-        } else if (teamDetails.alt_color) {
-          const isAltReadable = contrastUtils.isContrastReadable(teamDetails.alt_color, '#FFFFFF');
+        } else if (teamDetails.altColor) {
+          const isAltReadable = contrastUtils.isContrastReadable(teamDetails.altColor, '#FFFFFF');
           if (isAltReadable) {
-            newBgColor = teamDetails.alt_color;
+            newBgColor = teamDetails.altColor;
           }
         }
       }
       setBgColor(newBgColor);
     } else {
-      setBgColor('#1F2937'); // Default color
+      setBgColor('#1F2937'); // Default color if no colors are readable
     }
   }, [location, teamDetails]);
 

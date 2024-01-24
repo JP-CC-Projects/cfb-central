@@ -32,20 +32,25 @@ public class AdminController {
     private PlayService playService;
     private PlayerService playerService;
     private SeasonCalendarService seasonCalendarService;
-    private GameRepository gameRepository;
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
 
     @Autowired
-    public AdminController(TeamService teamService, GameService gameService, TeamRecordService teamRecordService, PlayService playService, PlayerService playerService, SeasonCalendarService seasonCalendarService, GameRepository gameRepository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public AdminController(TeamService teamService,
+                           GameService gameService,
+                           TeamRecordService teamRecordService,
+                           PlayService playService,
+                           PlayerService playerService,
+                           SeasonCalendarService seasonCalendarService,
+                           PasswordEncoder passwordEncoder,
+                           UserRepository userRepository) {
         this.teamService = teamService;
         this.gameService = gameService;
         this.teamRecordService = teamRecordService;
         this.playService = playService;
         this.playerService = playerService;
         this.seasonCalendarService = seasonCalendarService;
-        this.gameRepository = gameRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -63,9 +68,10 @@ public class AdminController {
     public void init() {
         createAdminUser();
     }
+
     public void createAdminUser() {
         User adminUser = new User();
-        if(userRepository.findByEmail(adminEmail).isPresent()){
+        if (userRepository.findByEmail(adminEmail).isPresent()) {
             return;
         }
         adminUser.setFirstName(adminFirstName);
@@ -79,19 +85,13 @@ public class AdminController {
     }
 
 
-    @GetMapping
-    public String adminHome(Model model) {
-        // Add any necessary data to the model
-        return "admin/home"; // HTML page in 'src/main/resources/templates/admin/home.html'
-    }
     @PostMapping("/fetchSeasonCalendar")
-    public String fetchAndSaveSeasonCalendar(RedirectAttributes redirectAttributes,
-                                             @RequestParam(required = true) Integer season) throws Exception {
+    public ResponseEntity<?> fetchAndSaveSeasonCalendar(
+            @RequestParam(required = true) Integer season) throws Exception {
         seasonCalendarService.fetchAndSaveWeeks(season);
-        redirectAttributes.addFlashAttribute("message",
-                "Season" + season + "fetched and saved successfully.");
-        return "redirect:/admin";
+        return ResponseEntity.ok("Season " + season + " fetched and saved successfully.");
     }
+
 
     @PostMapping("/fetchTeams")
     public ResponseEntity<?> fetchAndSaveTeams() throws Exception {
@@ -101,42 +101,34 @@ public class AdminController {
 
 
     @PostMapping("/fetchGames")
-    public String fetchAndSaveGames(RedirectAttributes redirectAttributes,
+    public ResponseEntity<?> fetchAndSaveGames(RedirectAttributes redirectAttributes,
                                     @RequestParam(required = true) Integer season) throws Exception {
         gameService.fetchAndSaveGames(season, "postseason");
         gameService.fetchAndSaveGames(season, "regular");
-        redirectAttributes.addFlashAttribute("message", "Games fetched and saved successfully.");
-        return "redirect:/admin";
+        return ResponseEntity.ok("Games for season " + season + " fetched and saved successfully.");
     }
 
     @PostMapping("/fetchTeamRecords")
-    public String fetchAndSaveTeamRecords(RedirectAttributes redirectAttributes,
+    public ResponseEntity<?> fetchAndSaveTeamRecords(RedirectAttributes redirectAttributes,
                                           @RequestParam(required = true) Integer year) throws Exception {
         teamRecordService.fetchAndSaveTeamRecords(year);
-        redirectAttributes.addFlashAttribute("message", "Team records for year " + year + " fetched and saved successfully.");
-        return "redirect:/admin";
+        return ResponseEntity.ok("Team Records for season " + year + " fetched and saved successfully.");
     }
 
     @PostMapping("/fetchPlays")
-    public String fetchAndSavePlays(RedirectAttributes redirectAttributes,
+    public ResponseEntity<?> fetchAndSavePlays(RedirectAttributes redirectAttributes,
                                     @RequestParam(required = true) Integer year,
                                     @RequestParam(required = true) Integer week) throws Exception {
         playService.fetchAndSavePlaysBySeason(year, week, "regular");
-        redirectAttributes.addFlashAttribute("message",
-                "Plays for " + year + "and week" + week + " fetched and saved successfully.");
-        List<Long> gameIdsList = gameRepository.findAllGameIds();
-        for (Long gameId : gameIdsList){
-            gameService.calculateQuarterScores(gameId);
-        }
-        return "redirect:/admin";
+        gameService.calculateAllQuarterScores();
+        return ResponseEntity.ok("Plays for season " + year + " and season " + week + " fetched and saved successfully.");
     }
+
     @PostMapping("/fetchPlayers") //Goes to Roster endpoint in CFB API
-    public String fetchAndSavePlayers(RedirectAttributes redirectAttributes,
-                                    @RequestParam(required = true) Integer year,
-                                    @RequestParam(required = false) String team) throws Exception {
+    public ResponseEntity<?> fetchAndSavePlayers(RedirectAttributes redirectAttributes,
+                                      @RequestParam(required = true) Integer year,
+                                      @RequestParam(required = false) String team) throws Exception {
         playerService.fetchAndSavePlayers(team, year);
-        redirectAttributes.addFlashAttribute("message",
-                "Players for " + team + " " + year + " fetched and saved successfully.");
-        return "redirect:/admin";
+        return ResponseEntity.ok("Players for " + team + " " + year + " fetched and saved successfully.");
     }
 }

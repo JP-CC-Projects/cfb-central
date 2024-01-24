@@ -60,16 +60,6 @@ public class AuthenticationController {
                 .orElseThrow(() -> new IllegalStateException(
                         "Refresh token " + requestRefreshToken + " is not in database!"));
     }
-//    @PostMapping("/login")
-//    public ResponseEntity<?> authenticateLogin(@RequestBody SignInRequest request) {
-//        Optional<User> existingUser = userService.findUserByEmail(request.email());
-//        if (existingUser.isPresent()) {
-//            return ResponseEntity.ok(authenticationService.signin(request));
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-//        }
-//    }
-
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateLogin(@RequestBody SignInRequest request, HttpServletResponse response) {

@@ -32,6 +32,7 @@ public class PlayerSeasonStat {
 
     @Embeddable
     public static class PPAData {
+        @Column(name = "`all`")
         private Double all;
         private Double pass;
         private Double rush;

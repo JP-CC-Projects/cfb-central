@@ -7,7 +7,7 @@ const Logout = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     dispatch({ type: 'LOGOUT' }); 
     navigate('/'); 
   }, [dispatch, navigate]);

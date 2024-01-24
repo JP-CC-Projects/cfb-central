@@ -67,6 +67,7 @@ public class RankingWeek {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+        @Column(name = "`rank`")
         private Integer rank;
         private String school;
         private String conference;

@@ -159,6 +159,12 @@ public class GameService extends BaseService {
         );
     }
 
+    public void calculateAllQuarterScores(){
+        List<Long> gameIdsList = gameRepository.findAllGameIds();
+        for (Long gameId : gameIdsList) {
+            calculateQuarterScores(gameId);
+        }
+    }
     @Async
     @Transactional
     public void calculateQuarterScores(Long gameId) {

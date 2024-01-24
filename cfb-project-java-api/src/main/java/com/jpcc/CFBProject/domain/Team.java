@@ -1,5 +1,6 @@
 package com.jpcc.CFBProject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jpcc.CFBProject.domain.relationship.PlayerTeamHistory;
 import jakarta.persistence.*;
@@ -12,8 +13,7 @@ import java.util.Set;
 @Table(name = "team")
 public class Team {
     @OneToMany(mappedBy = "team")
-    @JsonManagedReference
-//     -- add back if Java17 on railway causes infinite recursion!!
+    @JsonIgnore
     private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
     public Set<PlayerTeamHistory> getPlayerTeamHistories() {

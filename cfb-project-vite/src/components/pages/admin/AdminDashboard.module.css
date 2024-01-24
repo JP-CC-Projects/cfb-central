@@ -1,5 +1,5 @@
 .dashboard {
-  max-width: 600px;
+  max-width: 1000px;
   margin: auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -8,20 +8,28 @@
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr repeat(4, 4rem) 5rem; /* 1 wide column, 5 columns of 3rem */
   align-items: center;
+  gap: 10px; /* Space between columns */
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #f8f8f8;
   border-radius: 4px;
 }
-
-.row:last-child {
-  margin-bottom: 0;
+.headerRow > * {
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f8f8;
+  font-weight: bold; /* Making the text bold */
 }
 
-button {
+.row input {
+  width: 100%; /* Fill the grid column */
+  text-align: right;
+}
+
+.row button {
   padding: 5px 15px;
   background-color: #007bff;
   color: white;
@@ -31,6 +39,6 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.row button:hover {
   background-color: #0056b3;
 }
