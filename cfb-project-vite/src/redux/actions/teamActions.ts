@@ -32,7 +32,7 @@ const START_FETCHING_TEAM_ROSTER = 'START_FETCHING_TEAM_ROSTER';
 const STOP_FETCHING_TEAM_ROSTER = 'STOP_FETCHING_TEAM_ROSTER';
 
 // Base URL for API requests
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/api`;
 
 
 

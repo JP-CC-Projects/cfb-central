@@ -4,8 +4,6 @@ import com.jpcc.CFBProject.security.securityservices.JwtServiceImpl;
 import com.jpcc.CFBProject.security.securityservices.RefreshTokenService;
 import com.jpcc.CFBProject.security.securityservices.UserServiceImpl;
 import com.jpcc.CFBProject.security.securityutil.JwtAuthenticationFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -41,7 +40,6 @@ public class SecurityConfig {
     private final UserServiceImpl userService;
     private final JwtServiceImpl jwtService;
     private final RefreshTokenService refreshTokenService;
-    private Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, UserServiceImpl userService,
                           JwtServiceImpl jwtService, RefreshTokenService refreshTokenService) {
@@ -96,7 +94,8 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .anyRequest().authenticated(); // All other requests require authentication
                 })
-                .headers(headers -> headers.frameOptions().disable())
+                .headers(headers -> headers.addHeaderWriter(new XFrameOptionsHeaderWriter(
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 .authenticationProvider(authenticationProvider())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -118,9 +117,6 @@ public class SecurityConfig {
 
         authProvider.setUserDetailsService(userService.userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-
-        logger.info("UserDetailsService: " + userDetailsService);
-        logger.info("PasswordEncoder: " + passwordEncoder);
         return authProvider;
     }
 
