@@ -39,7 +39,7 @@ public class ChartController {
     }
 
     @Cacheable(value = "allTeamsChartData")
-    @GetMapping("/api/chart/all-teams")
+    @GetMapping("/api/chart/all-teams-avgs")
     public ResponseEntity<List<TeamChartDataDTO>> getAllTeamsChartData() {
         try {
             List<TeamChartDataDTO> teamChartDataDTO = chartDataService.getAllTeamsChartData();

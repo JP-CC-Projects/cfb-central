@@ -49,7 +49,8 @@ public class ChartDataService {
                         player.getHeight(),
                         player.getDistanceToSchool(),
                         player.getYear(),
-                        player.getPosition()))
+                        player.getPosition(),
+                        player.getJersey()))
                 .collect(Collectors.toList());
     }
     public NationChartDataDTO getNationAvgChartData() {

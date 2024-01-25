@@ -3,9 +3,9 @@ package com.jpcc.CFBProject.dto;
 public class TeamChartDataDTO {
     private Long teamId;
     private String teamName;
+    private Double teamAvgDistance;
     private Double teamAvgWeight;
     private Double teamAvgHeight;
-    private Double teamAvgDistance;
     private Double teamAvgYear;
     private Double teamWinRate;
 

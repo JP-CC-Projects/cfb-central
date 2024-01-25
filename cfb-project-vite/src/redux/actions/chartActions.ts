@@ -43,7 +43,7 @@ async (dispatch: AppDispatch) => {
   }
 };
 
-export const fetchAllTeamsChartData = () => 
+export const fetchAllTeamsAvgChartData = () => 
 async (dispatch: AppDispatch) => {
   dispatch({ type: START_FETCHING_TEAM_CHART });
   try {

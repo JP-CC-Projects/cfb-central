@@ -9,6 +9,8 @@ public class PlayerChartDataDTO {
     private Double playerDistance;
     private Integer playerYear;
     private String playerPosition;
+    private Integer playerJersey;
+
 
     public Long getPlayerId() {
         return playerId;
@@ -76,8 +78,23 @@ public class PlayerChartDataDTO {
     public void setPlayerPosition(String playerPosition) {
         this.playerPosition = playerPosition;
     }
+    public Integer getPlayerJersey() {
+        return playerJersey;
+    }
 
-    public PlayerChartDataDTO(Long playerId, String playerFirstName, String playerLastName, Integer playerWeight, Integer playerHeight, Double playerDistance, Integer playerYear, String playerPosition) {
+    public void setPlayerJersey(Integer playerJersey) {
+        this.playerJersey = playerJersey;
+    }
+
+    public PlayerChartDataDTO(Long playerId,
+                              String playerFirstName,
+                              String playerLastName,
+                              Integer playerWeight,
+                              Integer playerHeight,
+                              Double playerDistance,
+                              Integer playerYear,
+                              String playerPosition,
+                              Integer playerJersey) {
         this.playerId = playerId;
         this.playerFirstName = playerFirstName;
         this.playerLastName = playerLastName;
@@ -86,5 +103,8 @@ public class PlayerChartDataDTO {
         this.playerDistance = playerDistance;
         this.playerYear = playerYear;
         this.playerPosition = playerPosition;
+        this.playerJersey = playerJersey;
     }
+
+
 }

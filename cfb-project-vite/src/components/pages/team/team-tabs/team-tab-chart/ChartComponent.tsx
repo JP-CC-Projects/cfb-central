@@ -2,12 +2,30 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../../../../redux/store';
-import { fetchPlayerChartData, fetchAllTeamsChartData } from '../../../../../redux/actions/chartActions';
+import { fetchPlayerChartData, fetchAllTeamsAvgChartData } from '../../../../../redux/actions/chartActions';
 import { PlayerChartData, TeamChartData } from '../../../../../types/chartTypes';
 Chart.register(...registerables);
 interface ChartComponentProps {
     teamId: number;
 }
+type AxisOption = 'Player' | 'Team';
+
+const yAxisOptions: Record<AxisOption, { value: string; label: string }[]> = {
+    Player: [
+        { value: 'playerDistance', label: 'Player Distance' },
+        { value: 'playerWeight', label: 'Player Weight' },
+        { value: 'playerHeight', label: 'Player Height' }
+        // Add more player-specific options here
+    ],
+    Team: [
+        { value: 'teamAvgDistance', label: 'Avg Distance' },
+        { value: 'teamAvgWeight', label: 'Avg Weight' },
+        { value: 'teamAvgHeight', label: 'Avg Height' },
+        { value: 'teamAvgYear', label: 'Avg Year' },
+        { value: 'teamWinRate', label: 'Win Rate' }
+        // Add more team-specific options here
+    ]
+};
 
 const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
     const dispatch = useAppDispatch();
@@ -17,19 +35,22 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
     const chartRef = useRef<HTMLCanvasElement>(null);
     const chartInstance = useRef<Chart<"bar", number[], string> | null>(null);
 
-    const [xAxisOption, setXAxisOption] = useState('Player');
-    const [yAxis, setYAxis] = useState('playerWeight');
+    const [xAxisOption, setXAxisOption] = useState<AxisOption>('Player');
+    const [yAxis, setYAxis] = useState<string>(yAxisOptions['Player'][0].value);
+
+    useEffect(() => {
+        setYAxis(yAxisOptions[xAxisOption][0].value);
+    }, [xAxisOption]);
 
     useEffect(() => {
         if (xAxisOption === 'Player') {
             dispatch(fetchPlayerChartData(teamId));
         } else if (xAxisOption === 'Team') {
-            dispatch(fetchAllTeamsChartData); // Implement this action
+            dispatch(fetchAllTeamsAvgChartData());
         }
     }, [dispatch, teamId, xAxisOption]);
 
-    // ... (continues in the next chunk)
-    // ... (continued from the previous chunk)
+
     useEffect(() => {
         if (chartRef.current && (playerChartData || teamChartData)) {
             const ctx = chartRef.current.getContext('2d');
@@ -49,8 +70,6 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
                     dataset = teamChartData?.map(item => item[yAxis as keyof TeamChartData]); // Adjust as needed
                 }
 
-                // ... (continues in the next chunk)
-                // ... (continued from the previous chunk)
                 const config: ChartConfiguration<"bar", number[], string> = {
                     type: 'bar',
                     data: {
@@ -82,19 +101,22 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
         };
     }, [playerChartData, teamChartData, xAxisOption, yAxis]);
 
+
     return (
-        <div >
+        <div>
             <div>
                 <label>X-Axis: </label>
                 <select value={xAxisOption} onChange={e => setXAxisOption(e.target.value)}>
                     <option value="Player">Player</option>
                     <option value="Team">Team</option>
                 </select>
-                <label>  Y-Axis: </label>
+                <label> Y-Axis: </label>
                 <select value={yAxis} onChange={e => setYAxis(e.target.value)}>
-                    {/* Adjust the options based on your needs */}
-                    <option value="playerWeight">Player Weight</option>
-                    {/* Add more yAxis options here */}
+                    {yAxisOptions[xAxisOption].map(option => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
                 </select>
             </div>
             <canvas ref={chartRef}></canvas>
