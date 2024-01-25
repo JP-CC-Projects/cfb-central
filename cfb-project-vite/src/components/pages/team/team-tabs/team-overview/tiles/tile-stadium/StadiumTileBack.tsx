@@ -9,7 +9,7 @@ const StadiumTileBack = () => {
         <p>Name: {teamDetails.location.name}</p>
         <p>Location: {teamDetails.location.city}, {teamDetails.location.state}</p>
         <p>Capacity: {teamDetails.location.capacity}</p>
-        <p>Constructed in: {teamDetails.location.year_constructed}</p>
+        <p>Constructed in: {teamDetails.location.yearConstructed}</p>
         <p>Field: {teamDetails.location.grass ? "Real grass" : "Fake grass"} </p>
     </div>
     );

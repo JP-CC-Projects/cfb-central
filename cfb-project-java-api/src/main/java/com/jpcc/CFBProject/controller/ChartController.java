@@ -34,7 +34,6 @@ public class ChartController {
             @RequestParam(required = true) Long teamId) throws JsonProcessingException {
         List<PlayerChartDataDTO> playerChartData = chartDataService.getPlayerChartData(teamId);
         String playerChartJSON = objectMapper.writeValueAsString(playerChartData);
-        logger.info("Player Chart DTO JSON: {}", playerChartJSON);
         return ResponseEntity.ok(playerChartData);
     }
 
@@ -43,6 +42,7 @@ public class ChartController {
     public ResponseEntity<List<TeamChartDataDTO>> getAllTeamsChartData() {
         try {
             List<TeamChartDataDTO> teamChartDataDTO = chartDataService.getAllTeamsChartData();
+            logger.info("Team Chart DTO JSON: {}", teamChartDataDTO);
             return ResponseEntity.ok(teamChartDataDTO);
         } catch (Exception e) {
             // Handle exceptions

@@ -13,22 +13,24 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.ToDoubleFunction;
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class ChartDataService {
-    private TeamService teamService;
-    private PlayerService playerService;
-    private PlayerTeamHistoryRepository playerTeamHistoryRepository;
+    private final TeamService teamService;
+    private final PlayerService playerService;
+    private final PlayerTeamHistoryRepository playerTeamHistoryRepository;
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
 
     public ChartDataService(TeamService teamService,
-                            PlayerTeamHistoryRepository playerTeamHistoryRepository,
+                            PlayerService playerService, PlayerTeamHistoryRepository playerTeamHistoryRepository,
                             PlayerRepository playerRepository,
                             TeamRepository teamRepository) {
         this.teamService = teamService;
+        this.playerService = playerService;
         this.playerTeamHistoryRepository = playerTeamHistoryRepository;
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
@@ -78,10 +80,10 @@ public class ChartDataService {
                     .map(playerTeamHistory -> playerTeamHistory.getPlayer())
                     .collect(Collectors.toList());
 
-            double avgWeight = calculateAverage(players, Player::getWeight);
-            double avgHeight = calculateAverage(players, Player::getHeight);
-            double avgDistance = calculateAverage(players, Player::getDistanceToSchool);
-            double avgYear = calculateAverage(players, Player::getYear);
+            Double avgWeight = calculateAverage(players, Player::getWeight);
+            Double avgHeight = calculateAverage(players, Player::getHeight);
+            Double avgDistance = calculateAverage(players, Player::getDistanceToSchool);
+            Double avgYear = calculateAverage(players, Player::getYear);
 
             TeamChartDataDTO dto = new TeamChartDataDTO();
             dto.setTeamId(team.getId());
@@ -94,9 +96,11 @@ public class ChartDataService {
         }
         return chartData;
     }
-    private double calculateAverage(List<Player> players, ToDoubleFunction<Player> mapper) {
+    private double calculateAverage(List<Player> players, Function<Player, Number> mapper) {
         return players.stream()
-                .mapToDouble(mapper)
+                .map(mapper)
+                .filter(Objects::nonNull)
+                .mapToDouble(Number::doubleValue)
                 .average()
                 .orElse(0.0);
     }

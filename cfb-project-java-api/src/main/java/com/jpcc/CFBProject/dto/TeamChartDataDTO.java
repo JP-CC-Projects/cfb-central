@@ -68,7 +68,13 @@ public class TeamChartDataDTO {
     public TeamChartDataDTO() {
     }
 
-    public TeamChartDataDTO(Long teamId, String teamName, Double teamAvgWeight, Double teamAvgHeight, Double teamAvgDistance, Double teamAvgYear, Double teamWinRate) {
+    public TeamChartDataDTO(Long teamId,
+                            String teamName,
+                            Double teamAvgWeight,
+                            Double teamAvgHeight,
+                            Double teamAvgDistance,
+                            Double teamAvgYear,
+                            Double teamWinRate) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.teamAvgWeight = teamAvgWeight;

@@ -55,6 +55,7 @@ async (dispatch: AppDispatch) => {
     dispatch({ type: STOP_FETCHING_TEAM_CHART });
   }
 };
+
 export const fetchNatAvgChartData = () => 
 async (dispatch: AppDispatch) => {
   dispatch({ type: START_FETCHING_TEAM_CHART });
