@@ -4,8 +4,6 @@ import com.jpcc.CFBProject.security.securityservices.JwtServiceImpl;
 import com.jpcc.CFBProject.security.securityservices.RefreshTokenService;
 import com.jpcc.CFBProject.security.securityservices.UserServiceImpl;
 import com.jpcc.CFBProject.security.securityutil.JwtAuthenticationFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,7 +38,6 @@ public class SecurityConfig {
     private final UserServiceImpl userService;
     private final JwtServiceImpl jwtService;
     private final RefreshTokenService refreshTokenService;
-    private Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, UserServiceImpl userService,
                           JwtServiceImpl jwtService, RefreshTokenService refreshTokenService) {
@@ -113,14 +109,9 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        UserDetailsService userDetailsService = userService.userDetailsService();
-        PasswordEncoder passwordEncoder = passwordEncoder();
-
         authProvider.setUserDetailsService(userService.userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
 
-        logger.info("UserDetailsService: " + userDetailsService);
-        logger.info("PasswordEncoder: " + passwordEncoder);
         return authProvider;
     }
 
