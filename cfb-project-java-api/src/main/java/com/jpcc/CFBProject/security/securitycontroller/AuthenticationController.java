@@ -1,6 +1,4 @@
 package com.jpcc.CFBProject.security.securitycontroller;
-
-import com.jpcc.CFBProject.request.RefreshTokenRequest;
 import com.jpcc.CFBProject.request.SignInRequest;
 import com.jpcc.CFBProject.response.JwtAuthenticationResponse;
 import com.jpcc.CFBProject.response.TokenRefreshResponse;
@@ -73,8 +71,6 @@ public class AuthenticationController {
                     .sameSite("Lax")
                     .build();
             response.addHeader("Set-Cookie", refreshCookie.toString());
-
-            // Send access token in the response body
             return ResponseEntity.ok(new TokenRefreshResponse(accessToken));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
