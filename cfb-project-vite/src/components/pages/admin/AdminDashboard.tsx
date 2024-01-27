@@ -1,107 +1,11 @@
 import React, { useState } from 'react';
-import axios from '../../../utils/axios';
 import styles from './AdminDashboard.module.css';
-
-const ADMIN_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/admin`;
-const accessToken = localStorage.getItem('accessToken');
+import { handleFetchTeams, handleFetchGames, handleFetchPlayers, handleFetchPlays, handleFetchSeasonCalendar, handleFetchTeamRecords } from './adminRequests';
 
 const AdminDashboard: React.FC = () => {
   const [season, setSeason] = useState<number>(2024); // Default year
   const [week, setWeek] = useState<number>(1); // Default week
 
-  const handleFetchTeams = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchTeams`, {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching teams:', error);
-    }
-  };
-
-  const handleFetchPlayers = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlayers`, {}, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-          year: season
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching teams:', error);
-    }
-  };
-
-
-  const handleFetchSeasonCalendar = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchSeasonCalendar`, null, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-          season: season
-        }
-      });
-  
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching season calendar:', error);
-    }
-  };
-
-  const handleFetchGames = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchGames`, { season }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-          season: season
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching games:', error);
-    }
-  };
-
-  const handleFetchTeamRecords = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchTeamRecords`, { year: season }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-          year: season
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching team records:', error);
-    }
-  };
-  const handleFetchPlays = async () => {
-    try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlays`, { year: season, week }, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-          year: season
-        }
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching plays:', error);
-    }
-  };
 
   return (
     <div className={styles.dashboard}>
@@ -127,7 +31,7 @@ const AdminDashboard: React.FC = () => {
         <div />
         <div />
         <div />
-        <button onClick={handleFetchPlayers}>Fetch</button>
+        <button onClick={() => handleFetchPlayers(season)}>Fetch</button>
       </div>
       <div className={styles.row}>
         <span>Fetch season calendar for:</span>
@@ -135,7 +39,7 @@ const AdminDashboard: React.FC = () => {
         <div />
         <div />
         <div />
-        <button onClick={handleFetchSeasonCalendar}>Fetch</button>
+        <button onClick={() => handleFetchSeasonCalendar(season)}>Fetch</button>
       </div>
 
       <div className={styles.row}>
@@ -144,7 +48,7 @@ const AdminDashboard: React.FC = () => {
         <div />
         <div />
         <div />
-        <button onClick={handleFetchGames}>Fetch</button>
+        <button onClick={() => handleFetchGames(season)}>Fetch</button>
       </div>
 
       <div className={styles.row}>
@@ -153,7 +57,7 @@ const AdminDashboard: React.FC = () => {
         <div />
         <div />
         <div />
-        <button onClick={handleFetchTeamRecords}>Fetch</button>
+        <button onClick={() => handleFetchTeamRecords(season)}>Fetch</button>
       </div>
 
       <div className={styles.row}>
@@ -162,7 +66,7 @@ const AdminDashboard: React.FC = () => {
         <input type="number" value={week} onChange={(e) => setWeek(parseInt(e.target.value))} className={styles.seasonInput} />
         <div />
         <div />
-        <button onClick={handleFetchPlays}>Fetch</button>
+        <button onClick={() => handleFetchPlays(season, week)}>Fetch</button>
       </div>
     </div>
   );
