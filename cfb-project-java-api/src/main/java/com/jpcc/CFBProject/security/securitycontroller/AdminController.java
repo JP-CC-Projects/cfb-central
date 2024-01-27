@@ -85,7 +85,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/fetchSeasonCalendar")
+    @PostMapping("/triggerSeasonCalendarFetch")
     public ResponseEntity<?> fetchAndSaveSeasonCalendar(
             @RequestParam(required = true) Integer season) throws Exception {
         seasonCalendarService.fetchAndSaveWeeks(season);
@@ -93,42 +93,44 @@ public class AdminController {
     }
 
 
-    @PostMapping("/fetchTeams")
+    @PostMapping("/triggerTeamsFetch")
     public ResponseEntity<?> fetchAndSaveTeams() throws Exception {
         teamService.fetchAndSaveTeams();
         return ResponseEntity.ok("Teams fetched and saved successfully.");
     }
+    @PostMapping("/triggerPlayersFetch") //Goes to Roster endpoint in CFB API
+    public ResponseEntity<?> fetchAndSavePlayers(@RequestParam(required = true) Integer year,
+                                                 @RequestParam(required = false) String team) throws Exception {
+        if(team.isBlank()){
+            playerService.fetchAndSaveAllPlayersByYear(year);
+        }
+        else {
+            playerService.fetchAndSavePlayers(team, year);
+        }
+        return ResponseEntity.ok("Players for " + year + " fetched and saved successfully.");
+    }
 
-
-    @PostMapping("/fetchGames")
-    public ResponseEntity<?> fetchAndSaveGames(RedirectAttributes redirectAttributes,
+    @PostMapping("/triggerGamesFetch")
+    public ResponseEntity<?> fetchAndSaveGames(
                                     @RequestParam(required = true) Integer season) throws Exception {
         gameService.fetchAndSaveGames(season, "postseason");
         gameService.fetchAndSaveGames(season, "regular");
         return ResponseEntity.ok("Games for season " + season + " fetched and saved successfully.");
     }
 
-    @PostMapping("/fetchTeamRecords")
-    public ResponseEntity<?> fetchAndSaveTeamRecords(RedirectAttributes redirectAttributes,
+    @PostMapping("/triggerTeamRecordsFetch")
+    public ResponseEntity<?> fetchAndSaveTeamRecords(
                                           @RequestParam(required = true) Integer year) throws Exception {
         teamRecordService.fetchAndSaveTeamRecords(year);
         return ResponseEntity.ok("Team Records for season " + year + " fetched and saved successfully.");
     }
 
-    @PostMapping("/fetchPlays")
-    public ResponseEntity<?> fetchAndSavePlays(RedirectAttributes redirectAttributes,
+    @PostMapping("/triggerPlaysFetch")
+    public ResponseEntity<?> fetchAndSavePlays(
                                     @RequestParam(required = true) Integer year,
                                     @RequestParam(required = true) Integer week) throws Exception {
         playService.fetchAndSavePlaysBySeason(year, week, "regular");
         gameService.calculateAllQuarterScores();
         return ResponseEntity.ok("Plays for season " + year + " and season " + week + " fetched and saved successfully.");
-    }
-
-    @PostMapping("/fetchPlayers") //Goes to Roster endpoint in CFB API
-    public ResponseEntity<?> fetchAndSavePlayers(RedirectAttributes redirectAttributes,
-                                      @RequestParam(required = true) Integer year,
-                                      @RequestParam(required = false) String team) throws Exception {
-        playerService.fetchAndSavePlayers(team, year);
-        return ResponseEntity.ok("Players for " + team + " " + year + " fetched and saved successfully.");
     }
 }

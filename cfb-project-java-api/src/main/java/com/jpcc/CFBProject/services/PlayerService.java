@@ -35,6 +35,13 @@ public class PlayerService extends BaseService {
         this.teamRepository = teamRepository;
         this.playerTeamHistoryRepository = playerTeamHistoryRepository;
     }
+    @Transactional
+    public void fetchAndSaveAllPlayersByYear(Integer year) throws Exception {
+        List<Team> teamList = teamRepository.findAll();
+        for(Team team: teamList){
+            fetchAndSavePlayers(team.getSchool(), year);
+        }
+    }
 
     @Transactional
     public List<Player> fetchAndSavePlayers(String teamName, Integer year) throws Exception {
