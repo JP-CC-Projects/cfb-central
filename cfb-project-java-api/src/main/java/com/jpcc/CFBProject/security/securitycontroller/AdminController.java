@@ -102,7 +102,7 @@ public class AdminController {
     @PostMapping("/triggerPlayersFetch") //Goes to Roster endpoint in CFB API
     public ResponseEntity<?> fetchAndSavePlayers(@RequestParam(required = true, name = "season") Integer season,
                                                  @RequestParam(required = false) String team) throws Exception {
-        if(team.isBlank()){
+        if (team == null || team.isBlank()) {
             playerService.fetchAndSaveAllPlayersByYear(season);
         }
         else {
