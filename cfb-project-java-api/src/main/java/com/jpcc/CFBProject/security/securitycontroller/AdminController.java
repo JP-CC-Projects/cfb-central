@@ -8,6 +8,7 @@ import com.jpcc.CFBProject.services.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -87,7 +88,7 @@ public class AdminController {
 
     @PostMapping("/triggerSeasonCalendarFetch")
     public ResponseEntity<?> fetchAndSaveSeasonCalendar(
-            @RequestParam(required = true) Integer season) throws Exception {
+            @RequestParam(required = true, name = "season") Integer season) throws Exception {
         seasonCalendarService.fetchAndSaveWeeks(season);
         return ResponseEntity.ok("Season " + season + " fetched and saved successfully.");
     }
@@ -99,7 +100,7 @@ public class AdminController {
         return ResponseEntity.ok("Teams fetched and saved successfully.");
     }
     @PostMapping("/triggerPlayersFetch") //Goes to Roster endpoint in CFB API
-    public ResponseEntity<?> fetchAndSavePlayers(@RequestParam(required = true) Integer year,
+    public ResponseEntity<?> fetchAndSavePlayers(@RequestParam(required = true, name = "year") Integer year,
                                                  @RequestParam(required = false) String team) throws Exception {
         if(team.isBlank()){
             playerService.fetchAndSaveAllPlayersByYear(year);
@@ -111,24 +112,28 @@ public class AdminController {
     }
 
     @PostMapping("/triggerGamesFetch")
-    public ResponseEntity<?> fetchAndSaveGames(
-                                    @RequestParam(required = true) Integer season) throws Exception {
-        gameService.fetchAndSaveGames(season, "postseason");
-        gameService.fetchAndSaveGames(season, "regular");
-        return ResponseEntity.ok("Games for season " + season + " fetched and saved successfully.");
+    public ResponseEntity<?> fetchAndSaveGames(@RequestParam(name = "season") Integer season) throws Exception {
+        try {
+            gameService.fetchAndSaveGames(season, "postseason");
+            gameService.fetchAndSaveGames(season, "regular");
+            return ResponseEntity.ok("Games for season " + season + " fetched and saved successfully.");
+        } catch (Exception e) {
+            // Log the error and potentially return a different response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching games for season " + season);
+        }
     }
 
     @PostMapping("/triggerTeamRecordsFetch")
     public ResponseEntity<?> fetchAndSaveTeamRecords(
-                                          @RequestParam(required = true) Integer year) throws Exception {
+                                          @RequestParam(required = true, name = "year") Integer year) throws Exception {
         teamRecordService.fetchAndSaveTeamRecords(year);
         return ResponseEntity.ok("Team Records for season " + year + " fetched and saved successfully.");
     }
 
     @PostMapping("/triggerPlaysFetch")
     public ResponseEntity<?> fetchAndSavePlays(
-                                    @RequestParam(required = true) Integer year,
-                                    @RequestParam(required = true) Integer week) throws Exception {
+                                    @RequestParam(required = true, name = "year") Integer year,
+                                    @RequestParam(required = true, name = "week") Integer week) throws Exception {
         playService.fetchAndSavePlaysBySeason(year, week, "regular");
         gameService.calculateAllQuarterScores();
         return ResponseEntity.ok("Plays for season " + year + " and season " + week + " fetched and saved successfully.");

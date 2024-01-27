@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { handleFetchTeams, handleFetchGames, handleFetchPlayers, handleFetchPlays, handleFetchSeasonCalendar, handleFetchTeamRecords } from './adminRequests';
+import { handleFetchTeams, handleFetchGames, handleFetchPlayers, handleFetchPlays, handleFetchTeamRecords } from './adminRequests';
 
 const AdminDashboard: React.FC = () => {
   const [season, setSeason] = useState<number>(2024); // Default year
@@ -33,15 +33,6 @@ const AdminDashboard: React.FC = () => {
         <div />
         <button onClick={() => handleFetchPlayers(season)}>Fetch</button>
       </div>
-      <div className={styles.row}>
-        <span>Fetch season calendar for:</span>
-        <input type="number" value={season} onChange={(e) => setSeason(parseInt(e.target.value))} className={styles.seasonInput} />
-        <div />
-        <div />
-        <div />
-        <button onClick={() => handleFetchSeasonCalendar(season)}>Fetch</button>
-      </div>
-
       <div className={styles.row}>
         <span>Fetch games for season:</span>
         <input type="number" value={season} onChange={(e) => setSeason(parseInt(e.target.value))} className={styles.seasonInput} />

@@ -5,7 +5,7 @@ const accessToken = localStorage.getItem('accessToken');
 
 export const handleFetchTeams = async () => {
     try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchTeams`, {}, {
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerTeamsFetch`, {}, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -17,43 +17,22 @@ export const handleFetchTeams = async () => {
 };
 
 
-
-export const handleFetchSeasonCalendar = async (season: number) => {
+export const handleFetchGames = async (season: number) => {
     try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchSeasonCalendar`, null, {
-            params: {
-                season: season  // Send 'season' as a query parameter
-            },
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerGamesFetch`, null, {
+            params: { season },
+            headers: { Authorization: `Bearer ${accessToken}` }
         });
-        console.log(response.data);
-    } catch (error) {
-        console.error('Error fetching season calendar:', error);
-    }
-};
-
-
-export const handleFetchGames = async (season : number) => {
-    try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchGames`, null, {
-            params: {
-                season: season  
-            },
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        console.log(response.data);
+        console.log("Games fetch response:", response.data);
     } catch (error) {
         console.error('Error fetching games:', error);
     }
 };
 
+
 export const handleFetchPlayers = async (season: number) => {
     try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlayers`, {}, {
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerPlayersFetch`, {}, {
             params: {
                 year: season  
             },
@@ -69,7 +48,7 @@ export const handleFetchPlayers = async (season: number) => {
 
 export const handleFetchTeamRecords = async (season: number) => {
     try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchTeamRecords`, { year: season }, {
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerTeamRecordsFetch`, { year: season }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -81,7 +60,7 @@ export const handleFetchTeamRecords = async (season: number) => {
 };
 export const handleFetchPlays = async (season : number, week : number) => {
     try {
-        const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlays`, { year: season, week }, {
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerPlaysFetch`, { year: season, week }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
