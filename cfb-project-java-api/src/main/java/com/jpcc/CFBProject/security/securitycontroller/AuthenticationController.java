@@ -73,7 +73,6 @@ public class AuthenticationController {
                     .sameSite("Lax")
                     .build();
             response.addHeader("Set-Cookie", refreshCookie.toString());
-
             return ResponseEntity.ok(new TokenRefreshResponse(accessToken));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");

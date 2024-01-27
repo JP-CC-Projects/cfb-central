@@ -21,7 +21,6 @@ const App: React.FC = () => {
     if (accessToken) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: accessToken });
     }
-    // Add redirect to team page here
   }, [dispatch]);
 
   return (
