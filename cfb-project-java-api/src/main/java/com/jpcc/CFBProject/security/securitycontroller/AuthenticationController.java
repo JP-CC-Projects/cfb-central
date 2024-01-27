@@ -2,6 +2,7 @@ package com.jpcc.CFBProject.security.securitycontroller;
 
 import com.jpcc.CFBProject.request.RefreshTokenRequest;
 import com.jpcc.CFBProject.request.SignInRequest;
+import com.jpcc.CFBProject.response.AccessTokenResponse;
 import com.jpcc.CFBProject.response.JwtAuthenticationResponse;
 import com.jpcc.CFBProject.response.TokenRefreshResponse;
 import com.jpcc.CFBProject.security.securitydomain.RefreshToken;
@@ -66,26 +67,24 @@ public class AuthenticationController {
         Optional<User> existingUser = userService.findUserByEmail(request.email());
         if (existingUser.isPresent()) {
             JwtAuthenticationResponse jwtAuthResponse = authenticationService.signin(request);
-            String token = jwtAuthResponse.token();
+            String accessToken = jwtAuthResponse.token();
             String refreshToken = jwtAuthResponse.refreshToken();
+
+            // Send refresh token as HTTP-only cookie
             ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
-                    .secure(true) // Make sure to use this in a production environment with HTTPS
+                    .secure(true) // Use with HTTPS in production
                     .path("/")
                     .sameSite("Lax") // CSRF protection
                     .build();
             response.addHeader("Set-Cookie", refreshCookie.toString());
-            ResponseCookie accessCookie = ResponseCookie.from("token", token)
-                    .httpOnly(true)
-                    .secure(true)
-                    .path("/")
-                    .sameSite("Lax")
-                    .build();
-            response.addHeader("Set-Cookie", accessCookie.toString());
-            return ResponseEntity.ok(new TokenRefreshResponse(token, refreshToken));
+
+            // Send access token in the response body
+            return ResponseEntity.ok(new AccessTokenResponse(accessToken));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
     }
+
 }
 

@@ -88,6 +88,7 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/refreshtoken")).authenticated()
                             .requestMatchers(new AntPathRequestMatcher("/account")).authenticated()
                             .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER") // User specific paths
                             .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths

@@ -7,7 +7,6 @@ export interface LoginSuccessAction {
   type: typeof LOGIN_SUCCESS;
   payload: {
     accessToken: string;
-    refreshToken: string;
   };
 }
 

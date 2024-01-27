@@ -18,12 +18,12 @@ const LoginPage: React.FC = () => {
         password
       });
       console.log('Login successful:', response.data);
-      const { accessToken, refreshToken } = response.data;
+      const { accessToken } = response.data;
       console.log("Access token is: " + accessToken)
       localStorage.setItem('accessToken', accessToken);
       dispatch({ 
         type: 'LOGIN_SUCCESS', 
-        payload: { accessToken, refreshToken }  
+        payload: { accessToken  }  
       });      
       navigate(from, { replace: true });
     } catch (error) {

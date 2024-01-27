@@ -8,8 +8,6 @@ import com.jpcc.CFBProject.security.securitydomain.Authority;
 import com.jpcc.CFBProject.security.securitydomain.Role;
 import com.jpcc.CFBProject.security.securitydomain.User;
 import com.jpcc.CFBProject.security.securityrepository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-	
-	private Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
-	
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -50,7 +46,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var refreshToken = refreshTokenService.createRefreshToken(user.getId());
         
         String encodedPassword = passwordEncoder.encode(request.password());
-        logger.info("Raw Password during registation: {}, Encoded Password during registation: {}", request.password(), encodedPassword);
         return new JwtAuthenticationResponse(jwt, refreshToken.getToken());
     }
 
@@ -62,7 +57,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
         var jwt = jwtService.generateToken(user);
         var refreshTokenOpt = refreshTokenService.findByToken(jwt);
-        logger.info("Raw password during login: {}", "Encoded password during login: {}", request.password(), user.getPassword());
 
         if (refreshTokenOpt.isPresent()) {
             return new JwtAuthenticationResponse(jwt, refreshTokenOpt.get().getToken());

@@ -27,6 +27,9 @@ const AdminDashboard: React.FC = () => {
       const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlayers`, {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`
+        },
+        params: {
+          year: season
         }
       });
       console.log(response.data);
@@ -38,11 +41,15 @@ const AdminDashboard: React.FC = () => {
 
   const handleFetchSeasonCalendar = async () => {
     try {
-      const response = await axios.post(`${ADMIN_BASE_URL}/fetchSeasonCalendar`, { season }, {
+      const response = await axios.post(`${ADMIN_BASE_URL}/fetchSeasonCalendar`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`
+        },
+        params: {
+          season: season
         }
       });
+  
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching season calendar:', error);
@@ -54,6 +61,9 @@ const AdminDashboard: React.FC = () => {
       const response = await axios.post(`${ADMIN_BASE_URL}/fetchGames`, { season }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
+        },
+        params: {
+          season: season
         }
       });
       console.log(response.data);
@@ -67,6 +77,9 @@ const AdminDashboard: React.FC = () => {
       const response = await axios.post(`${ADMIN_BASE_URL}/fetchTeamRecords`, { year: season }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
+        },
+        params: {
+          year: season
         }
       });
       console.log(response.data);
@@ -79,6 +92,9 @@ const AdminDashboard: React.FC = () => {
       const response = await axios.post(`${ADMIN_BASE_URL}/fetchPlays`, { year: season, week }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
+        },
+        params: {
+          year: season
         }
       });
       console.log(response.data);
@@ -107,7 +123,7 @@ const AdminDashboard: React.FC = () => {
       </div>
       <div className={styles.row}>
         <span>Fetch players</span>
-        <div />
+        <input type="number" value={season} onChange={(e) => setSeason(parseInt(e.target.value))} className={styles.seasonInput} />
         <div />
         <div />
         <div />

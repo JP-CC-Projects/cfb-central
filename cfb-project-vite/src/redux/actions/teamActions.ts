@@ -34,8 +34,6 @@ const STOP_FETCHING_TEAM_ROSTER = 'STOP_FETCHING_TEAM_ROSTER';
 // Base URL for API requests
 const API_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/api`;
 
-
-
 // Helper function for error handling
 const handleAxiosError = (error: any, dispatch: any, failureType: string) => {
   const errorMessage = axios.isAxiosError(error) && error.message ? error.message : 'An unknown error occurred';
