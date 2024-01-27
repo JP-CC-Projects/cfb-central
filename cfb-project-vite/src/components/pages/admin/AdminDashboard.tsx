@@ -43,7 +43,7 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className={styles.row}>
-        <span>Fetch team records for year:</span>
+        <span>Fetch team records for season:</span>
         <input type="number" value={season} onChange={(e) => setSeason(parseInt(e.target.value))} className={styles.seasonInput} />
         <div />
         <div />
