@@ -51,8 +51,6 @@ public class TeamService {
                 cfbApiConfig.getFbsTeamsEndpoint(),
                 cfbApiKey, queryParams
         );
-
-        System.out.println("Teams JSON = " + teamsJsonString);
         List<Team> teams = convertJsonStringToTeamObjects(teamsJsonString);
         for(Team team : teams){
             if (teamRepository.findTeamById(team.getId()).isPresent()){

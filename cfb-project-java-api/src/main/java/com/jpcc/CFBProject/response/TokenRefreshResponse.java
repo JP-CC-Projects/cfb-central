@@ -1,5 +1,5 @@
 package com.jpcc.CFBProject.response;
 
-public record TokenRefreshResponse(String accessToken, String refreshToken) {
+public record TokenRefreshResponse(String accessToken) {
 
 }

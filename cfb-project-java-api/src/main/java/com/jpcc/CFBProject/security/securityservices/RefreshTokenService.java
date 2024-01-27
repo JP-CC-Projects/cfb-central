@@ -4,11 +4,13 @@ import com.jpcc.CFBProject.request.RefreshTokenRequest;
 import com.jpcc.CFBProject.security.securitydomain.RefreshToken;
 import com.jpcc.CFBProject.security.securityrepository.RefreshTokenRepository;
 import com.jpcc.CFBProject.security.securityrepository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,6 +46,7 @@ public class RefreshTokenService {
         return refreshToken;
     }
 
+
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(token);
@@ -67,5 +70,14 @@ public class RefreshTokenService {
                 .map(refreshToken -> jwtService.generateToken(new HashMap<>(), refreshToken.getUser()))
                 .orElseThrow(() -> new IllegalArgumentException("Refresh token not found"));
         return accessToken;
+    }
+
+    public String extractRefreshTokenFromCookies(Cookie[] cookies) {
+        if (cookies == null) return null;
+        return Arrays.stream(cookies)
+                .filter(cookie -> "refreshToken".equals(cookie.getName()))
+                .findFirst()
+                .map(Cookie::getValue)
+                .orElse(null);
     }
 }
