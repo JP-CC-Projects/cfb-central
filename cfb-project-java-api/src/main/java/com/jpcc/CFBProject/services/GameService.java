@@ -54,13 +54,12 @@ public class GameService extends BaseService {
         this.playRepository = playRepository;
     }
 
-    public List<Game> fetchAndSaveGames(Integer year, String seasonType) throws Exception {
+    public void fetchAndSaveGames(Integer year, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);
         params.put("division", "fbs");
         params.put("seasonType", seasonType); // Add seasonType parameter
-
-        return fetchSaveAndConvert(
+        fetchSaveAndConvert(
                 cfbApiConfig.getGamesEndpoint(),
                 params,
                 Game[].class,
@@ -68,6 +67,7 @@ public class GameService extends BaseService {
                 this::doesGameExist,
                 gameRepository::save
         );
+        System.out.println(seasonType + " games for " + year + "saved to database");
     }
 
     private boolean doesGameExist(Game game) {
