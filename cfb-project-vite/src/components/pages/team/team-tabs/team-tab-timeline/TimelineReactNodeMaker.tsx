@@ -25,9 +25,9 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                             <th>3</th>
                             <th>4</th>
                             {/* Conditionally render OT headers */}
-                            {typeof quarterScores.ot1HomeTeamScore === 'number' ? <th>OT</th> : null}
-                            {typeof quarterScores.ot2HomeTeamScore === 'number' ? <th>OT2</th> : null}
-                            {typeof quarterScores.ot3HomeTeamScore === 'number' ? <th>OT3</th> : null}
+                            {quarterScores?.ot1HomeTeamScore !== null && <th>OT</th>}
+                            {quarterScores?.ot2HomeTeamScore !== null && <th>OT2</th>}
+                            {quarterScores?.ot3HomeTeamScore !== null && <th>OT3</th>}
                             <th>T</th>
                         </tr>
                     </thead>
