@@ -4,6 +4,10 @@ import { TeamTimeline } from '../../../../../types/teamTypes';
 import styles from './TimelineReactNodeMaker.module.css';
 
 const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarterScores, media }) => {
+    if (!quarterScores) {
+        // Handle null quarterScores here - could be rendering nothing or a placeholder
+        return <div>No Score Data</div>;
+    }
     return (
         <div>
             <div className={styles.timelineWrapper}>
