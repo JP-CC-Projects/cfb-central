@@ -6,6 +6,7 @@ import com.jpcc.CFBProject.domain.Play;
 import com.jpcc.CFBProject.repository.PlayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -32,6 +33,7 @@ public class PlayService extends BaseService {
         this.gameService = gameService;
     };
 
+    @Async
     @Transactional
     public List<Play> fetchAndSavePlaysBySeason(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
