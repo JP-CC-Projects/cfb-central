@@ -35,7 +35,7 @@ public class PlayService extends BaseService {
 
     @Async
     @Transactional
-    public List<Play> fetchAndSavePlaysBySeason(Integer year, Integer week, String seasonType) throws Exception {
+    public void fetchAndSavePlaysBySeason(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);
         params.put("week", week);
@@ -55,13 +55,12 @@ public class PlayService extends BaseService {
         System.out.println("[" + timestamp + "] " +
                 "Batch saved " + savedPlays.size() +
                 " plays for season: " + year + ", week: " + week + ", seasonType: " + seasonType);
-        return savedPlays;
     }
 
 
     @Async
     @Transactional
-    public List<Play> fetchAndSavePlaysBySeasonAndWeek(Integer year, Integer week, String seasonType) throws Exception {
+    public void fetchAndSavePlaysBySeasonAndWeek(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);
         params.put("week", week);
@@ -78,7 +77,6 @@ public class PlayService extends BaseService {
         );
         // Print statement after save operation
         System.out.println("Saved " + savedPlays.size() + " plays for season " + year + ", week " + week + ", season type " + seasonType);
-        return savedPlays;
     }
     private boolean doesPlayExist(Play play) {
         return playRepository.existsById(play.getId());
