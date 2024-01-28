@@ -39,6 +39,7 @@ public class PlayService extends BaseService {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);
         params.put("week", week);
+        params.put("classification", "FBS");
         params.put("seasonType", seasonType);
 
         List<Play> savedPlays = fetchSaveAndConvertBatch(
@@ -58,6 +59,7 @@ public class PlayService extends BaseService {
     }
 
 
+    @Async
     @Transactional
     public List<Play> fetchAndSavePlaysBySeasonAndWeek(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
@@ -78,7 +80,6 @@ public class PlayService extends BaseService {
         System.out.println("Saved " + savedPlays.size() + " plays for season " + year + ", week " + week + ", season type " + seasonType);
         return savedPlays;
     }
-
     private boolean doesPlayExist(Play play) {
         return playRepository.existsById(play.getId());
     }

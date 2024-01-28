@@ -135,6 +135,7 @@ public class AdminController {
                                     @RequestParam(required = true, name = "season") Integer season,
                                     @RequestParam(required = true, name = "week") Integer week) throws Exception {
         playService.fetchAndSavePlaysBySeason(season, week, "regular");
+        playService.fetchAndSavePlaysBySeason(season, week, "postseason");
         gameService.calculateAllQuarterScores();
         return ResponseEntity.ok("Plays for season " + season + " and season " + week + " fetched and saved successfully.");
     }
