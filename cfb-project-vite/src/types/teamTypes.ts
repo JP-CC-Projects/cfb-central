@@ -77,45 +77,46 @@ export type TeamTimeline = {
     q4AwayTeamPointsScored: number;
 
     // Fields for overtime periods
-    ot1HomeTeamScore: number;
-    ot1AwayTeamScore: number;
-    ot1HomeTeamPointsScored: number;
-    ot1AwayTeamPointsScored: number;
+    ot1HomeTeamScore: number | null;
+    ot1AwayTeamScore: number | null;
+    ot1HomeTeamPointsScored: number | null;
+    ot1AwayTeamPointsScored: number | null;
 
-    ot2HomeTeamScore: number;
-    ot2AwayTeamScore: number;
-    ot2HomeTeamPointsScored: number;
-    ot2AwayTeamPointsScored: number;
+    ot2HomeTeamScore: number | null;
+    ot2AwayTeamScore: number | null;
+    ot2HomeTeamPointsScored: number | null;
+    ot2AwayTeamPointsScored: number | null;
 
-    ot3HomeTeamScore: number;
-    ot3AwayTeamScore: number;
-    ot3HomeTeamPointsScored: number;
-    ot3AwayTeamPointsScored: number;
+    ot3HomeTeamScore: number | null;
+    ot3AwayTeamScore: number | null;
+    ot3HomeTeamPointsScored: number | null;
+    ot3AwayTeamPointsScored: number | null;
 
-    ot4HomeTeamScore: number;
-    ot4AwayTeamScore: number;
-    ot4HomeTeamPointsScored: number;
-    ot4AwayTeamPointsScored: number;
+    ot4HomeTeamScore: number | null;
+    ot4AwayTeamScore: number | null;
+    ot4HomeTeamPointsScored: number | null;
+    ot4AwayTeamPointsScored: number | null;
 
-    ot5HomeTeamScore: number;
-    ot5AwayTeamScore: number;
-    ot5HomeTeamPointsScored: number;
-    ot5AwayTeamPointsScored: number;
+    ot5HomeTeamScore: number | null;
+    ot5AwayTeamScore: number | null;
+    ot5HomeTeamPointsScored: number | null;
+    ot5AwayTeamPointsScored: number | null;
 
-    ot6HomeTeamScore: number;
-    ot6AwayTeamScore: number;
-    ot6HomeTeamPointsScored: number;
-    ot6AwayTeamPointsScored: number;
+    ot6HomeTeamScore: number | null;
+    ot6AwayTeamScore: number | null;
+    ot6HomeTeamPointsScored: number | null;
+    ot6AwayTeamPointsScored: number | null;
 
-    ot7HomeTeamScore: number;
-    ot7AwayTeamScore: number;
-    ot7HomeTeamPointsScored: number;
-    ot7AwayTeamPointsScored: number;
+    ot7HomeTeamScore: number | null;
+    ot7AwayTeamScore: number | null;
+    ot7HomeTeamPointsScored: number | null;
+    ot7AwayTeamPointsScored: number | null;
 
-    ot8HomeTeamScore: number;
-    ot8AwayTeamScore: number;
-    ot8HomeTeamPointsScored: number;
-    ot8AwayTeamPointsScored: number;
+    ot8HomeTeamScore: number | null;
+    ot8AwayTeamScore: number | null;
+    ot8HomeTeamPointsScored: number | null;
+    ot8AwayTeamPointsScored: number | null;
+
   };
 };
 export type TeamRecord = {
