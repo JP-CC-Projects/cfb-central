@@ -39,9 +39,9 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                             <td>{quarterScores.q3AwayTeamPointsScored}</td>
                             <td>{quarterScores.q4AwayTeamPointsScored}</td>
                             {/* Conditionally render OT scores */}
-                            {typeof quarterScores.ot1AwayTeamScore === 'number' ? <td>{quarterScores.ot1AwayTeamPointsScored}</td> : null}
-                            {typeof quarterScores.ot2AwayTeamScore === 'number' ? <td>{quarterScores.ot2AwayTeamPointsScored}</td> : null}
-                            {typeof quarterScores.ot3AwayTeamScore === 'number' ? <td>{quarterScores.ot3AwayTeamPointsScored}</td> : null}
+                            {quarterScores.ot1AwayTeamScore !== null && typeof quarterScores.ot1AwayTeamScore === 'number' ? <td>{quarterScores.ot1AwayTeamPointsScored}</td> : null}
+                            {quarterScores.ot2AwayTeamScore !== null && typeof quarterScores.ot2AwayTeamScore === 'number' ? <td>{quarterScores.ot2AwayTeamPointsScored}</td> : null}
+                            {quarterScores.ot3AwayTeamScore !== null && typeof quarterScores.ot3AwayTeamScore === 'number' ? <td>{quarterScores.ot3AwayTeamPointsScored}</td> : null}
                             <td>{
                                 // Determine final score
                                 typeof quarterScores.ot3AwayTeamScore === 'number' ? quarterScores.ot3AwayTeamScore :
@@ -57,9 +57,9 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                             <td>{quarterScores.q3HomeTeamPointsScored}</td>
                             <td>{quarterScores.q4HomeTeamPointsScored}</td>
                             {/* Conditionally render OT scores */}
-                            {typeof quarterScores.ot1HomeTeamScore === 'number' ? <td>{quarterScores.ot1HomeTeamPointsScored}</td> : null}
-                            {typeof quarterScores.ot2HomeTeamScore === 'number' ? <td>{quarterScores.ot2HomeTeamPointsScored}</td> : null}
-                            {typeof quarterScores.ot3HomeTeamScore === 'number' ? <td>{quarterScores.ot3HomeTeamPointsScored}</td> : null}
+                            {quarterScores.ot1HomeTeamScore !== null && typeof quarterScores.ot1HomeTeamScore === 'number' ? <td>{quarterScores.ot1HomeTeamPointsScored}</td> : null}
+                            {quarterScores.ot2HomeTeamScore !== null && typeof quarterScores.ot2HomeTeamScore === 'number' ? <td>{quarterScores.ot2HomeTeamPointsScored}</td> : null}
+                            {quarterScores.ot3HomeTeamScore !== null && typeof quarterScores.ot3HomeTeamScore === 'number' ? <td>{quarterScores.ot3HomeTeamPointsScored}</td> : null}
                             <td>{
                                 // Determine final score
                                 typeof quarterScores.ot3HomeTeamScore === 'number' ? quarterScores.ot3HomeTeamScore :
