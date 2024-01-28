@@ -174,7 +174,6 @@ public class GameService extends BaseService {
             System.out.println("Quarter scores for Game with ID " + gameId + " already exist.");
             return;
         }
-
         QuarterScores quarterScores = new QuarterScores();
         List<CalculateQuarterScoresDTO> sortedPlays = plays.stream()
                 .filter(play -> play.getPeriod() != null)
@@ -268,8 +267,6 @@ public class GameService extends BaseService {
         }
         game.setQuarterScores(quarterScores);
         gameRepository.save(game);
-        LocalDateTime timestamp = LocalDateTime.now();
-        System.out.println("[" + timestamp + "] " +
-                "Quarter Scores for Game with ID " + gameId + " calculated and saved successfully.");
+        System.out.println("Quarter Scores for Game with ID " + gameId + " calculated and saved successfully.");
     }
 }

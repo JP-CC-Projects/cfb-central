@@ -42,42 +42,31 @@ public class PlayService extends BaseService {
         params.put("classification", "FBS");
         params.put("seasonType", seasonType);
 
-        List<Play> savedPlays = fetchSaveAndConvertBatch(
-                cfbApiConfig.getPlaysEndpoint(),
-                params,
-                Play[].class,
-                Function.identity(),
-                this::doesPlayExist,
-                playRepository::saveAll
-        );
+        List<Play> savedPlays;
+        try {
+            savedPlays = fetchSaveAndConvertBatch(
+                    cfbApiConfig.getPlaysEndpoint(),
+                    params,
+                    Play[].class,
+                    Function.identity(),
+                    this::doesPlayExist,
+                    playRepository::saveAll
+            );
+
+            // Check if plays are fetched and saved correctly
+            if (savedPlays == null || savedPlays.isEmpty()) {
+                throw new RuntimeException("Failed to fetch or save plays for season: " + year +
+                        ", week: " + week + ", seasonType: " + seasonType);
+            }
+        } catch (Exception e) {
+            System.err.println("Error during fetching and saving plays: " + e.getMessage());
+            throw e; // Rethrow the exception to signal failure
+        }
         // Print statement after batch save operation
-        LocalDateTime timestamp = LocalDateTime.now();
-        System.out.println("[" + timestamp + "] " +
-                "Batch saved " + savedPlays.size() +
+        System.out.println("Batch saved " + savedPlays.size() +
                 " plays for season: " + year + ", week: " + week + ", seasonType: " + seasonType);
     }
-
-
-    @Async
-    @Transactional
-    public void fetchAndSavePlaysBySeasonAndWeek(Integer year, Integer week, String seasonType) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("year", year);
-        params.put("week", week);
-        params.put("classification", "FBS");
-        params.put("seasonType", seasonType);
-
-        List<Play> savedPlays = fetchSaveAndConvert(
-                cfbApiConfig.getPlaysEndpoint(),
-                params,
-                Play[].class,
-                Function.identity(),
-                this::doesPlayExist,
-                playRepository::save
-        );
-        // Print statement after save operation
-        System.out.println("Saved " + savedPlays.size() + " plays for season " + year + ", week " + week + ", season type " + seasonType);
-    }
+    
     private boolean doesPlayExist(Play play) {
         return playRepository.existsById(play.getId());
     }
