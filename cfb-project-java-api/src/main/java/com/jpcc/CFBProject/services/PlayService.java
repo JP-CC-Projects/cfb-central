@@ -36,7 +36,6 @@ public class PlayService extends BaseService {
     ;
 
     @Async
-    @Transactional
     public void fetchAndSavePlaysBySeason(Integer year, Integer week, String seasonType) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("year", year);
@@ -44,41 +43,19 @@ public class PlayService extends BaseService {
         params.put("classification", "FBS");
         params.put("seasonType", seasonType);
 
-        int maxRetries = 3;
-        int retryCount = 0;
-        boolean success = false;
+        List<Play> savedPlays = fetchSaveAndConvertBatch(
+                cfbApiConfig.getPlaysEndpoint(),
+                params,
+                Play[].class,
+                Function.identity(),
+                this::doesPlayExist,
+                playRepository::saveAll
+        );
+        LocalDateTime timestamp = LocalDateTime.now();
+        System.out.println("[" + timestamp + "] " +
+                "Batch saved " + savedPlays.size() +
+                " plays for season: " + year + ", week: " + week + ", seasonType: " + seasonType);
 
-        while (retryCount < maxRetries && !success) {
-            try {
-                List<Play> savedPlays = fetchSaveAndConvertBatch(
-                        cfbApiConfig.getPlaysEndpoint(),
-                        params,
-                        Play[].class,
-                        Function.identity(),
-                        this::doesPlayExist,
-                        playRepository::saveAll
-                );
-
-                // Check if plays are fetched and saved correctly
-                if (savedPlays == null || savedPlays.isEmpty()) {
-                    throw new RuntimeException("Failed to fetch or save plays for season: " + year +
-                            ", week: " + week + ", seasonType: " + seasonType);
-                }
-
-                // Print statement after successful batch save operation
-                LocalDateTime timestamp = LocalDateTime.now();
-                System.out.println("[" + timestamp + "] " +
-                        "Batch saved " + savedPlays.size() +
-                        " plays for season: " + year + ", week: " + week + ", seasonType: " + seasonType);
-                success = true;
-            } catch (Exception e) {
-                retryCount++;
-                System.err.println("Attempt " + retryCount + ": Error during fetching and saving plays: " + e.getMessage());
-                if (retryCount >= maxRetries) {
-                    throw e; // Rethrow the exception after max retries
-                }
-            }
-        }
     }
 
     private boolean doesPlayExist(Play play) {
