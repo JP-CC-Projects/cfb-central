@@ -1,6 +1,5 @@
 package com.jpcc.CFBProject.security.securitycontroller;
 
-import com.jpcc.CFBProject.repository.GameRepository;
 import com.jpcc.CFBProject.security.securitydomain.Authority;
 import com.jpcc.CFBProject.security.securitydomain.User;
 import com.jpcc.CFBProject.security.securityrepository.UserRepository;
@@ -12,16 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,6 +29,7 @@ public class AdminController {
     private SeasonCalendarService seasonCalendarService;
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
+    private DatabaseCreationService databaseCreationService;
 
 
     @Autowired
@@ -45,7 +40,8 @@ public class AdminController {
                            PlayerService playerService,
                            SeasonCalendarService seasonCalendarService,
                            PasswordEncoder passwordEncoder,
-                           UserRepository userRepository) {
+                           UserRepository userRepository,
+                           DatabaseCreationService databaseCreationService) {
         this.teamService = teamService;
         this.gameService = gameService;
         this.teamRecordService = teamRecordService;
@@ -54,6 +50,7 @@ public class AdminController {
         this.seasonCalendarService = seasonCalendarService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.databaseCreationService = databaseCreationService;
     }
 
     @Value("${admin.firstName}")
@@ -142,5 +139,11 @@ public class AdminController {
     public ResponseEntity<?> fetchAndSavePlays() throws Exception {
         gameService.calculateAllQuarterScores();
         return ResponseEntity.ok("Quarter scores successfully calculated");
+    }
+    @PostMapping("/removeNullPlayers")
+    public ResponseEntity<?> removeNullPlayers() {
+        databaseCreationService.removeNullPlayers();
+        databaseCreationService.correctNullJerseys();
+        return ResponseEntity.ok("Duplicate players removed. Null jerseys corrected");
     }
 }

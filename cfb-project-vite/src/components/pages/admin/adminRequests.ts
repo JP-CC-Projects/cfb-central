@@ -50,7 +50,7 @@ export const handleFetchTeamRecords = async (season: number) => {
         });
         console.log("Games fetch response:", response.data);
     } catch (error) {
-        console.error('Error fetching games:', error);
+        console.error('Error fetching team records:', error);
     }
 };
 
@@ -65,7 +65,7 @@ export const handleFetchPlays = async (season: number, week: number) => {
         });
         console.log("Games fetch response:", response.data);
     } catch (error) {
-        console.error('Error fetching games:', error);
+        console.error('Error fetching plays:', error);
     }
 };
 
@@ -79,6 +79,21 @@ export const handleCalculateQtrScores = async () => {
         });
         console.log(response.data);
     } catch (error) {
-        console.error('Error fetching teams:', error);
+        console.error('Error calculating quarter scores:', error);
+    }
+};
+
+
+
+export const handleRemoveNullPlayers = async () => {
+    try {
+        const response = await axios.post(`${ADMIN_BASE_URL}/removeNullPlayers`, {}, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error fetching fixing player nulls:', error);
     }
 };

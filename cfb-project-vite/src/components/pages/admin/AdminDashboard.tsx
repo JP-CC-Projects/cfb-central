@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './AdminDashboard.module.css';
-import { handleFetchTeams, handleFetchGames, handleFetchPlayers, handleFetchPlays, handleFetchTeamRecords, handleCalculateQtrScores } from './adminRequests';
+import { handleFetchTeams, handleFetchGames, handleFetchPlayers, 
+  handleFetchPlays, handleFetchTeamRecords, handleCalculateQtrScores,
+  handleRemoveNullPlayers } from './adminRequests';
 
 const AdminDashboard: React.FC = () => {
   const [season, setSeason] = useState<number>(2024); // Default year
@@ -64,7 +66,15 @@ const AdminDashboard: React.FC = () => {
         <div />
         <div />
         <div />
-        <button onClick={handleCalculateQtrScores}>Fetch</button>
+        <button onClick={handleCalculateQtrScores}>Calculate</button>
+      </div>
+      <div className={styles.row}>
+        <span>Fix null player data:</span>
+        <div />
+        <div />
+        <div />
+        <div />
+        <button onClick={handleRemoveNullPlayers}>Fix</button>
       </div>
     </div>
   );
