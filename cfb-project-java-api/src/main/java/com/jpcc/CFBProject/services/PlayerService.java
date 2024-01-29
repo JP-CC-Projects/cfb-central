@@ -50,13 +50,11 @@ public class PlayerService extends BaseService {
         params.put("team", teamName);
         String json = fetchJsonFromApi(cfbApiConfig.getRosterEndpoint(), params);
         Player[] allFetchedPlayers = objectMapper.readValue(json, Player[].class);
-
         Instant now = Instant.now();
         for (Player fetchedPlayer : allFetchedPlayers) {
             Team team = teamRepository.findBySchool(fetchedPlayer.getTeam()).orElse(null);
             Player player = playerRepository.findById(fetchedPlayer.getId())
                     .orElseGet(() -> playerRepository.save(fetchedPlayer));
-
             PlayerTeamHistory currentHistory = playerTeamHistoryRepository
                     .findCurrentByPlayerId(player.getId()).orElse(null);
 
@@ -64,66 +62,52 @@ public class PlayerService extends BaseService {
                 currentHistory.setEndDate(now);
                 playerTeamHistoryRepository.save(currentHistory);
             }
-
             PlayerTeamHistory newHistory = new PlayerTeamHistory(player, team, now);
             playerTeamHistoryRepository.save(newHistory);
-
             if (player.getPlayerTeamHistories() == null) {
                 player.setPlayerTeamHistories(new HashSet<>());
             }
             player.getPlayerTeamHistories().add(newHistory);
         }
-
         return Arrays.asList(allFetchedPlayers);
     }
-
-
     public Boolean doesPlayerExist(Player player) {
         return playerRepository.existsById(player.getId());
     }
 
     public List<Player> getPlayerListByTeamIdAndYear(Long teamId, Integer season) throws Exception {
         String schoolName = teamRepository.findTeamById(teamId).get().getSchool();
-        //          Add player history when CFB's API gets fixed //
-        //        List<Player> = playerRepository.findByTeamAndYear(schoolName, season);
-        System.out.println("School name via getPlayerListByTeamIdAndYear = " + schoolName);
-        List<Player> fetchedPlayers = fetchAndSavePlayers(schoolName, season);
-        for (Player player : fetchedPlayers) {
-        }
-        return fetchedPlayers;
+        return fetchAndSavePlayers(schoolName, season);
     }
 
    public List<Player> getPlayerListByTeam(Long teamId) {
         String schoolName = teamRepository.findTeamById(teamId).get().getSchool();
-        List<Player> playerList = playerRepository.findPlayersByTeam(schoolName);
-        return playerList;
+        return playerRepository.findPlayersByTeam(schoolName);
     }
+
 
     @Transactional
     public void calculateAndSetPlayerHometownDistanceToSchool(Long playerId) {
         Player player = playerRepository.findById(playerId).orElse(null);
         if (player == null) {
-            // Optionally log that the player was not found
+            System.out.println("Player with id [" + playerId + "] not found!");
             return;
         }
 
         Team team = teamRepository.findBySchool(player.getTeam()).orElse(null);
         if (team == null || team.getLocation() == null) {
-            // Optionally log that the team or location was not found
+            System.out.println("Player with id [" + playerId + "] not found on Team!");
             return;
         }
-
         Double playerLatitude = player.getHomeLatitude();
         Double playerLongitude = player.getHomeLongitude();
         Double teamLatitude = team.getLocation().getLatitude();
         Double teamLongitude = team.getLocation().getLongitude();
-
         // Check if any latitude or longitude is null
         if (playerLatitude == null || playerLongitude == null || teamLatitude == null || teamLongitude == null) {
             System.out.println("Coordinates not found for player" + player.getFirstName() + " " + player.getLastName());
             return; // Do nothing if any coordinate is null
         }
-
         Double distance = haversineCalculation(playerLatitude, playerLongitude, teamLatitude, teamLongitude);
         player.setDistanceToSchool(distance);
         System.out.println(player.getFirstName() + " " + player.getLastName() +

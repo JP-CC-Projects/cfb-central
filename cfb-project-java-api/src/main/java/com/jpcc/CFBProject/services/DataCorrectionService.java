@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class DatabaseCreationService {
+public class DataCorrectionService {
 
     private PlayerService playerService;
     private TeamRepository teamRepository;
     private final PlayerRepository playerRepository;
 
     @Autowired
-    public DatabaseCreationService(PlayerService playerService, TeamRepository teamRepository,
-                                   PlayerRepository playerRepository) {
+    public DataCorrectionService(PlayerService playerService, TeamRepository teamRepository,
+                                 PlayerRepository playerRepository) {
         this.playerService = playerService;
         this.teamRepository = teamRepository;
         this.playerRepository = playerRepository;
@@ -39,9 +39,13 @@ public class DatabaseCreationService {
             }
         };
     };
+    public void calculateAllPlayerDistances(){
+        List<Player> playerList = playerRepository.findAll();
+        for (Player player : playerList){
+            playerService.calculateAndSetPlayerHometownDistanceToSchool(player.getId());
+        }
+    }
 
-    //Fix database:
-    //Removes duplicate players who are entered with null fields:
     public void removeNullPlayers(){
         playerRepository.deletePlayersWithNullHeightAndPosition();
     }

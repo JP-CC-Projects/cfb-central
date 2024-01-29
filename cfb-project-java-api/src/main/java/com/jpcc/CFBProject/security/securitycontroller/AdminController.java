@@ -29,7 +29,7 @@ public class AdminController {
     private SeasonCalendarService seasonCalendarService;
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
-    private DatabaseCreationService databaseCreationService;
+    private DataCorrectionService dataCorrectionService;
 
 
     @Autowired
@@ -41,7 +41,7 @@ public class AdminController {
                            SeasonCalendarService seasonCalendarService,
                            PasswordEncoder passwordEncoder,
                            UserRepository userRepository,
-                           DatabaseCreationService databaseCreationService) {
+                           DataCorrectionService dataCorrectionService) {
         this.teamService = teamService;
         this.gameService = gameService;
         this.teamRecordService = teamRecordService;
@@ -50,7 +50,7 @@ public class AdminController {
         this.seasonCalendarService = seasonCalendarService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.databaseCreationService = databaseCreationService;
+        this.dataCorrectionService = dataCorrectionService;
     }
 
     @Value("${admin.firstName}")
@@ -142,8 +142,9 @@ public class AdminController {
     }
     @PostMapping("/removeNullPlayers")
     public ResponseEntity<?> removeNullPlayers() {
-        databaseCreationService.removeNullPlayers();
-        databaseCreationService.correctNullJerseys();
+        dataCorrectionService.removeNullPlayers();
+        dataCorrectionService.correctNullJerseys();
+        dataCorrectionService.calculateAllPlayerDistances();
         return ResponseEntity.ok("Duplicate players removed. Null jerseys corrected");
     }
 }

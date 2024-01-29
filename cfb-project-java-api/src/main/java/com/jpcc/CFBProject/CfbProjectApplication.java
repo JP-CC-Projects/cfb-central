@@ -3,7 +3,7 @@ package com.jpcc.CFBProject;
 import com.jpcc.CFBProject.repository.PlayerRepository;
 import com.jpcc.CFBProject.repository.PlayerTeamHistoryRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
-import com.jpcc.CFBProject.services.DatabaseCreationService;
+import com.jpcc.CFBProject.services.DataCorrectionService;
 import com.jpcc.CFBProject.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,17 +18,17 @@ import org.springframework.web.client.RestTemplate;
 public class CfbProjectApplication implements CommandLineRunner {
 	private final PlayerService playerService;
 	private final PlayerRepository playerRepository;
-	private final DatabaseCreationService databaseCreationService;
+	private final DataCorrectionService dataCorrectionService;
 	private final PlayerTeamHistoryRepository playerTeamHistoryRepository;
 	private final TeamRepository teamRepository;
 
 	@Autowired
-	public CfbProjectApplication(PlayerService playerService, PlayerRepository playerRepository, DatabaseCreationService databaseCreationService,
+	public CfbProjectApplication(PlayerService playerService, PlayerRepository playerRepository, DataCorrectionService dataCorrectionService,
 								 PlayerTeamHistoryRepository playerTeamHistoryRepository,
 								 TeamRepository teamRepository) {
 		this.playerService = playerService;
 		this.playerRepository = playerRepository;
-		this.databaseCreationService = databaseCreationService;
+		this.dataCorrectionService = dataCorrectionService;
 		this.playerTeamHistoryRepository = playerTeamHistoryRepository;
 		this.teamRepository = teamRepository;
 	}

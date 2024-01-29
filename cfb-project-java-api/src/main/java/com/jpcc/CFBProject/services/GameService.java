@@ -133,7 +133,7 @@ public class GameService extends BaseService {
                         JsonNode itemsNode = root.path("items");
                         if (!itemsNode.isMissingNode() && itemsNode.isArray() && itemsNode.size() > 0) {
                             for(int i = 0; i < itemsNode.size(); i++){
-                                if(itemsNode.get(i).path("link").asText().length() < 799){
+                                if(itemsNode.get(i).path("link").asText().length() < 299){
                                     return itemsNode.get(i).path("link").asText();
                                 }
                                 else{
