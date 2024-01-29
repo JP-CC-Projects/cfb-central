@@ -162,19 +162,20 @@ public class GameService extends BaseService {
     public void calculateAllQuarterScores(){
         List<Long> gameIdsList = gameRepository.findAllGameIds();
         System.out.println(gameIdsList.size() + "games found");
+        Integer gamesProcessed = 0;
         for (Long gameId : gameIdsList) {
             calculateQuarterScores(gameId);
+            gamesProcessed++;
+            System.out.println("Games processed: " + gamesProcessed);
         }
     }
-    @Async
+
     @Transactional
     public void calculateQuarterScores(Long gameId) {
         List<CalculateQuarterScoresDTO> plays = playRepository.findPlaysByGameId(gameId);
-        Integer gamesProcessed = 0;
         Game game = gameRepository.findGameById(gameId).orElse(null);
         if (game != null && game.getQuarterScores() != null && game.getQuarterScores().getQ1AwayTeamScore() != null) {
-            gamesProcessed++;
-            System.out.println("Quarter scores for Game with ID " + gameId + " already exist. Plays process : " + gamesProcessed);
+            System.out.println("Quarter scores for Game with ID " + gameId + " already exist.");
             return;
         }
         QuarterScores quarterScores = new QuarterScores();
@@ -268,10 +269,8 @@ public class GameService extends BaseService {
             previousHomeScore = homeScore;
             previousAwayScore = awayScore;
         }
-        gamesProcessed++;
         game.setQuarterScores(quarterScores);
         gameRepository.save(game);
-        System.out.println("Quarter Scores for Game with ID " + gameId + " calculated and saved successfully. " +
-                "Plays processed: " + gamesProcessed);
+        System.out.println("Quarter Scores for Game with ID " + gameId + " calculated and saved successfully. ");
     }
 }
