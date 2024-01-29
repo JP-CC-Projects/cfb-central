@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "player")
 public class Player {
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<PlayerTeamHistory> playerTeamHistories = new HashSet<>();
 
