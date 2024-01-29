@@ -23,6 +23,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 //    0. find games by team and year from game repo
 //    1. create base google API
@@ -59,7 +60,7 @@ public class GameService extends BaseService {
         params.put("year", year);
         params.put("division", "fbs");
         params.put("seasonType", seasonType); // Add seasonType parameter
-        List<Game> gamesList = fetchSaveAndConvert(
+        List<Game> allFetchedGames = fetchSaveAndConvert(
                 cfbApiConfig.getGamesEndpoint(),
                 params,
                 Game[].class,
@@ -67,9 +68,13 @@ public class GameService extends BaseService {
                 this::doesGameExist,
                 gameRepository::save
         );
-        System.out.println(gamesList.size() + "games of season type " + seasonType + " and season " + year + "saved to database");
-    }
+        List<Game> newGames = allFetchedGames.stream()
+                .filter(game -> !doesGameExist(game))
+                .collect(Collectors.toList());
+        gameRepository.saveAll(newGames);
 
+        System.out.println(allFetchedGames.size() + " games fetched for season type " + seasonType + " and season " + year);
+        System.out.println(newGames.size() + " new games saved to database");    }
     private boolean doesGameExist(Game game) {
         return gameRepository.existsById(game.getId());
     }
@@ -162,11 +167,8 @@ public class GameService extends BaseService {
     public void calculateAllQuarterScores(){
         List<Long> gameIdsList = gameRepository.findAllGameIds();
         System.out.println(gameIdsList.size() + "games found");
-        Integer gamesProcessed = 0;
         for (Long gameId : gameIdsList) {
             calculateQuarterScores(gameId);
-            gamesProcessed++;
-            System.out.println("Games processed: " + gamesProcessed);
         }
     }
 
@@ -175,9 +177,10 @@ public class GameService extends BaseService {
         List<CalculateQuarterScoresDTO> plays = playRepository.findPlaysByGameId(gameId);
         Game game = gameRepository.findGameById(gameId).orElse(null);
         if (game != null && game.getQuarterScores() != null && game.getQuarterScores().getQ1AwayTeamScore() != null) {
-            System.out.println("Quarter scores for Game with ID " + gameId + " already exist.");
+//            System.out.println("Quarter scores for Game with ID " + gameId + " already exist.");
             return;
         }
+        System.out.println("Game with ID: " + game.getId() + " has issues");
         QuarterScores quarterScores = new QuarterScores();
         List<CalculateQuarterScoresDTO> sortedPlays = plays.stream()
                 .filter(play -> play.getPeriod() != null)

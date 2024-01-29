@@ -49,8 +49,11 @@ public abstract class BaseService {
             if (!existsChecker.apply(entity)) {
                 saver.accept(entity);
                 results.add(entity);
+                System.out.println("Saved entity: " + entity);
             }
         }
+        System.out.println("Total entities processed: " + objects.length);
+        System.out.println("Total entities saved: " + results.size());
         return results;
     }
     protected <T, R> List<R> fetchSaveAndConvertBatch(String endpoint,
