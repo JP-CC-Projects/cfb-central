@@ -59,7 +59,7 @@ const AdminDashboard: React.FC = () => {
         <button onClick={() => handleFetchPlays(season, week)}>Fetch</button>
       </div>
       <div className={styles.row}>
-        <span>Fetch teams to database:</span>
+        <span>Calculate Quarter Scores:</span>
         <div />
         <div />
         <div />

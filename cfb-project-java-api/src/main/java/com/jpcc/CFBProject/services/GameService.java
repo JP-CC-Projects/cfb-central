@@ -170,7 +170,7 @@ public class GameService extends BaseService {
     public void calculateQuarterScores(Long gameId) {
         List<CalculateQuarterScoresDTO> plays = playRepository.findPlaysByGameId(gameId);
         Game game = gameRepository.findGameById(gameId).orElse(null);
-        if (game != null && game.getQuarterScores().getQ1AwayTeamScore() != null) {
+        if (game != null && game.getQuarterScores() != null && game.getQuarterScores().getQ1AwayTeamScore() != null) {
             System.out.println("Quarter scores for Game with ID " + gameId + " already exist.");
             return;
         }
