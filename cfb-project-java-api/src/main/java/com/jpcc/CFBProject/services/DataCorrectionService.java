@@ -39,12 +39,7 @@ public class DataCorrectionService {
             }
         };
     };
-    public void calculateAllPlayerDistances(){
-        List<Player> playerList = playerRepository.findAll();
-        for (Player player : playerList){
-            playerService.calculateAndSetPlayerHometownDistanceToSchool(player.getId());
-        }
-    }
+
 
     public void removeNullPlayers(){
         playerRepository.deletePlayersWithNullHeightAndPosition();

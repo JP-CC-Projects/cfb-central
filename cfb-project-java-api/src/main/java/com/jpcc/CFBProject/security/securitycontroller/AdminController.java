@@ -96,7 +96,7 @@ public class AdminController {
         teamService.fetchAndSaveTeams();
         return ResponseEntity.ok("Teams fetched and saved successfully.");
     }
-    @PostMapping("/triggerPlayersFetch") //Goes to Roster endpoint in CFB API
+    @PostMapping("/triggerPlayersFetch")
     public ResponseEntity<?> fetchAndSavePlayers(@RequestParam(required = true, name = "season") Integer season,
                                                  @RequestParam(required = false) String team) throws Exception {
         if (team == null || team.isBlank()) {
@@ -105,6 +105,7 @@ public class AdminController {
         else {
             playerService.fetchAndSavePlayers(team, season);
         }
+        playerService.calculateAllPlayerDistances();
         return ResponseEntity.ok("Players for " + season + " fetched and saved successfully.");
     }
 
@@ -144,7 +145,7 @@ public class AdminController {
     public ResponseEntity<?> removeNullPlayers() {
         dataCorrectionService.removeNullPlayers();
         dataCorrectionService.correctNullJerseys();
-        dataCorrectionService.calculateAllPlayerDistances();
+        playerService.calculateAllPlayerDistances();
         return ResponseEntity.ok("Duplicate players removed. Null jerseys corrected");
     }
 }

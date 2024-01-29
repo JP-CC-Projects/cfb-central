@@ -85,7 +85,12 @@ public class PlayerService extends BaseService {
         return playerRepository.findPlayersByTeam(schoolName);
     }
 
-
+    public void calculateAllPlayerDistances(){
+        List<Player> playerList = playerRepository.findAll();
+        for (Player player : playerList){
+            calculateAndSetPlayerHometownDistanceToSchool(player.getId());
+        }
+    }
     @Transactional
     public void calculateAndSetPlayerHometownDistanceToSchool(Long playerId) {
         Player player = playerRepository.findById(playerId).orElse(null);
