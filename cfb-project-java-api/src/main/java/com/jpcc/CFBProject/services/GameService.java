@@ -59,7 +59,7 @@ public class GameService extends BaseService {
         params.put("year", year);
         params.put("division", "fbs");
         params.put("seasonType", seasonType); // Add seasonType parameter
-        fetchSaveAndConvert(
+        List<Game> gamesList = fetchSaveAndConvert(
                 cfbApiConfig.getGamesEndpoint(),
                 params,
                 Game[].class,
@@ -67,7 +67,7 @@ public class GameService extends BaseService {
                 this::doesGameExist,
                 gameRepository::save
         );
-        System.out.println(seasonType + " games for " + year + "saved to database");
+        System.out.println(gamesList.size() + "games of season type " + seasonType + " and season " + year + "saved to database");
     }
 
     private boolean doesGameExist(Game game) {
