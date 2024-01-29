@@ -51,9 +51,7 @@ public class PlayService extends BaseService {
                 this::doesPlayExist,
                 playRepository::saveAll
         );
-        LocalDateTime timestamp = LocalDateTime.now();
-        System.out.println("[" + timestamp + "] " +
-                "Batch saved " + savedPlays.size() +
+        System.out.println("Batch saved " + savedPlays.size() +
                 " plays for season: " + year + ", week: " + week + ", seasonType: " + seasonType);
 
     }
