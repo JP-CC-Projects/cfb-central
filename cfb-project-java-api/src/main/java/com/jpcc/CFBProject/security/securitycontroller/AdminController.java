@@ -139,4 +139,9 @@ public class AdminController {
         gameService.calculateAllQuarterScores();
         return ResponseEntity.ok("Plays for season " + season + " and season " + week + " fetched and saved successfully.");
     }
+    @PostMapping("/triggerCalculateQtrScores")
+    public ResponseEntity<?> fetchAndSavePlays() throws Exception {
+        gameService.calculateAllQuarterScores();
+        return ResponseEntity.ok("Quarter scores successfully calculated");
+    }
 }

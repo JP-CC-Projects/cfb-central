@@ -68,3 +68,17 @@ export const handleFetchPlays = async (season: number, week: number) => {
         console.error('Error fetching games:', error);
     }
 };
+
+
+export const handleCalculateQtrScores = async () => {
+    try {
+        const response = await axios.post(`${ADMIN_BASE_URL}/triggerCalculateQtrScores`, {}, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error fetching teams:', error);
+    }
+};
