@@ -42,10 +42,10 @@ export type TeamTimeline = {
   gameId: number;
   timelineContent: ReactNode;
   date: number;
-  title: string;
-  cardTitle: string;
-  cardSubtitle: string;
-  cardDetailedText: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeTeamAbrv: string;
+  awayTeamAbrv: string;
   url: string;
   media: {
     source: {

@@ -106,7 +106,6 @@ public class GameService extends BaseService {
                 homeTeam.get().getLocation().setVenueImageUrl(venueImageUrl);
                 teamRepository.save(homeTeam.get());
             }
-            System.out.println("Venue Image URL = " + venueImageUrl);
             return venueImageUrl;
         }
         return null;
@@ -114,7 +113,6 @@ public class GameService extends BaseService {
 
     @Transactional
     public String handleMissingVenueImageUrl(String teamName, String venueName) {
-
         String searchQuery = "cool image of " + teamName + " " + venueName + " football";
         Mono<String> fetchedVenueUrlMono = webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -150,14 +148,19 @@ public class GameService extends BaseService {
     }
 
     private TimeLineSeasonGamesDTO createDTOFromGame(Game game, String venueImageUrl) {
+        Team defaultHomeTeam = new Team("Home", "Home");
+        Team defaultAwayTeam = new Team("Away", "Away");
+        Team homeTeam = teamRepository.findBySchool(game.getHomeTeam()).orElse(defaultHomeTeam);
+        Team awayTeam = teamRepository.findBySchool(game.getAwayTeam()).orElse(defaultAwayTeam);
         return new TimeLineSeasonGamesDTO(
                 game.getId(),
                 game.getStartDate(),
-                game.getAwayTeam() + " @ " + game.getHomeTeam(),
-                "Card Subtitle", // Replace with actual subtitle if available
-                "Card Detailed Text", // Replace with actual detailed text if available
-                "https://www.example.com", // LINK TO GAME DETAILS PAGE
-                "IMAGE", // Replace with actual media type if available
+                game.getHomeTeam(),
+                game.getAwayTeam(),
+                homeTeam.getAbbreviation(),
+                awayTeam.getAbbreviation(),
+                "http://www.example.com/",
+                "IMAGE",
                 venueImageUrl, // Replace with actual media URL if available
                 "Game Highlights", // Replace with actual media name if available
                 game.getQuarterScores()

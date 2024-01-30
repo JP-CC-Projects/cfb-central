@@ -3,23 +3,28 @@ import React from 'react';
 import { TeamTimeline } from '../../../../../types/teamTypes';
 import styles from './TimelineReactNodeMaker.module.css';
 
-const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarterScores, media }) => {
+const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ homeTeam, awayTeam, homeTeamAbrv, awayTeamAbrv, url, quarterScores, media }) => {
     if (!quarterScores) {
-        // Handle null quarterScores here - could be rendering nothing or a placeholder
-        return <div>No Score Data</div>;
+        return <div>Score Data Not Available</div>;
     }
     return (
         <div>
             <div className={styles.timelineWrapper}>
-                <h1 className="text-xl font-bold text-center">{cardTitle}</h1>
-                <img src={media.source.url} style={{ width: '50vw', maxHeight: '25vh', objectFit: 'cover' }}></img>
+                <div>
+                    <h1 className="text-xl font-bold text-center">{awayTeam} @ {homeTeam}</h1>
+                </div>
 
-                <a href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.customLink}>
-                    Test Link Here
-                </a>
+                <div>
+                    <img src={media.source.url} style={{ width: '50vw', maxHeight: '25vh', objectFit: 'cover' }}></img>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                    <a href={media.source.url} target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.customLink}>
+                        (Image Source)
+                    </a>
+                </div>
+
                 <table className={styles.scoreTable}>
                     <thead>
                         <tr>
@@ -37,7 +42,7 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Away</td>
+                            <td>{awayTeamAbrv}</td>
                             <td>{quarterScores.q1AwayTeamPointsScored}</td>
                             <td>{quarterScores.q2AwayTeamPointsScored}</td>
                             <td>{quarterScores.q3AwayTeamPointsScored}</td>
@@ -55,7 +60,7 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                             }</td>
                         </tr>
                         <tr>
-                            <td>Home</td>
+                            <td>{homeTeamAbrv}</td>
                             <td>{quarterScores.q1HomeTeamPointsScored}</td>
                             <td>{quarterScores.q2HomeTeamPointsScored}</td>
                             <td>{quarterScores.q3HomeTeamPointsScored}</td>
@@ -74,10 +79,6 @@ const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ cardTitle, url, quarte
                         </tr>
                     </tbody>
                 </table>
-
-
-
-
             </div>
         </div>
     );

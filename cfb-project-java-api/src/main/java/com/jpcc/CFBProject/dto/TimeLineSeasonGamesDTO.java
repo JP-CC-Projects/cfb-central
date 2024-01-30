@@ -7,9 +7,10 @@ import java.time.Instant;
 public class TimeLineSeasonGamesDTO {
     private Long gameId;
     private Instant date;
-    private String cardTitle;
-    private String cardSubtitle;
-    private String cardDetailedText;
+    private String homeTeam;
+    private String awayTeam;
+    private String homeTeamAbrv;
+    private String awayTeamAbrv;
     private String url;
     private Media media;
     private QuarterScores quarterScores;
@@ -30,28 +31,36 @@ public class TimeLineSeasonGamesDTO {
         this.date = date;
     }
 
-    public String getCardTitle() {
-        return cardTitle;
+    public String getHomeTeam() {
+        return homeTeam;
     }
 
-    public void setCardTitle(String cardTitle) {
-        this.cardTitle = cardTitle;
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
     }
 
-    public String getCardSubtitle() {
-        return cardSubtitle;
+    public String getAwayTeam() {
+        return awayTeam;
     }
 
-    public void setCardSubtitle(String cardSubtitle) {
-        this.cardSubtitle = cardSubtitle;
+    public void setAwayTeam(String awayTeam) {
+        this.awayTeam = awayTeam;
     }
 
-    public String getCardDetailedText() {
-        return cardDetailedText;
+    public String getHomeTeamAbrv() {
+        return homeTeamAbrv;
     }
 
-    public void setCardDetailedText(String cardDetailedText) {
-        this.cardDetailedText = cardDetailedText;
+    public void setHomeTeamAbrv(String homeTeamAbrv) {
+        this.homeTeamAbrv = homeTeamAbrv;
+    }
+
+    public String getAwayTeamAbrv() {
+        return awayTeamAbrv;
+    }
+
+    public void setAwayTeamAbrv(String awayTeamAbrv) {
+        this.awayTeamAbrv = awayTeamAbrv;
     }
 
     public String getUrl() {
@@ -131,14 +140,15 @@ public class TimeLineSeasonGamesDTO {
             }
         }
     }
-    public TimeLineSeasonGamesDTO(Long gameId, Instant date, String cardTitle, String cardSubtitle,
-                                  String cardDetailedText, String url, String mediaType,
+    public TimeLineSeasonGamesDTO(Long gameId, Instant date, String homeTeam, String awayTeam,
+                                  String homeTeamAbrv, String awayTeamAbrv, String url, String mediaType,
                                   String mediaUrl, String mediaName, QuarterScores quarterScores) {
         this.gameId = gameId;
         this.date = date;
-        this.cardTitle = cardTitle;
-        this.cardSubtitle = cardSubtitle;
-        this.cardDetailedText = cardDetailedText;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeTeamAbrv = homeTeamAbrv;
+        this.awayTeamAbrv = awayTeamAbrv;
         this.url = url;
         this.media = new Media();
         this.media.type = mediaType;

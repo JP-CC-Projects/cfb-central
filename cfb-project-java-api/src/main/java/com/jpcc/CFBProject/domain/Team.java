@@ -312,4 +312,12 @@ public class Team {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public Team() {
+    }
+
+    public Team(String school, String abbreviation) {
+        this.school = school;
+        this.abbreviation = abbreviation;
+    }
 }

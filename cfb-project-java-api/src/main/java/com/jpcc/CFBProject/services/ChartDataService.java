@@ -1,48 +1,42 @@
 package com.jpcc.CFBProject.services;
 
+import com.jpcc.CFBProject.domain.NationChartData;
 import com.jpcc.CFBProject.domain.Player;
 import com.jpcc.CFBProject.domain.Team;
 import com.jpcc.CFBProject.dto.NationChartDataDTO;
 import com.jpcc.CFBProject.dto.PlayerChartDataDTO;
 import com.jpcc.CFBProject.dto.TeamChartDataDTO;
+import com.jpcc.CFBProject.repository.NationChartDataRepository;
 import com.jpcc.CFBProject.repository.PlayerRepository;
 import com.jpcc.CFBProject.repository.PlayerTeamHistoryRepository;
 import com.jpcc.CFBProject.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class ChartDataService {
-    private final TeamService teamService;
-    private final PlayerService playerService;
-    private final PlayerTeamHistoryRepository playerTeamHistoryRepository;
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
+    private final NationChartDataRepository nationChartDataRepository;
 
-    public ChartDataService(TeamService teamService,
-                            PlayerService playerService, PlayerTeamHistoryRepository playerTeamHistoryRepository,
-                            PlayerRepository playerRepository,
-                            TeamRepository teamRepository) {
-        this.teamService = teamService;
-        this.playerService = playerService;
-        this.playerTeamHistoryRepository = playerTeamHistoryRepository;
+    public ChartDataService(PlayerRepository playerRepository,
+                            TeamRepository teamRepository,
+                            NationChartDataRepository nationChartDataRepository) {
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
+        this.nationChartDataRepository = nationChartDataRepository;
     }
     public List<PlayerChartDataDTO> getPlayerChartData(Long teamId){
         Team team = teamRepository.findById(teamId).orElse(null);
         if (team == null) {
-            // Handle the case where the team is not found, possibly throw an exception or return an empty list
-            return Collections.emptyList();
+            throw new IllegalArgumentException("Team is null.");
         }
         String teamName = team.getSchool();
         return playerRepository.findPlayersByTeam(teamName).stream()
+                .filter(Objects::nonNull)
                 .map(player -> new PlayerChartDataDTO(
                         player.getId(),
                         player.getFirstName(),
@@ -56,21 +50,41 @@ public class ChartDataService {
                 .collect(Collectors.toList());
     }
     public NationChartDataDTO getNationAvgChartData() {
-        List<Player> allPlayers = playerRepository.findAllCurrentPlayers();
+        // Check if the data already exists in the database
+        Optional<NationChartData> existingData = nationChartDataRepository.findLatestEntry();
 
-        Double natAvgWeight = calculateAverage(allPlayers, Player::getWeight);
-        Double natAvgHeight = calculateAverage(allPlayers, Player::getHeight);
-        Double natAvgDistance = calculateAverage(allPlayers, Player::getDistanceToSchool);
-        Double natAvgYear = calculateAverage(allPlayers, Player::getYear);
+        if (existingData.isPresent()) {
+            // Convert existing entity to DTO and return it
+            return convertToDTO(existingData.get());
+        } else {
+            // Calculate the averages
+            List<Player> allPlayers = playerRepository.findAllCurrentPlayers();
+            Double natAvgWeight = calculateAverage(allPlayers, Player::getWeight);
+            Double natAvgHeight = calculateAverage(allPlayers, Player::getHeight);
+            Double natAvgDistance = calculateAverage(allPlayers, Player::getDistanceToSchool);
+            Double natAvgYear = calculateAverage(allPlayers, Player::getYear);
 
-        NationChartDataDTO nationChartDataDTO = new NationChartDataDTO();
-        nationChartDataDTO.setNatAvgWeight(natAvgWeight);
-        nationChartDataDTO.setNatAvgHeight(natAvgHeight);
-        nationChartDataDTO.setNatAvgDistance(natAvgDistance);
-        nationChartDataDTO.setNatAvgYear(natAvgYear);
+            // Save the new averages to the database
+            NationChartData newNationChartAvgs = new NationChartData();
+            newNationChartAvgs.setNatAvgWeight(natAvgWeight);
+            newNationChartAvgs.setNatAvgHeight(natAvgHeight);
+            newNationChartAvgs.setNatAvgDistance(natAvgDistance);
+            newNationChartAvgs.setNatAvgYear(natAvgYear);
+            nationChartDataRepository.save(newNationChartAvgs);
 
-        return nationChartDataDTO;
+            // Convert and return the new DTO
+            return convertToDTO(newNationChartAvgs);
+        }
     }
+    private NationChartDataDTO convertToDTO(NationChartData data) {
+        NationChartDataDTO dto = new NationChartDataDTO();
+        dto.setNatAvgWeight(data.getNatAvgWeight());
+        dto.setNatAvgHeight(data.getNatAvgHeight());
+        dto.setNatAvgDistance(data.getNatAvgDistance());
+        dto.setNatAvgYear(data.getNatAvgYear());
+        return dto;
+    }
+
     public List<TeamChartDataDTO> getAllTeamsChartData() {
         List<Team> teams = teamRepository.findAll();
         List<TeamChartDataDTO> chartData = new ArrayList<>();

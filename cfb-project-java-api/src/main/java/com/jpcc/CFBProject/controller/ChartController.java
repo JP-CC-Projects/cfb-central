@@ -20,8 +20,6 @@ import java.util.List;
 @RestController
 public class ChartController {
     private final ObjectMapper objectMapper;
-    private static final Logger logger = LoggerFactory.getLogger(ChartController.class);
-
     private ChartDataService chartDataService;
 
     public ChartController(ObjectMapper objectMapper, ChartDataService chartDataService) {
@@ -31,10 +29,13 @@ public class ChartController {
 
     @GetMapping("/api/chart/players")
     public ResponseEntity<List<PlayerChartDataDTO>> getSelectedTeamChartData(
-            @RequestParam(required = true) Long teamId) throws JsonProcessingException {
-        List<PlayerChartDataDTO> playerChartData = chartDataService.getPlayerChartData(teamId);
-        String playerChartJSON = objectMapper.writeValueAsString(playerChartData);
-        return ResponseEntity.ok(playerChartData);
+            @RequestParam(required = true) Long teamId) {
+        try {
+            List<PlayerChartDataDTO> playerChartData = chartDataService.getPlayerChartData(teamId);
+            return ResponseEntity.ok(playerChartData);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @Cacheable(value = "allTeamsChartData")
@@ -42,10 +43,8 @@ public class ChartController {
     public ResponseEntity<List<TeamChartDataDTO>> getAllTeamsChartData() {
         try {
             List<TeamChartDataDTO> teamChartDataDTO = chartDataService.getAllTeamsChartData();
-            logger.info("Team Chart DTO JSON: {}", teamChartDataDTO);
             return ResponseEntity.ok(teamChartDataDTO);
         } catch (Exception e) {
-            // Handle exceptions
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

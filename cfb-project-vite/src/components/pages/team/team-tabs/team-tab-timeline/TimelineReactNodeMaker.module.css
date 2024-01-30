@@ -2,23 +2,26 @@
     padding: 0 10px;
 }
 .scoreTable {
-    width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .scoreTable th,
 .scoreTable td {
-    border: 1px solid black;
+    border: 0 1px solid black;
     padding: .1rem .5rem;
     text-align: center;
+    width: 4rem; /* Set default width for all columns */
 }
 
 .scoreTable thead {
-    font-weight: 400;
+    font-weight: 600;
 }
-.scoreTable td:first-child,
-.scoreTable th:first-child {
+.scoreTable th:first-child,
+.scoreTable td:first-child {
+    width: 5rem; /* Set width for the first column */
     text-align: left;
 }
 
