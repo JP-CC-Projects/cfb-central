@@ -3,7 +3,7 @@ import React from 'react';
 import { TeamTimeline } from '../../../../../types/teamTypes';
 import styles from './TimelineReactNodeMaker.module.css';
 
-const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ homeTeam, awayTeam, homeTeamAbrv, awayTeamAbrv, url, quarterScores, media }) => {
+const TimelineReactNodeMaker: React.FC<TeamTimeline> = ({ homeTeam, awayTeam, homeTeamAbrv, awayTeamAbrv, quarterScores, media }) => {
     if (!quarterScores) {
         return <div>Score Data Not Available</div>;
     }
