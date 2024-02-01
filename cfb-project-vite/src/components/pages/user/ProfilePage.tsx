@@ -21,6 +21,7 @@ import { UnknownAction } from 'redux';
 export default function ProfilePage() {
   const dispatch = useDispatch<ThunkDispatch<{}, {}, UnknownAction>>();
   const teams = useSelector((state: RootState) => state.team.teams);
+  console.log(teams);
   const accessToken = localStorage.getItem('accessToken');
   const USER_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/user`;
   const [user, setUser] = useState({ firstName: '', lastName: '', email: '' });
