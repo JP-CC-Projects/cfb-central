@@ -90,7 +90,7 @@ public class SecurityConfig {
                             .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/refreshtoken")).authenticated()
                             .requestMatchers(new AntPathRequestMatcher("/account")).authenticated()
-                            .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority("ROLE_USER") // User specific paths
+                            .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                             .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .anyRequest().authenticated(); // All other requests require authentication
                 })

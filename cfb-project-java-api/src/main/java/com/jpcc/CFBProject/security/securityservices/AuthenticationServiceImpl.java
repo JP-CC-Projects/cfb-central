@@ -3,13 +3,17 @@ package com.jpcc.CFBProject.security.securityservices;
 
 import com.jpcc.CFBProject.request.SignInRequest;
 import com.jpcc.CFBProject.request.SignUpRequest;
+import com.jpcc.CFBProject.request.UpdateProfileRequest;
 import com.jpcc.CFBProject.response.JwtAuthenticationResponse;
+import com.jpcc.CFBProject.response.JwtUserUpdateResponse;
 import com.jpcc.CFBProject.security.securitydomain.Authority;
 import com.jpcc.CFBProject.security.securitydomain.Role;
 import com.jpcc.CFBProject.security.securitydomain.User;
 import com.jpcc.CFBProject.security.securityrepository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +67,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } else {
             return new JwtAuthenticationResponse(jwt, refreshTokenService.createRefreshToken(user.getId()).getToken());
         }
+    }
+
+    public void verifyUserBeforeUpdate(UpdateProfileRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String loggedInUserEmail = ((UserDetails)principal).getUsername();
+            if (!loggedInUserEmail.equals(request.email())) {
+                throw new IllegalArgumentException("Logged in user does not match the requested update user");
+            }
+            User user = userRepository.findByEmail(loggedInUserEmail)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
+                throw new IllegalArgumentException("Invalid current password");
+            }
+        } else {
+            throw new IllegalStateException("User authentication details not found");
+        }
+    }
+    @Override
+    public JwtUserUpdateResponse issueNewTokens(String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        String newJwtToken = jwtService.generateToken(user);
+        String newRefreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
+
+        return new JwtUserUpdateResponse(newJwtToken, newRefreshToken);
     }
 }
 

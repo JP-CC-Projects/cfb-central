@@ -12,7 +12,7 @@ interface ChartComponentProps {
 type AxisOption = 'Player' | 'Team';
 
 const playerChartIncludedKeys = ['playerWeight', 'playerHeight', 'playerDistance'];
-const teamChartIncludedKeys = ['teamAvgWeight', 'teamAvgHeight', 'teamAvgDistance', 'teamAvgYear', 'teamWinRate'];
+const teamChartIncludedKeys = ['teamAvgWeight', 'teamAvgHeight', 'teamAvgDistance', 'teamAvgYear'];
 
 const playerChartOptions = playerChartIncludedKeys.map(key => ({
     value: key,

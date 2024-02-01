@@ -28,9 +28,12 @@ public class JwtServiceImpl implements JwtService {
     private Long tokenExpiration;
     @Value("${token.refreshExpiration}")
     private Long refreshTokenExpiration;
-    
+
     @Override
     public String extractUserName(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // Removes "Bearer " prefix
+        }
         return extractClaim(token, Claims::getSubject);
     }
 

@@ -24,8 +24,6 @@ function TeamSearchAutocomplete() {
     }
   }, [dispatch]);
 
-  // const handleSelection = (event: React.ChangeEvent<{}>, selectedTeam: Team | null) => {
-  // event replaced with "_" to signifiy a potentially unused "event"
   const handleSelection = (_: React.ChangeEvent<{}>, selectedTeam: TeamMin | null) => {
     if (selectedTeam) {
       navigate(`/${selectedTeam.id}/team`);

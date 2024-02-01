@@ -15,7 +15,7 @@ const TileComponent: React.FC<TeamDetailsProps> = ({ teamId, teamDetails }) => {
     if (teamDetails) {
         console.log(`teamDetails received for teamId ${teamId}`);
     }
-    const [flippedStates, setFlippedStates] = useState(Array(6).fill(false));
+    const [flippedStates, setFlippedStates] = useState(Array(3).fill(false));
     const handleFlip = (index: number) => {
         const newFlippedStates = [...flippedStates];
         newFlippedStates[index] = !newFlippedStates[index];
@@ -28,10 +28,6 @@ const TileComponent: React.FC<TeamDetailsProps> = ({ teamId, teamDetails }) => {
             case 0: return <TeamRecordTileFront teamId={teamId} teamSeason={2023}/>;
             case 1: return <SchoolTileFront/>;
             case 2: return <StadiumTileFront/>;
-            case 3: return ;
-            case 4: return ;
-            case 5: return ;
-            case 6: return ;
         }
     };
 
@@ -41,10 +37,6 @@ const TileComponent: React.FC<TeamDetailsProps> = ({ teamId, teamDetails }) => {
             case 0: return <div><TeamRecordTileBack teamId={teamId} teamSeason={2023} /></div>;
             case 1: return <SchoolTileBack/>;
             case 2: return <StadiumTileBack/>;
-            case 3: return ;
-            case 4: return ;
-            case 5: return ;
-            case 6: return ;
         }
     };
     

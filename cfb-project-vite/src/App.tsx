@@ -12,6 +12,7 @@ import AdminDashboard from './components/pages/admin/AdminDashboard';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import setupAxiosInterceptor from './utils/setupAxiosInterceptor';
+import ProfilePage from './components/pages/user/ProfilePage';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,8 +36,9 @@ const App: React.FC = () => {
             <Route path="/schedule" element={<SchedulePage />} /> {/* SchedulePage component */}
             <Route path="/:teamId/map" element={<MapPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </div>
       </Router>

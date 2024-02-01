@@ -21,14 +21,12 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    private Integer favoriteTeamId;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Authority> authorities = new ArrayList<>();
 
-    /*
-     * enable if you want to have the confirm password to be checked in the back end + their corresponding getters and setters
-     * private String confirmPassword;
-     */
 
     @Override
     public Collection<Authority> getAuthorities() {
@@ -137,4 +135,19 @@ public class User implements UserDetails {
         return this;
     }
 
+    public Integer getFavoriteTeamId() {
+        return favoriteTeamId;
+    }
+
+    public String getFavoriteTeam() {
+        return favoriteTeam;
+    }
+
+    public void setFavoriteTeam(String favoriteTeam) {
+        this.favoriteTeam = favoriteTeam;
+    }
+
+    public void setFavoriteTeamId(Integer favoriteTeamId) {
+        this.favoriteTeamId = favoriteTeamId;
+    }
 }

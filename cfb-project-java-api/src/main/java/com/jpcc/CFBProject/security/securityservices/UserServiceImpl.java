@@ -1,5 +1,6 @@
 package com.jpcc.CFBProject.security.securityservices;
 
+import com.jpcc.CFBProject.dto.UserFormDto;
 import com.jpcc.CFBProject.security.securitydomain.Authority;
 import com.jpcc.CFBProject.security.securitydomain.User;
 import com.jpcc.CFBProject.security.securityrepository.UserRepository;
@@ -76,7 +77,16 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User not found with ID: " + userId);
         }
     }
-    
+    public UserFormDto mapUserToDTO(User user) {
+        UserFormDto dto = new UserFormDto();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
+        return dto;
+    }
+
+
     public User registerUser(User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
 
