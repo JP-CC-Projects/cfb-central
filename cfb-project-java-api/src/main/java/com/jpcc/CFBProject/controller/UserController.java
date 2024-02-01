@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<?> updateUserProfile(@RequestBody User requestedUserUpdate) {
+    public ResponseEntity<?> updateUserProfile(@RequestBody UpdateProfileRequest requestedUserUpdate) {
         try {
             authenticationService.verifyUserBeforeUpdate(requestedUserUpdate);
             JwtUserUpdateResponse jwtResponse = authenticationService.issueNewTokens(requestedUserUpdate.email());

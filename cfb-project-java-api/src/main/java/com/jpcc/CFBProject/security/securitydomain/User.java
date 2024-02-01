@@ -22,6 +22,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Integer favoriteTeamId;
+    private String favoriteTeam;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")

@@ -35,6 +35,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
     const { playerChartData, teamChartData } = useChartData(teamId);
     const chartRef = chartSetup({ playerChartData, teamChartData, xAxisOption, yAxis });
 
+    console.log("Rendering");
     return (
         <div>
             <div>

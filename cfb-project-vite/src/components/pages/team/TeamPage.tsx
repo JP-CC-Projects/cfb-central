@@ -68,7 +68,7 @@ const TeamPage = () => {
               <CustomTab>Timeline</CustomTab>
               <CustomTab>Roster</CustomTab>
               <CustomTab>Graphs</CustomTab>
-              <CustomTab>Player Map</CustomTab>
+              <CustomTab>Map</CustomTab>
             </TabList>
             <TabPanel>
               <div>
