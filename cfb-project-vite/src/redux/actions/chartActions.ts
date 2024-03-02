@@ -35,6 +35,7 @@ async (dispatch: AppDispatch) => {
   dispatch({ type: START_FETCHING_PLAYER_CHART });
   try {
     const response = await axiosClient.get<PlayerChartData[]>(`${API_BASE_URL}/chart/players?teamId=${teamId}`);
+    console.log(response)
     dispatch({ type: FETCH_PLAYER_CHART_SUCCESS, payload: response.data });
   } catch (error) {
     console.log("Rendering fetch");

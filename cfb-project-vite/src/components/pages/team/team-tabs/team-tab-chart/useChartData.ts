@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { RootState, useAppDispatch } from '../../../../../redux/store';
-import { fetchPlayerChartData, fetchAllTeamsAvgChartData } from '../../../../../redux/actions/chartActions';
+import { fetchAllTeamsAvgChartData, fetchPlayerChartData } from '../../../../../redux/actions/chartActions';
 
 // Memoized selectors
 const selectPlayerChartData = createSelector(
@@ -15,15 +15,36 @@ const selectTeamChartData = createSelector(
   (teamChartData) => teamChartData
 );
 
-const useChartData = (teamId: number) => {
-    const dispatch = useAppDispatch();
+const useChartData = (teamId: number, xAxisOption:string, setYAxis:any) => {
     const playerChartData = useSelector(selectPlayerChartData);
     const teamChartData = useSelector(selectTeamChartData);
-
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(fetchPlayerChartData(teamId));
-        dispatch(fetchAllTeamsAvgChartData());
-    }, [dispatch, teamId]);
+       
+        setYAxis(xAxisOption === 'Player' ? 'playerDistance' : 'teamAvgDistance')
+    },[teamChartData,playerChartData])
+
+
+    
+      useEffect(() => {
+  
+       switch(xAxisOption) {
+        case "Player":
+          dispatch(fetchPlayerChartData(teamId));
+          break;
+        case "Team":
+          dispatch(fetchAllTeamsAvgChartData());
+          break;
+
+        default:
+          break;
+       }
+
+
+      
+    }, [xAxisOption, dispatch]);
+
+
 
     return { playerChartData, teamChartData };
 };

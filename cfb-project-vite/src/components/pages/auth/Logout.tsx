@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.removeItem('accessToken');
-    dispatch({ type: 'LOGOUT' }); 
+    localStorage.removeItem('accessToken'); 
     navigate('/'); 
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return null; 
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import useChartData from './useChartData';
 import chartSetup from './chartSetup';
@@ -32,17 +32,18 @@ const yAxisOptions = {
 const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
     const [xAxisOption, setXAxisOption] = useState<'Player' | 'Team'>('Player');
     const [yAxis, setYAxis] = useState<string>('playerDistance');
-    const { playerChartData, teamChartData } = useChartData(teamId);
+    const { playerChartData, teamChartData } = useChartData(teamId, xAxisOption, setYAxis);
     const chartRef = chartSetup({ playerChartData, teamChartData, xAxisOption, yAxis });
 
-    console.log("Rendering");
+
+
     return (
         <div>
             <div>
                 <label>X-Axis: </label>
                 <select value={xAxisOption} onChange={e => setXAxisOption(e.target.value as AxisOption)}>
-                    <option value="Player">Player</option>
-                    <option value="Team">Team</option>
+                    <option value="Player" >Player</option>
+                    <option value="Team" >Team</option>
                 </select>
                 <label> Y-Axis: </label>
                 <select value={yAxis} onChange={e => setYAxis(e.target.value)}>
