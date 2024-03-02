@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import useChartData from './useChartData';
 import chartSetup from './chartSetup';
