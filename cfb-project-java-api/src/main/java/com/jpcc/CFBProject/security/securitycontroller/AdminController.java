@@ -76,7 +76,6 @@ public class AdminController {
         adminUser.setLastName(adminLastName);
         adminUser.setEmail(adminEmail);
         adminUser.setPassword(passwordEncoder.encode(adminUPassword));
-
         Authority adminAuth = new Authority("ROLE_ADMIN", adminUser);
         adminUser.setAuthorities(Collections.singletonList(adminAuth));
         userRepository.save(adminUser);

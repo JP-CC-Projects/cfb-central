@@ -29,6 +29,7 @@ public class ChartController {
             @RequestParam(required = true) Long teamId) {
         try {
             List<PlayerChartDataDTO> playerChartData = chartDataService.getPlayerChartData(teamId);
+            System.out.println("Player chart data: " + playerChartData);
             return ResponseEntity.ok(playerChartData);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -40,6 +41,7 @@ public class ChartController {
     public ResponseEntity<List<TeamChartDataDTO>> getAllTeamsChartData() {
         try {
             List<TeamChartDataDTO> teamChartDataDTO = chartDataService.getAllTeamsChartData();
+            System.out.println("All teams avg chart data : " + teamChartDataDTO);
             return ResponseEntity.ok(teamChartDataDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -38,7 +38,6 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserServiceImpl userService;
     private final JwtServiceImpl jwtService;
-    private final RefreshTokenService refreshTokenService;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, UserServiceImpl userService,
                           JwtServiceImpl jwtService, RefreshTokenService refreshTokenService) {
@@ -46,7 +45,6 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.userService = userService;
         this.jwtService = jwtService;
-        this.refreshTokenService = refreshTokenService;
     }
 
 
@@ -85,12 +83,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> {
                     authz
-                            .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
-                            .requestMatchers(new AntPathRequestMatcher("/refreshtoken")).authenticated()
-                            .requestMatchers(new AntPathRequestMatcher("/account")).authenticated()
-                            .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                            .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                             .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN") // Admin specific paths
                             .anyRequest().authenticated(); // All other requests require authentication
                 })
