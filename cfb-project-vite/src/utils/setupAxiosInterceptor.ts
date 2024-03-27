@@ -12,12 +12,9 @@ const setupAxiosInterceptor = () => {
         originalRequest._retry = true;
         try {
           // Refresh token logic here
-
           const newAccessToken = await refreshToken(); 
-
           // Update local storage with the new access token
           localStorage.setItem('accessToken', newAccessToken);
-
           // Update Redux store (optional, depends on how you manage state)
           store.dispatch({
             type: LOGIN_SUCCESS,

@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
       if (axios.isAxiosError(error)) {
         console.error('Login error:', error.response?.data || error.message);
       } else {
-        console.error('An unexpected error occurred:', error);
+        console.error('An unknown error occurred:', error);
       }
       
     }

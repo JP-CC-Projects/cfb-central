@@ -1,26 +1,22 @@
-// LoginForm.tsx
-import { Link } from 'react-router-dom';
+// RegisterForm.tsx
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './AuthPages.css';
 
-interface LoginProps {
-  onLogin: (
-    email: string,
-    password: string) => void;
+interface RegisterProps {
+  onRegister: (email: string, password: string, confirmPassword: string) => void;
   errorMessage?: string;
 }
 
-const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
-  const [email, setEmail] = useState('email');
-  const [password, setPassword] = useState('password');
+const RegisterForm: React.FC<RegisterProps> = ({ onRegister, errorMessage }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onLogin(email, password);
+    onRegister(email, password, confirmPassword);
   };
-
-
 
   return (
     <>
@@ -32,7 +28,7 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
               <label htmlFor="email">Email</label>
               <input
                 id="email"
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -46,15 +42,21 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin, errorMessage }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button type="submit" className="login-button">Login</button>
+            <div className="input-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="login-button">Register</button>
           </form>
-          <div>
-            No Account? <Link to="/register">Register!</Link>
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

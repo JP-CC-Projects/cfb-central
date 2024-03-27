@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
+import axios from 'axios';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
@@ -13,7 +14,6 @@ import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
 import Typography from '@mui/joy/Typography';
 import { User } from '../../../types/userTypes';
-import axios from 'axios';
 import { fetchTeams } from '../../../redux/actions/teamActions';
 import { ThunkDispatch } from 'redux-thunk';
 import { UnknownAction } from 'redux';
