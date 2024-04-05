@@ -12,7 +12,7 @@ export default function DrawerMobileNavigation() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <IconButton variant="outlined" color="neutral" onClick={() => setOpen(true)}>
         <Menu />
       </IconButton>
@@ -43,9 +43,10 @@ export default function DrawerMobileNavigation() {
           <ListItemButton>Overview</ListItemButton>
           <ListItemButton>Timeline</ListItemButton>
           <ListItemButton>Roster</ListItemButton>
+          <ListItemButton>Map</ListItemButton>
           <ListItemButton>About</ListItemButton>
         </List>
       </Drawer>
-    </React.Fragment>
+    </>
   );
 }

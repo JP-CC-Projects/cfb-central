@@ -1,13 +1,13 @@
 // TeamSearchAutocomplete.tsx
 import React, { useEffect } from 'react';
+import Autocomplete from '@mui/joy/Autocomplete';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import type { ThunkDispatch } from 'redux-thunk';
-import type { UnknownAction } from 'redux';
-import Autocomplete from '@mui/joy/Autocomplete';
-import type { RootState } from '../../redux/store';
 import { TeamMin } from '../../types/teamTypes';
 import { fetchTeams } from '../../redux/actions/teamActions';
+import type { ThunkDispatch } from 'redux-thunk';
+import type { UnknownAction } from 'redux';
+import type { RootState } from '../../redux/store';
 
 
 function TeamSearchAutocomplete() {

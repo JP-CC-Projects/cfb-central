@@ -1,6 +1,7 @@
 // src/components/layout/MainLayout.tsx
 import { ReactNode } from 'react';
 import Header from '../common/header/Header';
+import ClippedDrawer from '../common/header/ClippedDrawer';
 
 type MainLayoutProps = {
   children: ReactNode;
