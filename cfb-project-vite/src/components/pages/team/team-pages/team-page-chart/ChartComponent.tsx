@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import useChartData from './useChartData';
 import chartSetup from './chartSetup';
+import { useParams } from 'react-router-dom';
 
 Chart.register(...registerables);
-
-interface ChartComponentProps {
-    teamId: number;
-}
 
 type AxisOption = 'Player' | 'Team';
 
@@ -29,13 +26,14 @@ const yAxisOptions = {
     Team: teamChartOptions
 };
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ teamId }) => {
+const ChartComponent: React.FC = () => {
+    const { teamId: teamIdStr } = useParams<{ teamId?: string }>();
+    const teamId = teamIdStr ? parseInt(teamIdStr, 10) : null;
+
     const [xAxisOption, setXAxisOption] = useState<'Player' | 'Team'>('Player');
     const [yAxis, setYAxis] = useState<string>('playerDistance');
     const { playerChartData, teamChartData } = useChartData(teamId, xAxisOption, setYAxis);
     const chartRef = chartSetup({ playerChartData, teamChartData, xAxisOption, yAxis });
-
-
 
     return (
         <div>

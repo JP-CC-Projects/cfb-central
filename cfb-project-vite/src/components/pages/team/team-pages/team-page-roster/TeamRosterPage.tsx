@@ -1,4 +1,4 @@
-//TeamRosterTab.tsx
+//TeamRosterPage.tsx
 import { Player } from '../../../../../types/teamTypes';
 import { useEffect } from 'react';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -8,38 +8,38 @@ import { fetchTeamRoster } from '../../../../../redux/actions/teamActions';
 import { RootState } from '../../../../../redux/store';
 import SortableSegmentedTable from './SortableSegmentedTable';
 import { ColumnDef } from '@tanstack/react-table';
+import { useParams } from 'react-router-dom';
 
+ 
 
-interface TeamRosterProps {
-    teamId: number;
-    teamSeason: number;
-}
+const TeamRosterPage: React.FC = () => {
+    const { teamId } = useParams<{ teamId?: string }>();
+    const parsedTeamId = teamId ? parseInt(teamId, 10) : 0;
+    console.log(teamId);
+    const teamSeason = 2023;
 
-
-const TeamRosterTab: React.FC<TeamRosterProps> = ({ teamId, teamSeason }) => {
     const dispatch = useDispatch<ThunkDispatch<{}, {}, UnknownAction>>();
     const players = useSelector((state: RootState) => state.team.teamRoster); // Adjust this path to your Redux state structure
 
     useEffect(() => {
-        const cacheKey = `teamRoster-${teamId}-${teamSeason}`;
+        const cacheKey = `teamRoster-${parsedTeamId}-${teamSeason}`;
         const cachedRoster = localStorage.getItem(cacheKey);
-
         if (cachedRoster) {
             const parsedRoster = JSON.parse(cachedRoster);
             // Optional: Check if the cached data matches the current teamId and teamSeason
-            if (parsedRoster.teamId === teamId && parsedRoster.teamSeason === teamSeason) {
+            if (parsedRoster.teamId === parsedTeamId && parsedRoster.teamSeason === teamSeason) {
                 dispatch({ type: 'FETCH_TEAM_ROSTER_SUCCESS', payload: parsedRoster });
             } else {
                 // Cached data is stale or for a different team, fetch new data
-                dispatch(fetchTeamRoster(teamId, teamSeason));
+                dispatch(fetchTeamRoster(parsedTeamId, teamSeason));
             }
-        } else if (teamId && !isNaN(teamId) && teamSeason) {
-            dispatch(fetchTeamRoster(teamId, teamSeason));
+        } else if (parsedTeamId && !isNaN(parsedTeamId) && teamSeason) {
+            dispatch(fetchTeamRoster(parsedTeamId, teamSeason));
         }
-    }, [dispatch, teamId, teamSeason]);
+    }, [dispatch, parsedTeamId, teamSeason]);
 
     useEffect(() => {
-        const cacheKey = `teamRoster-${teamId}-${teamSeason}`;
+        const cacheKey = `teamRoster-${parsedTeamId}-${teamSeason}`;
         if (players.length > 0) {
             localStorage.setItem(cacheKey, JSON.stringify(players));
         }
@@ -103,4 +103,4 @@ const TeamRosterTab: React.FC<TeamRosterProps> = ({ teamId, teamSeason }) => {
     );
 };
 
-export default TeamRosterTab;
+export default TeamRosterPage;

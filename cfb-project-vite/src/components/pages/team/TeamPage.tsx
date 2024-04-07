@@ -4,13 +4,11 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTeamDetails } from '../../../redux/actions/teamActions';
 import { AppDispatch, RootState } from '../../../redux/store';
-import { Tab, Tabs, TabList, TabPanel, TabProps } from 'react-tabs';
-import MainLayout from '../../layout/MainLayout';
-import TeamTimelineTab from './team-tabs/team-tab-timeline/TeamTimeLineTab';
-import TeamRosterTab from './team-tabs/team-tab-roster/TeamRosterTab';
-import TeamOverviewTab from './team-tabs/team-overview/TeamOverviewTab';
+import TeamTimelinePage from './team-pages/team-page-timeline/TeamTimeLinePage';
+import TeamRosterPage from './team-pages/team-page-roster/TeamRosterPage';
+import TeamOverviewPage from './team-pages/team-overview/TeamOverviewPage';
 import MapComponent from '../map/MapComponent';
-import ChartComponent from './team-tabs/team-tab-chart/ChartComponent';
+import ChartComponent from './team-pages/team-page-chart/ChartComponent';
 import 'react-tabs/style/react-tabs.css';
 import './TeamPage.css';
 
@@ -24,22 +22,11 @@ const TeamPage = () => {
 
   // Redux-related Constants
   const { teamId } = useParams<{ teamId?: string }>();
-  const dispatch = useDispatch<AppDispatch>();
   const parsedTeamId = teamId ? parseInt(teamId, 10) : undefined;
+  const dispatch = useDispatch<AppDispatch>();
   const teamDetails = useSelector((state: RootState) => state.team.teamDetails);
 
   // React Tabs component
-  interface CustomTabProps extends TabProps {
-    children: React.ReactNode;
-  }
-  function CustomTab({ children, ...otherProps }: CustomTabProps) {
-    return (
-      <Tab {...otherProps}>
-        <h1>{children}</h1>
-      </Tab>
-    );
-  }
-  (CustomTab as any).tabsRole = 'Tab';
 
   useEffect(() => {
     if (parsedTeamId && !isNaN(parsedTeamId)) {
@@ -49,52 +36,16 @@ const TeamPage = () => {
 
   if (!parsedTeamId || isNaN(parsedTeamId)) {
     return (
-      <MainLayout>
-        <p>Invalid Team ID</p>
-      </MainLayout>
+      <p>Invalid Team ID</p>
     );
   }
 
   return (
-    <MainLayout>
-      <div className="flex flex-col sm:flex-row">
-        {/* Team Details Section */}
-        {/* Add/Remove borders during dev */}
-        {/* <div className="sm:w-full p-0" style={{ border: '1px solid black' }}> */}
-        <div className="sm:w-full p-0">
-          <Tabs >
-            <TabList>
-              <CustomTab>Overview</CustomTab>
-              <CustomTab>Timeline</CustomTab>
-              <CustomTab>Roster</CustomTab>
-              <CustomTab>Graphs</CustomTab>
-              <CustomTab>Map</CustomTab>
-            </TabList>
-            <TabPanel>
-              <div>
-                {teamDetails && <TeamOverviewTab teamId={parsedTeamId} teamDetails={teamDetails} />}
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <div>
-                <TeamTimelineTab teamId={parsedTeamId} teamSeason={teamSeason} />
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <TeamRosterTab teamId={parsedTeamId} teamSeason={teamSeason} />
-            </TabPanel>
-            <TabPanel>
-              <div>
-                <ChartComponent teamId={parsedTeamId}/>
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <MapComponent teamId={parsedTeamId} teamSeason={teamSeason} />
-            </TabPanel>
-          </Tabs>
+    <div className="flex flex-col sm:flex-row">
+      <div className="sm:w-full p-0">
+          {teamDetails && <TeamOverviewPage/>}
         </div>
-      </div>
-    </MainLayout>
+    </div>
   );
 };
 

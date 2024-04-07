@@ -1,20 +1,15 @@
-// src/components/layout/MainLayout.tsx
-import { ReactNode } from 'react';
-import Header from '../common/header/Header';
-import ClippedDrawer from '../common/header/ClippedDrawer';
 
-type MainLayoutProps = {
-  children: ReactNode;
-};
-const MainLayout = ({ children }: MainLayoutProps) => {
+import ClippedDrawer from '../common/nav/ClippedDrawer';
+import { Outlet } from 'react-router-dom';
+
+
+  const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 pt-0 mt-0">
-        {children}
-      </main>
+    <div>
+      <ClippedDrawer>
+        <Outlet /> {/* This will render the child route component */}
+      </ClippedDrawer>
     </div>
   );
 };
-
 export default MainLayout;

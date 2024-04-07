@@ -1,7 +1,6 @@
 // MapPage.tsx 
 import MapComponent from "./MapComponent";
 import { useParams } from "react-router-dom";
-import MainLayout from "../../layout/MainLayout";
 
 const MapPage = () => {
     const { teamId } = useParams<{ teamId?: string }>();
@@ -9,11 +8,9 @@ const MapPage = () => {
     const parsedTeamId = teamId ? parseInt(teamId, 10) : 0;
 
     return (
-        <MainLayout>
             <div>
                 <MapComponent teamId={parsedTeamId} teamSeason={2023} />
             </div>
-        </MainLayout>
     );
 };
 

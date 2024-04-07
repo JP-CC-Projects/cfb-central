@@ -1,6 +1,7 @@
 import TeamSearchAutocomplete from '../../common/TeamSearchAutocomplete';
-import mainLogo from '../../../assets/mainlogo.png';
+import mainLogo from '../../../assets/mainlogo2.png';
 import backgroundVideo from '../../../assets/bgvid.mp4';
+
 
 const HomePage = () => {
   return (
@@ -13,13 +14,12 @@ const HomePage = () => {
 
       {/* Dark Overlay */}
       <div className="absolute w-full h-full bg-black opacity-70"></div>
-
       <div className="m-auto z-10 text-center">
         {/* Main content */}
         <div className="flex justify-center items-center">
           <div>
-            <div className="flex flex-col justify-center items-center">
-              <img src={mainLogo} alt="Main Logo" className="w-2/3 lg:w-1/3 mb-5" />
+            <div className="flex flex-col justify-center items-center opacity-60">
+            <img src={mainLogo} alt="Main Logo" className="w-full lg:w-full mb-5" />
               <div className="w-full lg:w-80">
                 <TeamSearchAutocomplete />
               </div>

@@ -9,40 +9,41 @@ import MapPage from './components/pages/map/MapPage';
 import LoginPage from './components/pages/auth/LoginPage';
 import Logout from './components/pages/auth/Logout';
 import AdminDashboard from './components/pages/admin/AdminDashboard';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import setupAxiosInterceptor from './utils/setupAxiosInterceptor';
 import ProfilePage from './components/pages/user/ProfilePage';
 import RegisterPage from './components/pages/auth/RegisterPage';
+import MainLayout from './components/layout/MainLayout';
+import AppInitializer from './AppInitializer';
+import TeamRosterPage from './components/pages/team/team-pages/team-page-roster/TeamRosterPage';
+import ChartComponent from './components/pages/team/team-pages/team-page-chart/ChartComponent';
+import TeamTimelinePage from './components/pages/team/team-pages/team-page-timeline/TeamTimeLinePage';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    setupAxiosInterceptor();
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: accessToken });
-    }
-  }, [dispatch]);
 
   return (
     <Provider store={store}>
       <Router>
-        <div className="App">
-          <header className="App-header">
-          </header>
-          <Routes>
-            <Route path="/" element={<HomePage />} /> {/* HomePage component */}
-            <Route path="/:teamId/team" element={<TeamPage />} /> {/* TeamPage component for individual team */}
-            <Route path="/schedule" element={<SchedulePage />} /> {/* SchedulePage component */}
-            <Route path="/:teamId/map" element={<MapPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/logout" element={<Logout />} />
-          </Routes>
-        </div>
+        <AppInitializer>
+          <div className="App">
+            <header className="App-header">
+            </header>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/:teamId/" element={<MainLayout />}>
+                <Route path="team" element={<TeamPage />} />
+                <Route path="timeline" element={<TeamTimelinePage />} />
+                <Route path="roster" element={<TeamRosterPage />} />
+                <Route path="chart" element={<ChartComponent />} />
+                <Route path="map" element={<MapPage />} />
+              </Route>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/schedule" element={<SchedulePage />} /> {/* SchedulePage component */}
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/logout" element={<Logout />} />
+            </Routes>
+          </div>
+        </AppInitializer>
       </Router>
     </Provider>
   );

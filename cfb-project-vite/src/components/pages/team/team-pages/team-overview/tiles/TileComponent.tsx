@@ -9,7 +9,7 @@ import StadiumTileBack from './tile-stadium/StadiumTileBack';
 import TeamRecordTileFront from './tile-team-record/TeamRecordTileFront';
 interface TeamDetailsProps {
     teamId: number;
-    teamDetails: TeamDetails;
+    teamDetails: TeamDetails| null;
 }
 const TileComponent: React.FC<TeamDetailsProps> = ({ teamId, teamDetails }) => {
     if (teamDetails) {
