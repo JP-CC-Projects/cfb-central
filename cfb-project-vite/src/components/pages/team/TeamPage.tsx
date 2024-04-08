@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import TeamOverviewPage from './team-pages/team-overview/TeamOverviewPage';
 import 'react-tabs/style/react-tabs.css';
 import './TeamPage.css';
+import Header from '../../common/nav/Header';
 
 const TeamPage = () => {
 
@@ -33,8 +34,8 @@ const TeamPage = () => {
   return (
     <div className="flex flex-col sm:flex-row">
       <div className="sm:w-full p-0">
-          {teamDetails && <TeamOverviewPage/>}
-        </div>
+        {teamDetails && <TeamOverviewPage />}
+      </div>
     </div>
   );
 };

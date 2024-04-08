@@ -29,6 +29,7 @@ const HomePage = () => {
         <div className="flex-1"></div>
       </div>
     </div>
+    
   );
 };
 

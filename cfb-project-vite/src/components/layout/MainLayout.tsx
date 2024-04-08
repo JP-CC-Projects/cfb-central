@@ -7,6 +7,7 @@ import { Outlet } from 'react-router-dom';
   return (
     <div>
       <ClippedDrawer>
+        <br/>
         <Outlet /> {/* This will render the child route component */}
       </ClippedDrawer>
     </div>

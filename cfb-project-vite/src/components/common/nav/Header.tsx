@@ -14,7 +14,7 @@ const Header = () => {
   const location = useLocation();
   const [bgColor, setBgColor] = useState('');
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     if (teamId && !isNaN(teamId)) {
       dispatch(fetchTeamDetails(teamId));
@@ -26,8 +26,6 @@ const Header = () => {
       <p>Invalid Team ID</p>
     );
   }
-
-
 
 
   useEffect(() => {
@@ -53,8 +51,7 @@ const Header = () => {
   return (
     // <nav style={{ backgroundColor: bgColor }} className="text-white p-4 relative">
 
-    <nav style={{ backgroundColor: bgColor, position: 'fixed', top: 0, width: '100%', height: 80, zIndex: 2000 /* AppBar z-index */ }} className="text-white p-4 relative">
-
+    <nav style={{ backgroundColor: bgColor, position: 'fixed', top: 0, width: '100%', height: '10vh', zIndex: 2000 /* AppBar z-index */ }} className="header-nav">
       <div className="flex justify-between items-center">
         <div>
         </div>
@@ -68,20 +65,25 @@ const Header = () => {
 
         {/* Right Side Content - Navigation Links */}
         <div className="hidden md:flex">
-          <Link to="/" className="mr-4">Home</Link>
+          <div className="nav-padding-sides">|</div>
+          <Link to="/" className="mr-4">HOME</Link>
           {isAuthenticated ? (
             <>
-              <Link to="/profile" className="mr-4">Profile</Link>
-              <Link to="/logout" className="mr-4">Logout</Link>
+              <div className="nav-padding-sides">|</div>
+              <Link to="/profile" className="mr-4">PROFILE</Link>
+              <div className="nav-padding-sides">|</div>
+              <Link to="/logout" className="mr-4">LOGOUT</Link>
             </>
           ) : (
             <>
-              <Link to="/login" className="mr-4">Login</Link>
-              <Link to="/register">Register</Link>
+              <div className="nav-padding-sides">|</div>
+              <Link to="/login" className="mr-4">LOGIN</Link>
+              <div className="nav-padding-sides">|</div>
+              <Link to="/register">REGISTER</Link>
+              <div className="nav-padding-sides">|</div>
             </>
           )}
         </div>
-
         {/* Placeholder for balancing layout */}
         <div className="text-lg font-bold opacity-0 md:hidden"></div>
       </div>

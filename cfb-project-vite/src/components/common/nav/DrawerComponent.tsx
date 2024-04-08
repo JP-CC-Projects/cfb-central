@@ -7,8 +7,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Groups2TwoToneIcon from '@mui/icons-material/Groups2TwoTone';
+import AvTimerTwoToneIcon from '@mui/icons-material/AvTimerTwoTone';
+import SsidChartTwoToneIcon from '@mui/icons-material/SsidChartTwoTone';
+import WhereToVoteTwoToneIcon from '@mui/icons-material/WhereToVoteTwoTone';
+
+
 
 const drawerWidth = 240;
 const DrawerComponent: React.FC = () => {
@@ -31,9 +36,9 @@ const DrawerComponent: React.FC = () => {
           <ListItem disablePadding>
             <ListItemButton component={Link} to={`/${teamId}/team`}>
               <ListItemIcon>
-                <InboxIcon /> {/* This icon can be anything you choose */}
+                <Groups2TwoToneIcon /> {/* This icon can be anything you choose */}
               </ListItemIcon>
-              <ListItemText primary="Team Page" />
+              <ListItemText primary="Team" />
             </ListItemButton>
           </ListItem>
           {/* Roster Page Link */}
@@ -42,13 +47,13 @@ const DrawerComponent: React.FC = () => {
               <ListItemIcon>
                 <MailIcon /> {/* This icon can be anything you choose */}
               </ListItemIcon>
-              <ListItemText primary="Roster Page" />
+              <ListItemText primary="Roster" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton component={Link} to={`/${teamId}/timeline`}>
               <ListItemIcon>
-                <InboxIcon /> 
+                <AvTimerTwoToneIcon /> 
               </ListItemIcon>
               <ListItemText primary="Timeline" />
             </ListItemButton>
@@ -56,7 +61,7 @@ const DrawerComponent: React.FC = () => {
           <ListItem disablePadding>
             <ListItemButton component={Link} to={`/${teamId}/chart`}>
               <ListItemIcon>
-                <InboxIcon /> 
+                <SsidChartTwoToneIcon /> 
               </ListItemIcon>
               <ListItemText primary="Chart" />
             </ListItemButton>
@@ -64,7 +69,7 @@ const DrawerComponent: React.FC = () => {
           <ListItem disablePadding>
             <ListItemButton component={Link} to={`/${teamId}/map`}>
               <ListItemIcon>
-                <InboxIcon /> 
+                <WhereToVoteTwoToneIcon /> 
               </ListItemIcon>
               <ListItemText primary="Map" />
             </ListItemButton>

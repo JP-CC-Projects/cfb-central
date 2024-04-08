@@ -28,7 +28,7 @@ const options = {
 
 const containerStyle = {
   width: '100%',
-  height: '80vh'
+  height: '85vh'
 };
 
 
