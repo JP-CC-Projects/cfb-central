@@ -7,7 +7,6 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import TeamOverviewPage from './team-pages/team-overview/TeamOverviewPage';
 import 'react-tabs/style/react-tabs.css';
 import './TeamPage.css';
-import Header from '../../common/nav/Header';
 
 const TeamPage = () => {
 
