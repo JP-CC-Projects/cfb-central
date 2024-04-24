@@ -19,9 +19,10 @@ const HomePage = () => {
         <div className="flex justify-center items-center">
           <div className="flex flex-col justify-center items-center ">
             <img src={mainLogo} alt="Main Logo" className="w-full lg:w-full mb-1" />
+
           </div>
         </div>
-          <RandomSlogan />
+        <RandomSlogan />
         <div className="flex justify-center items-center">
           <TeamSearchAutocomplete />
         </div>
@@ -29,7 +30,7 @@ const HomePage = () => {
         <div className="flex-1"></div>
       </div>
     </div>
-    
+
   );
 };
 

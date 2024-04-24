@@ -158,15 +158,8 @@ code {
     monospace;
 }
 
-/* Add this to your CSS file */
-.navbar {
-  display: flex;
-  align-items: center;
-  /* This will vertically center the child elements */
-  justify-content: space-between;
-  /* Adjusts space between items */
-  position: relative;
-}
+
+
 
 .logo-container {
   position: absolute;
@@ -203,7 +196,14 @@ code {
   font-style: bold;
   font-weight: 700;
 }
-
+.navbar {
+  display: flex;
+  align-items: center;
+  /* This will vertically center the child elements */
+  justify-content: space-between;
+  /* Adjusts space between items */
+  position: relative;
+}
 
 .header-nav{
   font-family: "Unbounded", sans-serif;

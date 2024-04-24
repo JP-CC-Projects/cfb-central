@@ -5,6 +5,7 @@ import { RootState, useAppDispatch } from '../../../redux/store';
 import { useEffect, useState } from 'react';
 import { contrastUtils } from '../../../utils/isContrastReadable';
 import { fetchTeamDetails } from '../../../redux/actions/teamActions';
+import logoHeader from '../../../assets/headerlogo.png'
 
 const Header = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -52,8 +53,9 @@ const Header = () => {
     // <nav style={{ backgroundColor: bgColor }} className="text-white p-4 relative">
 
     <nav style={{ backgroundColor: bgColor, position: 'fixed', top: 0, width: '100%', height: '10vh', zIndex: 2000 /* AppBar z-index */ }} className="header-nav">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center h-full">
         <div>
+          <img src={logoHeader} style={{ height: '70%', width: 'auto' }} alt="Logo"></img>
         </div>
 
         {/* Center Content - Team Logo */}
