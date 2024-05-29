@@ -4,88 +4,123 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import axios from 'axios';
-import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
-import Stack from '@mui/joy/Stack';
-import Select from '@mui/joy/Select';
-import Option from '@mui/joy/Option';
-import Typography from '@mui/joy/Typography';
-import { User } from '../../../types/userTypes';
 import { fetchTeams } from '../../../redux/actions/teamActions';
 import { ThunkDispatch } from 'redux-thunk';
 import { UnknownAction } from 'redux';
+import { User } from '../../../types/userTypes';
+
+type UpdateProfileRequest = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  currentPassword: string;
+  favoriteTeamId: number;
+};
 
 export default function ProfilePage() {
   const dispatch = useDispatch<ThunkDispatch<{}, {}, UnknownAction>>();
   const teams = useSelector((state: RootState) => state.team.teams);
-  console.log(teams);
   const accessToken = localStorage.getItem('accessToken');
   const USER_BASE_URL = `${import.meta.env.VITE_APP_BASE_URL}/user`;
-  const [user, setUser] = useState({ firstName: '', lastName: '', email: '' });
+
+  const [user, setUser] = useState<User>({
+    id: -1,
+    firstName: '',
+    lastName: '',
+    email: '',
+    favoriteTeamId: 0,
+    favoriteTeam: '', // This field is not necessary
+    currentPassword: '' // This will be used for updating the password
+  });
 
   useEffect(() => {
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    };
-    axios.get<User>(`${USER_BASE_URL}/get-user-details`, config)
-      .then(response => {
-        setUser(response.data);
+    if (accessToken) {
+      axios.get<User>(`${USER_BASE_URL}/get-user-details`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
       })
-      .catch(error => console.error(error));
+        .then(response => setUser(response.data))
+        .catch(error => console.error('Error fetching user details:', error));
+    }
   }, [accessToken]);
 
   useEffect(() => {
-    const cachedTeams = localStorage.getItem('teams');
-    if (cachedTeams) {
-      dispatch({ type: 'FETCH_TEAMS_SUCCESS', payload: JSON.parse(cachedTeams) });
-    } else {
-      dispatch(fetchTeams());
-    }
+    dispatch(fetchTeams());
   }, [dispatch]);
+
+  const handleSaveChanges = () => {
+    const updateProfileRequest: UpdateProfileRequest = {
+      email: user.email || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      currentPassword: user.currentPassword || '',
+      favoriteTeamId: user.favoriteTeamId,
+    };
+
+    axios.post(`${USER_BASE_URL}/update-user-details`, updateProfileRequest, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    })
+      .then(response => console.log('User details updated successfully:', response.data))
+      .catch(error => console.error('Error updating user details:', error));
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    setUser(prevUser => ({ ...prevUser, [name]: value }));
+  };
 
   return (
     <div>
-      <Box sx={{ flex: 1, width: '90vw', p: 4 }}>
-        <Typography level="h4" component="h1" sx={{ mb: 2 }}>
-          User Profile
-        </Typography>
-        <Stack spacing={3} component="form">
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <FormControl>
-              <FormLabel>First Name</FormLabel>
-              <Input size="sm" placeholder={user.firstName || 'First Name'} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Last Name</FormLabel>
-              <Input size="sm" placeholder={user.lastName || 'Last Name'} />
-            </FormControl>
-          </Stack>
-          <FormControl>
-            <FormLabel>Favorite Team</FormLabel>
-            <Select size="sm" defaultValue="">
-              {/* Populate options based on available teams */}
-              <Option value="team1">Team 1</Option>
-              <Option value="team2">Team 2</Option>
-              {/* ... other teams */}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input size="sm" type="email" placeholder={user.email || 'Your Email'} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <Input size="sm" type="password" placeholder="Your password" />
-          </FormControl>
-          <Stack direction="row" spacing={2}>
-            <Button variant="solid" size="sm">Save Changes</Button>
-            <Button variant="outlined" size="sm">Cancel</Button>
-          </Stack>
-        </Stack>
-      </Box>
+      <h1>User Profile</h1>
+      <form>
+        <div>
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={user.firstName || ''}
+            onChange={handleInputChange}
+            placeholder="First Name"
+          />
+        </div>
+        <div>
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={user.lastName || ''}
+            onChange={handleInputChange}
+            placeholder="Last Name"
+          />
+        </div>
+        <div>
+          <label>Favorite Team</label>
+          <select
+            name="favoriteTeamId"
+            value={String(user.favoriteTeamId)}
+            onChange={handleInputChange}
+          >
+            {teams.map(team => (
+              <option key={team.id} value={String(team.id)}>
+                {team.school} {team.mascot}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            value={user.currentPassword || ''}
+            onChange={handleInputChange}
+            placeholder="Your password"
+          />
+        </div>
+        <div>
+          <button type="button" onClick={handleSaveChanges}>Save Changes</button>
+          <button type="button">Cancel</button>
+        </div>
+      </form>
     </div>
   );
 }

@@ -67,22 +67,22 @@ const Header = () => {
 
         {/* Right Side Content - Navigation Links */}
         <div className="hidden md:flex">
-          <div className="nav-padding-sides">|</div>
-          <Link to="/" className="mr-4">HOME</Link>
+          <div className="nav-padding-sides"></div>
+          <Link to="/" className="mr-4"></Link>
           {isAuthenticated ? (
             <>
-              <div className="nav-padding-sides">|</div>
-              <Link to="/profile" className="mr-4">PROFILE</Link>
-              <div className="nav-padding-sides">|</div>
-              <Link to="/logout" className="mr-4">LOGOUT</Link>
+              <div className="nav-padding-sides"></div>
+              <Link to="/profile" className="mr-4"></Link>
+              <div className="nav-padding-sides"></div>
+              <Link to="/logout" className="mr-4"></Link>
             </>
           ) : (
             <>
-              <div className="nav-padding-sides">|</div>
-              <Link to="/login" className="mr-4">LOGIN</Link>
-              <div className="nav-padding-sides">|</div>
-              <Link to="/register">REGISTER</Link>
-              <div className="nav-padding-sides">|</div>
+              <div className="nav-padding-sides"></div>
+              <Link to="/login" className="mr-4"></Link>
+              <div className="nav-padding-sides"></div>
+              <Link to="/register"></Link>
+              <div className="nav-padding-sides"></div>
             </>
           )}
         </div>

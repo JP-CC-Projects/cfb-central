@@ -26,7 +26,7 @@ const HomePage = () => {
         <div className="flex justify-center items-center">
           <TeamSearchAutocomplete />
         </div>
-        {/* Prevent content stretch to the bottom */}
+        {/* Buffer to prevent content from stretching */}
         <div className="flex-1"></div>
       </div>
     </div>

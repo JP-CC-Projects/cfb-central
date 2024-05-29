@@ -17,7 +17,7 @@ const RegisterPage: React.FC = () => {
     try {
       await axios.post(REGISTER_URL, { email, password });
       console.log('Registration successful');
-      navigate('/login'); // Assuming '/login' is the route to your LoginPage
+      navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Registration error:', error.response?.data || error.message);

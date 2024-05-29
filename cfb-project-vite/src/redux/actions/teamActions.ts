@@ -55,58 +55,60 @@ export const fetchTeams = () => async (dispatch: ThunkDispatch<{}, {}, UnknownAc
 };
 
 export const fetchTeamDetails = (teamId: number) => async (dispatch: AppDispatch) => {
-  dispatch({ type: START_FETCHING_TEAM_DETAILS });
-  try {
-    const response = await axios.get<TeamDetails>(`${API_BASE_URL}/team-default?teamId=${teamId}`);
-    dispatch({ type: FETCH_TEAM_DETAILS_SUCCESS, payload: response.data });
-  } catch (error) {
-    handleAxiosError(error, dispatch, FETCH_TEAM_DETAILS_FAILURE);
-  } finally {
-    dispatch({ type: STOP_FETCHING_TEAM_DETAILS });
-  }
-};
+    dispatch({ type: START_FETCHING_TEAM_DETAILS });
+    try {
+      const response = await axios.get<TeamDetails>(
+        `${API_BASE_URL}/team-default?teamId=${teamId}`
+      );
+      dispatch({ type: FETCH_TEAM_DETAILS_SUCCESS, payload: response.data });
+    } catch (error) {
+      handleAxiosError(error, dispatch, FETCH_TEAM_DETAILS_FAILURE);
+    } finally {
+      dispatch({ type: STOP_FETCHING_TEAM_DETAILS });
+    }
+  };
 
-export const fetchTeamTimeline = (teamId: number, season: number) => 
-async (dispatch: AppDispatch) => {
-  dispatch({ type: START_FETCHING_TEAM_TIMELINE });
-  try {
-    const response = await axiosClient.get<TeamTimeline[]>(`${API_BASE_URL}/team-timeline?teamId=${teamId}&season=${season}`);
-    dispatch({ type: FETCH_TEAM_TIMELINE_SUCCESS, payload: response.data });
-    console.log("Team Timeline Response Data:", response.data);
-  } catch (error) {
-    handleAxiosError(error, dispatch, FETCH_TEAM_TIMELINE_FAILURE);
-  } finally {
-    dispatch({ type: STOP_FETCHING_TEAM_TIMELINE });
-  }
-};
+export const fetchTeamTimeline = (teamId: number, season: number) =>
+  async (dispatch: AppDispatch) => {
+    dispatch({ type: START_FETCHING_TEAM_TIMELINE });
+    try {
+      const response = await axiosClient.get<TeamTimeline[]>(`${API_BASE_URL}/team-timeline?teamId=${teamId}&season=${season}`);
+      dispatch({ type: FETCH_TEAM_TIMELINE_SUCCESS, payload: response.data });
+      console.log("Team Timeline Response Data:", response.data);
+    } catch (error) {
+      handleAxiosError(error, dispatch, FETCH_TEAM_TIMELINE_FAILURE);
+    } finally {
+      dispatch({ type: STOP_FETCHING_TEAM_TIMELINE });
+    }
+  };
 
-export const fetchTeamRecord = (teamId: number, season: number) => 
-async (dispatch: AppDispatch) => {
-  dispatch({ type: START_FETCHING_TEAM_RECORD });
-  try {
-    const response = await axiosClient.get<TeamRecord>(`${API_BASE_URL}/team-record?teamId=${teamId}&season=${season}`);
-    dispatch({ type: FETCH_TEAM_RECORD_SUCCESS, payload: response.data });
-    console.log("Team Record Response Data:", response.data);
-  } catch (error) {
-    handleAxiosError(error, dispatch, FETCH_TEAM_RECORD_FAILURE);
-  } finally {
-    dispatch({ type: STOP_FETCHING_TEAM_RECORD });
-  }
-};
+export const fetchTeamRecord = (teamId: number, season: number) =>
+  async (dispatch: AppDispatch) => {
+    dispatch({ type: START_FETCHING_TEAM_RECORD });
+    try {
+      const response = await axiosClient.get<TeamRecord>(`${API_BASE_URL}/team-record?teamId=${teamId}&season=${season}`);
+      dispatch({ type: FETCH_TEAM_RECORD_SUCCESS, payload: response.data });
+      console.log("Team Record Response Data:", response.data);
+    } catch (error) {
+      handleAxiosError(error, dispatch, FETCH_TEAM_RECORD_FAILURE);
+    } finally {
+      dispatch({ type: STOP_FETCHING_TEAM_RECORD });
+    }
+  };
 
-export const fetchTeamRoster = (teamId: number, season: number) => 
-    async (dispatch: ThunkDispatch<{}, {}, UnknownAction>) => {
-  dispatch({ type: START_FETCHING_TEAM_ROSTER });
-  try {
-    const response = await axiosClient.get<Player[]>(`${API_BASE_URL}/team-roster?teamId=${teamId}&season=${season}`);
-    dispatch({ type: FETCH_TEAM_ROSTER_SUCCESS, payload: response.data });
-    console.log("Team Roster Response Data:", response.data);
-  } catch (error) {
-    handleAxiosError(error, dispatch, FETCH_TEAM_ROSTER_FAILURE);
-  } finally {
-    dispatch({ type: STOP_FETCHING_TEAM_ROSTER });
-  }
-};
+export const fetchTeamRoster = (teamId: number, season: number) =>
+  async (dispatch: ThunkDispatch<{}, {}, UnknownAction>) => {
+    dispatch({ type: START_FETCHING_TEAM_ROSTER });
+    try {
+      const response = await axiosClient.get<Player[]>(`${API_BASE_URL}/team-roster?teamId=${teamId}&season=${season}`);
+      dispatch({ type: FETCH_TEAM_ROSTER_SUCCESS, payload: response.data });
+      console.log("Team Roster Response Data:", response.data);
+    } catch (error) {
+      handleAxiosError(error, dispatch, FETCH_TEAM_ROSTER_FAILURE);
+    } finally {
+      dispatch({ type: STOP_FETCHING_TEAM_ROSTER });
+    }
+  };
 
 
 // Export action type constants and new loading action types
@@ -115,12 +117,12 @@ export const actionTypes = {
   STOP_FETCHING_TEAMS,
   FETCH_TEAMS_SUCCESS,
   FETCH_TEAMS_FAILURE,
-  
+
   START_FETCHING_TEAM_DETAILS,
   STOP_FETCHING_TEAM_DETAILS,
   FETCH_TEAM_DETAILS_SUCCESS,
   FETCH_TEAM_DETAILS_FAILURE,
-  
+
   FETCH_TEAM_TIMELINE_SUCCESS,
   FETCH_TEAM_TIMELINE_FAILURE,
   START_FETCHING_TEAM_TIMELINE,
@@ -130,7 +132,7 @@ export const actionTypes = {
   FETCH_TEAM_RECORD_FAILURE,
   START_FETCHING_TEAM_RECORD,
   STOP_FETCHING_TEAM_RECORD,
-  
+
   FETCH_TEAM_ROSTER_SUCCESS,
   FETCH_TEAM_ROSTER_FAILURE,
   START_FETCHING_TEAM_ROSTER,

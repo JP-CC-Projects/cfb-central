@@ -41,7 +41,7 @@ function TeamSearchAutocompleteSelector({ onTeamSelected }: TeamSearchAutocomple
         placeholder="Find your team"
         options={sortedTeams}
         getOptionLabel={(team: TeamMin) => `${team.school} ${team.mascot || ''}`.trim()}
-        // Commented out as you might still use it for styling
+        // Prop for styling
         // renderInput={(params) => <TextField {...params} label="Find your team" />}
         onChange={handleSelection}
       />

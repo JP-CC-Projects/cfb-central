@@ -1,0 +1,47 @@
+/* ProfilePage.css */
+
+.profile-container {
+    width: 60vw;
+    padding: 16px;
+  }
+  
+  .profile-header {
+    margin-bottom: 16px;
+  }
+  
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .profile-row {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .profile-form-control {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-form-control label {
+    margin-bottom: 8px;
+  }
+  
+  .profile-form-control input,
+  .profile-form-control select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .profile-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .profile-buttons button {
+    padding: 8px 16px;
+  }
+  
