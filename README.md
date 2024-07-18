@@ -21,6 +21,7 @@ Data from [College Football Data API (CFBD)](https://api.collegefootballdata.com
 ## UI Components
 - Material UI for navigation components.
 - Customized fork of React Chrono for Timeline (adjusted spacing).
+- Randomized catch-phrase on splash page (I couldn't decided on one)
 
 ## Security
 - The website initially had Spring Security for account features, but these features have been removed due to outdated implementation of Spring Security CVEs and will be replaced.
