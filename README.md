@@ -28,4 +28,5 @@ Data from [College Football Data API (CFBD)](https://api.collegefootballdata.com
 
 ![image](https://github.com/user-attachments/assets/86435ae8-d1fd-415a-a0cd-bd453cde596e)
 ![image](https://github.com/user-attachments/assets/e7d4b404-2ce6-4288-a99b-0ed5723bf7e8)
+![image](https://github.com/user-attachments/assets/e215d6ab-fe66-44fe-890c-5756530640dc)
 
