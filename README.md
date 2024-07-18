@@ -24,7 +24,7 @@ Data from [College Football Data API (CFBD)](https://api.collegefootballdata.com
 - Randomized catch-phrase on splash page (I couldn't decided on one)
 
 ## Security
-- The website initially had Spring Security for account features, but these features have been removed due to outdated implementation of Spring Security CVEs and will be replaced.
+- The website initially had Spring Security for account features, but these features have been removed due to outdated implementation of Spring Security/CVEs and will be replaced.
 
 ![image](https://github.com/user-attachments/assets/86435ae8-d1fd-415a-a0cd-bd453cde596e)
 ![image](https://github.com/user-attachments/assets/e7d4b404-2ce6-4288-a99b-0ed5723bf7e8)
